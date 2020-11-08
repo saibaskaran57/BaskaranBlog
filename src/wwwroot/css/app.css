@@ -20,12 +20,6 @@ app {
     flex-direction: column;
 }
 
-.top-row {
-    height: 3.5rem;
-    display: flex;
-    align-items: center;
-}
-
 .main {
     flex: 1;
 }
@@ -44,63 +38,6 @@ app {
 .main .top-row a:first-child {
     overflow: hidden;
     text-overflow: ellipsis;
-}
-
-.sidebar {
-    background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
-}
-
-    .sidebar .top-row {
-        background-color: rgba(0,0,0,0.4);
-    }
-
-    .sidebar .navbar-brand {
-        font-size: 1.1rem;
-    }
-
-    .sidebar .oi {
-        width: 2rem;
-        font-size: 1.1rem;
-        vertical-align: text-top;
-        top: -2px;
-    }
-
-    .sidebar .nav-item {
-        font-size: 0.9rem;
-        padding-bottom: 0.5rem;
-    }
-
-        .sidebar .nav-item:first-of-type {
-            padding-top: 1rem;
-        }
-
-        .sidebar .nav-item:last-of-type {
-            padding-bottom: 1rem;
-        }
-
-        .sidebar .nav-item a {
-            color: #d7d7d7;
-            border-radius: 4px;
-            height: 3rem;
-            display: flex;
-            align-items: center;
-            line-height: 3rem;
-        }
-
-            .sidebar .nav-item a.active {
-                background-color: rgba(255,255,255,0.25);
-                color: white;
-            }
-
-            .sidebar .nav-item a:hover {
-                background-color: rgba(255,255,255,0.1);
-                color: white;
-            }
-
-
-
-.navbar-toggler {
-    background-color: rgba(255, 255, 255, 0.1);
 }
 
 .valid.modified:not([type=checkbox]) {
@@ -132,6 +69,19 @@ app {
     position: absolute;
     right: 0.75rem;
     top: 0.5rem;
+}
+
+.image {
+    max-height: 300px;
+    max-width: 700px;
+    vertical-align: middle;
+    position: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #dedede;
+    border-radius: 1%;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
 }
 
 /* Style the header with a grey background and some padding */
@@ -243,6 +193,7 @@ app {
     background-color:black;
 }
 
+/* For footer styling*/
 .footer {
     padding: 20px;
     left: 0;
@@ -268,7 +219,6 @@ app {
         text-decoration: none;
     }
 
-/* Set a specific color for each brand */
 /* Facebook */
 .fa-facebook {
     background: #3B5998;
@@ -285,6 +235,29 @@ app {
 .fa-linkedin {
     background: #55ACEE;
     color: white;
+}
+
+/* For posts styling */
+.post-header {
+    font-size: xx-large;
+    height: 100px;
+    text-align: center;
+    padding-bottom: 50px;
+}
+
+.post-image {
+    height: 400px;
+}
+
+.post-body {
+    height: 100px;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.post-footer {
+    height: 100px;
+    font-size: 10px;
 }
 
 @media (max-width: 767.98px) {
@@ -306,13 +279,6 @@ app {
         flex-direction: row;
     }
 
-    .sidebar {
-        width: 250px;
-        height: 100vh;
-        position: sticky;
-        top: 0;
-    }
-
     .main .top-row {
         position: sticky;
         top: 0;
@@ -321,15 +287,6 @@ app {
     .main > div {
         padding-left: 2rem !important;
         padding-right: 1.5rem !important;
-    }
-
-    .navbar-toggler {
-        display: none;
-    }
-
-    .sidebar .collapse {
-        /* Never collapse the sidebar for wide screens */
-        display: block;
     }
 }
 
