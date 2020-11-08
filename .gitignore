@@ -5,3 +5,6 @@
 /src/obj
 /src/.vs/BaskaranBlog/v16
 /src/bin/Debug/netstandard2.1
+/src/.vs/BaskaranBlog/config/debuggerConfiguration-d236f48c-16fb-40da-8e97-ea8822f56fbb.json
+/src/wwwroot/debug.log
+/src/.vs/BaskaranBlog/config/applicationhost.config
