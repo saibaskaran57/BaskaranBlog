@@ -9,3 +9,4 @@
 /src/wwwroot/debug.log
 /src/.vs/BaskaranBlog/config/applicationhost.config
 /src/.vs/BaskaranBlog/DesignTimeBuild/.dtbcache.v2
+/src/bin/Release/netstandard2.1
