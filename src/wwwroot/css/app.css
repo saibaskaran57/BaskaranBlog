@@ -2,16 +2,26 @@
 
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100%;
 }
 
-a, .btn-link {
-    color: #0366d6;
+p {
+    padding: 1px;
 }
 
-.btn-primary {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
+h4, h5 {
+    font-weight: bold;
+}
+
+.navbar-collapse {
+    flex-basis: 100%;
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
 }
 
 app {
@@ -22,6 +32,8 @@ app {
 
 .main {
     flex: 1;
+    min-height: 100%;
+    position: relative;
 }
 
     .main .top-row {
@@ -71,61 +83,30 @@ app {
     top: 0.5rem;
 }
 
+/* Blog logo */
+.logo {
+    font-size: 40px;
+    font-weight: bold;
+    font-family: Pacifico;
+    font-style: normal;
+    font-variant: normal;
+}
+
+/* Post images */
 .image {
-    max-height: 300px;
-    max-width: 700px;
-    vertical-align: middle;
-    position: center;
-    display: block;
+    margin-bottom: 15px;
+    margin-top: 15px;
     margin-left: auto;
     margin-right: auto;
+    max-height: 300px;
+    width: 100%;
+    position: center;
     border: 1px solid #dedede;
     border-radius: 1%;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
 }
 
-/* Style the header with a grey background and some padding */
-.header {
-    overflow: hidden;
-    background-color: #f1f1f1;
-    padding: 20px 10px;
-}
-
-    /* Style the header links */
-    .header a {
-        float: left;
-        color: black;
-        text-align: center;
-        padding: 12px;
-        text-decoration: none;
-        font-size: 18px;
-        line-height: 25px;
-        border-radius: 4px;
-    }
-
-        /* Style the logo link (notice that we set the same value of line-height and font-size to prevent the header to increase when the font gets bigger */
-        .header a.logo {
-            font-size: 25px;
-            font-weight: bold;
-        }
-
-        /* Change the background color on mouse-over */
-        .header a:hover {
-            background-color: #ddd;
-            color: black;
-        }
-
-        /* Style the active/current link*/
-        .header a.active {
-            background-color: dodgerblue;
-            color: white;
-        }
-
-/* Float the link section to the right */
-.header-right {
-    float: right;
-}
-
+/* Blog avatar */
 .avatar {
     vertical-align: middle;
     width: 250px;
@@ -135,29 +116,60 @@ app {
     display: block;
     margin-left: auto;
     margin-right: auto;
+    border: 1px solid #d2d0d0;
 }
 
+/* Blog about */
 .about {
     vertical-align: middle;
-    height: 150px;
     display: block;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
 }
 
-.content {
-    max-width: 800px;
-    margin: auto;
+/* Blog header */
+.header {
+    overflow: auto;
+    background-color: #f1f1f1;
+    padding: 20px 10px;
+    font-weight: bold;
 }
 
-/* Float four columns side by side */
+    .header a {
+        float: left;
+        color: black;
+        text-align: center;
+        padding: 12px;
+        text-decoration: none;
+        line-height: 25px;
+        border-radius: 4px;
+    }
+
+        .header a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .header a.active {
+            background-color: dodgerblue;
+            color: white;
+        }
+
+.header-right {
+    float: right;
+}
+
+/* Blog pinned post */
+.pinned div {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 .column {
-    height: 150px;
     width: 100%;
 }
 
-/* Style the counter cards */
 .card {
     padding: 16px;
     text-align: left;
@@ -165,20 +177,36 @@ app {
 }
 
     .card:hover {
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3); /* this adds the "card" effect */
         background-color: #efecec;
     }
 
-.content-header {
-    font-size: 15px;
+/* Blog content */
+.content {
+    max-width: 800px;
+    margin: auto;
+    padding: 10px;
+    padding-bottom: 60px; /* Height of the footer */
 }
 
+.content-header {
+    font-size: 15px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+    .content-header a {
+        text-decoration: none;
+        color:black;
+    }
+
 .content-body {
-    height: 60px;
+    height: 65px;
     font-size: 14px;
 }
 
 .content-footer {
+    padding: 4px;
     font-size: 10px;
 }
 
@@ -188,24 +216,23 @@ app {
     border-radius: 5px;
 }
 
+
 .tags:hover {
     color:white;
     background-color:black;
 }
 
-/* For footer styling*/
+/* Blog footer */
 .footer {
     padding: 20px;
-    left: 0;
     bottom: 0;
-    width: 100%;
     background-color: #f1f1f1;
-    color: white;
     text-align: center;
     color: black;
 }
 
-.fa {
+/* Social Media Links */
+.fab {
     padding: 20px;
     font-size: 30px;
     width: 70px;
@@ -213,14 +240,14 @@ app {
     text-decoration: none;
     border-radius: 50%;
 }
-    /* Add a hover effect if you want */
-    .fa:hover {
+
+    .fab:hover {
         opacity: 0.7;
         text-decoration: none;
     }
 
 /* Facebook */
-.fa-facebook {
+.fa-facebook-f {
     background: #3B5998;
     color: white;
 }
@@ -232,21 +259,27 @@ app {
 }
 
 /* LinkedIn */
-.fa-linkedin {
+.fa-linkedin-in {
     background: #55ACEE;
     color: white;
 }
 
-/* For posts styling */
+/* Post styling */
 .post-header {
+    font-weight: bolder;
     font-size: xx-large;
-    height: 100px;
-    text-align: center;
+    height: 80px;
+    text-align: left;
     padding-bottom: 50px;
 }
 
+.post-sub-header {
+    font-size: 10px;
+    text-align: left;
+}
+
 .post-image {
-    height: 400px;
+   
 }
 
 .post-body {
@@ -257,8 +290,136 @@ app {
 
 .post-footer {
     height: 100px;
-    font-size: 10px;
+    text-align: center;
+    font-size:12px;
 }
+
+/* Code terminal styling */
+.terminal-header {
+    background-color: #e3e3e3;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
+    display: block;
+}
+
+.terminal-comment {
+    color: limegreen;
+    text-align: left;
+}
+
+.terminal-body {
+    background-color: black;
+    color: white;
+    padding: 10px;
+    font-family: "Segoe UI",Helvetica,Arial,sans-serif;
+    display: block;
+    text-align: left;
+}
+
+    .terminal-body ul  {
+        list-style-type: none;
+    }
+
+.break {
+    display: block;
+}
+
+.note {
+    padding: 10px;
+    background-color: mediumpurple;
+    color: white;
+    border-radius: 6px;
+    display: block;
+    position: relative;
+    border-radius: 6px;
+    font-size: 1rem;
+    padding: 1rem;
+    margin-top: 1rem;
+    word-break: break-word;
+    outline-color: var(--theme-text);
+}
+
+/* Social media sharing links */
+.resp-sharing-button__link,
+.resp-sharing-button__icon {
+    display: inline-block;
+}
+
+.resp-sharing-button__link {
+    text-decoration: none;
+    color: #fff;
+    margin: 0.5em;
+}
+
+.resp-sharing-button__link:hover {
+    text-decoration: none;
+    color: #fff;
+    margin: 0.5em;
+}
+
+.resp-sharing-button {
+    border-radius: 5px;
+    transition: 25ms ease-out;
+    padding: 0.5em 0.75em;
+    font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+}
+
+.resp-sharing-button__icon svg {
+    width: 1em;
+    height: 1em;
+    margin-right: 0.4em;
+    vertical-align: middle;
+}
+
+.resp-sharing-button--small svg {
+    margin: 0;
+    vertical-align: middle;
+}
+
+.resp-sharing-button__icon {
+    stroke: #fff;
+    fill: none
+}
+
+.resp-sharing-button__icon--solid,
+.resp-sharing-button__icon--solidcircle {
+    fill: #fff;
+    stroke: none
+}
+
+.resp-sharing-button--facebook {
+    background-color: #3b5998;
+    border-color: #3b5998;
+}
+
+    .resp-sharing-button--facebook:hover,
+    .resp-sharing-button--facebook:active {
+        background-color: #2d4373;
+        border-color: #2d4373;
+    }
+
+.resp-sharing-button--twitter {
+    background-color: #55acee;
+    border-color: #55acee;
+}
+
+    .resp-sharing-button--twitter:hover,
+    .resp-sharing-button--twitter:active {
+        background-color: #2795e9;
+        border-color: #2795e9;
+    }
+
+.resp-sharing-button--linkedin {
+    background-color: #0077b5;
+    border-color: #0077b5;
+}
+
+    .resp-sharing-button--linkedin:hover,
+    .resp-sharing-button--linkedin:active {
+        background-color: #046293;
+        border-color: #046293;
+    }
 
 @media (max-width: 767.98px) {
     .main .top-row:not(.auth) {
@@ -303,7 +464,6 @@ app {
     }
 }
 
-/* Responsive columns - one column layout (vertical) on small screens */
 @media screen and (max-width: 600px) {
     .column {
         width: 100%;

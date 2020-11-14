@@ -1,0 +1,208 @@
+﻿@page "/posts/2020/11/blazor-part-1"
+
+<div class="container">
+    <table>
+        <tbody>
+            <tr class="container post-header">
+                <td colspan="2">@PostHeader</td>
+            </tr>
+            <tr class="container post-sub-header">
+                <td colspan="2">
+                    <span class="tags">C#</span>
+                    <span class="tags">Blazor</span>
+                    <span>&middot;</span>
+                    <span>Posted on @PostDate</span>
+                    <span>&middot;</span>
+                    <span>@PostReadDuration read</span>
+                </td>
+            </tr>
+            <tr class="container post-image">
+                <td colspan="2">
+                    <img src="@PostImageLocation" alt="Blazor" class="image" />
+                </td>
+            </tr>
+            <tr class="container post-body">
+                <td colspan="2">
+                    <p>
+                        In this post, I will share with you on my journey on how I started my blog with
+                        Blazor WebAssembly & my future plans. I have always wanted to start my own blog
+                        by sharing experience on software development along my career path. It's
+                        always the number one question comes in mind, <i>"Which technology/platform should I use?"</i>.
+                        In my opinion, choose what best fits your requirements. For me, I'm creating this blog
+                        for my personal hobby and would want to explore blazor technologies along my way.
+                    </p>
+                    <p>
+                        <h4>Why did I choose Blazor?</h4>
+                        Personally, I have been always developing softwares revolving with C# .NET
+                        and would always keen to explore Microsoft technologies. What a better way to start blogging
+                        than now with the introduction of Blazor. In most real-world scenarios, we opt to
+                        use Angular, React, and Vue.js for front end development due to the fact that it has better
+                        developer/user experience which I do not disagree at this point. With Blazor, I can be
+                        a full stack .NET developer. Sounds interesting?
+                    </p>
+                    <p>
+                        <h4>Which Blazor hosting model fits my requirement?</h4>
+                        There are two types of hosting model, Blazor Server & Blazor WebAssembly. I went with Blazor WebAssembly due
+                        to my long terms goals with my blog. It's not a difficult decision to make because of the nature of how different
+                        hosting models fits on case by case basis.
+                        <br />
+                        <br />
+                        <h5>Here's the requirements that I needed:</h5>
+                        <ul>
+                            <li>Hosting as a static content (does not need ASP.NET Core on the server)</li>
+                            <li>Faster loading (No SignalR dependancies exchange with server)</li>
+                            <li>Offline support (CLR & Assemblies are downloaded to client browser under WASM)</li>
+                            <li>Works in all modern web browsers, including mobile browsers</li>
+                            <li>
+                                Blog posts will be part of project structure because I find it's easier to create
+                                or edit posts.
+                            </li>
+                        </ul>
+                        <div class="note">
+                            <i class="fas fa-info-circle"></i> Note:
+                            <br />
+                            On a side note, Blazor server helps when you require a long running operation to be done in the server-side
+                            like scheduling a batch operations which you can offload to the work to the server.
+                        </div>
+                    </p>
+                    <p>
+                        <h4>How did I get started?</h4>
+                        In this sharing, it's not about how to create Blazor WebAssembly project from scratch. Microsoft have
+                        built step-by-step guide on how to create your first Blazor project right <a href="https://dotnet.microsoft.com/learn/aspnet/blazor-tutorial/install">here</a>.
+                        Therefore, this post will explain on the underlying project structure & some tips to ease your
+                        understanding for Blazor WebAssembly.
+                    </p>
+                    <p>
+                        First of all, believe me below are all the level of folder hierarachies I needed for my blog with Blazor:
+                        <div>
+                            <div class="terminal-header">
+                                Project structure
+                            </div>
+                            <div class="terminal-body">
+                                <ul>
+                                    <li><i class="far fa-folder"></i> Dependancies <span class="terminal-comment">#blog nuget dependancies</span></li>
+                                    <li><i class="far fa-folder"></i> Properties <span class="terminal-comment">#contains Visual Studio profiles of debug settings</span></li>
+                                    <li>
+                                        <i class="far fa-folder"></i>
+                                        wwwroot <span class="terminal-comment">#contains static assets(e.g. css)</span>
+                                        <ul>
+                                            <li><i class="far fa-folder"></i> css</li>
+                                            <li><i class="far fa-file-code"></i> index.html <span class="terminal-comment">#root page for blog</span></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <i class="far fa-folder"></i>
+                                        Pages <span class="terminal-comment">#views to render posts</span>
+                                        <ul>
+                                            <li>
+                                                <i class="far fa-folder"></i>
+                                                posts
+                                                <ul>
+                                                    <li>
+                                                        <i class="far fa-folder"></i>
+                                                        2020
+                                                        <ul>
+                                                            <li>
+                                                                <i class="far fa-folder"></i>
+                                                                11
+                                                                <ul>
+                                                                    <li><i class="far fa-file-code"></i> article1.razor <span class="terminal-comment">#article 1 page</span></li>
+                                                                    <li><i class="far fa-file-code"></i> article2.razor</li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <i class="far fa-folder"></i> Shared <span class="terminal-comment">#shared layout across blog</span>
+                                        <ul>
+                                            <li><i class="far fa-file-code"></i> MainLayout.razor </li>
+                                        </ul>
+                                    </li>
+                                    <li><i class="far fa-file-code"></i> _Imports.razor <span class="terminal-comment">#used to share directives across all Razor pages/layouts.</span></li>
+                                    <li><i class="far fa-file-code"></i> App.razor <span class="terminal-comment">#routing to render pages</span></li>
+                                    <li><i class="far fa-file-code"></i> Program.cs <span class="terminal-comment">#app entry point</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </p>
+                    <p>
+                        Once you have succesfully setup the entire project, it's now time to test it out locally. Open your preferred
+                        terminal and run the following command:
+
+                        <div class="terminal-header">
+                            Command Prompt
+                        </div>
+                        <div class="terminal-body">
+                            >  dotnet watch run debug
+                        </div>
+                        <div class="note">
+                            <i class="fas fa-info-circle"></i> Note:
+                            <br />
+                            One downfall to the current debugging experience with Blazor WebAssembly is that you will require to reload the pages
+                            on each changes you done locally. This can be frustrating for developers as it can cut productivity by always
+                            refreshing pages. That's because CLR and assemblies are compiled and transformed to JS interop which loaded directly to client
+                            browser which client browser no longer interacts with server side. Hope this will be solved .NET 5 or any hot reload extensions.
+                        </div>
+                    </p>
+                    <p>
+                        The most interesting part that I've noticed is I went on to inspect <a href="https://developers.google.com/web/tools/chrome-devtools/open">Chrome developer console</a>
+                        and found the below screenshot on application startup:
+
+                        <img src="/assets/posts/2020/11/blazor-part1/blazor-console.jpg" alt="Blazor Dev Console" class="image" />
+
+                        <h5>Debugging experience</h5>
+                        A typical .NET debugging will be putting breakpoints on application and running <code>F5</code> command on Visual Studio/Visual
+                        Studio Code. If you see the above logs, I was keen to know what's with Debugging hotkey <code>SHIFT + ALT + D</code>
+                        in windows.
+                        <br />
+                        <br />
+                        Once I hit the debugging hotkey, I was redirected to this page below:
+                        <img src="/assets/posts/2020/11/blazor-part1/blazor-debug.jpg" alt="Blazor Dev Debug" class="image" />
+                        If we follow the steps accordingly as the image above, a new Chrome window will be launched and you can hit <code>SHIFT + ALT + D</code> again.
+                        Once you done that, you will be directed to the page below where now you can debug .NET codes via Chrome Dev Console. That's
+                        amazing!!
+                        <img src="/assets/posts/2020/11/blazor-part1/blazor-dev-console.jpg" alt="Blazor Dev Console" class="image" />
+                        If we look closely on why we are able to debug .NET codes directly via browser is because by using WebAssembly, it will download
+                        CLR & assemblies of .NET and compiles it under Javascript Interop. Therefore, we will be able to debug .NET codes directly from
+                        browser. Use cases like debugging in a test environment without needing an IDE.
+                        <div class="note">
+                            <i class="fas fa-info-circle"></i> Note:
+                            <br />
+                            You will require to run locally in HTTP(http://localhost:5000) to debug via browser.
+                        </div>
+                        <br />
+                        <h5>Resource size</h5>
+                        As you can see, a typical simple Blazor .NET application are loaded with <strong><u>8.65 MB</u></strong> resources. If we narrow it down
+                        further, you will notice all the .NET dll are downloaded to the browser and cached which contributed on the huge size
+                        of the resource. When it comes to situations where you have slower network speed, Blazor WebAssembly can be painful to load.
+                        However, it's also mentioned that published applications will be significantly smaller. Here's <a href="https://docs.microsoft.com/en-us/aspnet/core/blazor/host-and-deploy/webassembly?view=aspnetcore-5.0#compression">why</a>
+                        with the help of compression algorithms like Brotli & Gzip.
+                    </p>
+                    <p>
+                        <h4>In closing</h4>
+                        Overall, I'm very happy how Blazor WebAssembly provides an end-to-end experience with .NET without having to write a single
+                        Javascript code and given that it has cleaner project hierarchy is a huge win for maintainability. Although the resource size
+                        & lacking of hot reload experience is a downfall now, but it will only get better as with the total attempt with Blazor is a huge
+                        evolution for full stack with .NET. If you would like to view the source codes, please feel free to view it right <a href="https://github.com/saibaskaran57/BaskaranBlog">here</a>.
+                    </p>
+                </td>
+            </tr>
+            <tr class="container post-footer">
+                <td colspan="2">
+                    <SocialMedia />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+@code {
+    private string PostHeader = "Building blog with Blazor - Getting Started";
+    private string PostDate = "11th November 2020";
+    private string PostReadDuration = "15 minutes";
+    private string PostImageLocation = "/assets/posts/2020/11/blazor-part1/blazor-head.jpg";
+}

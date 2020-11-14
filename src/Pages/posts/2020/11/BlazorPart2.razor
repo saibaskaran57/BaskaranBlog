@@ -1,0 +1,119 @@
+﻿@page "/posts/2020/11/blazor-part-2"
+
+<div class="container">
+    <table>
+        <tbody>
+            <tr class="post-header">
+                <td colspan="2">@PostHeader</td>
+            </tr>
+            <tr class="post-sub-header">
+                <td colspan="2">
+                    <span class="tags">C#</span>
+                    <span class="tags">Blazor</span>
+                    <span>&middot;</span>
+                    <span>Posted on @PostDate</span>
+                    <span>&middot;</span>
+                    <span>@PostReadDuration read</span>
+                </td>
+            </tr>
+            <tr class="post-image">
+                <td colspan="2">
+                    <img src="@PostImageLocation" alt="Blazor" class="image" />
+                </td>
+            </tr>
+            <tr class="post-body">
+                <td colspan="2">
+                    <p>
+                        In this post, it's all about styling the pages and making it look consistent. I am no UI/UX expert
+                        and therefore, will keep the initial setup simply simple. I will also want to be able to load my
+                        page faster given that the initial size was at <strong><u>8.65 MB</u></strong> and time taken for the
+                        page to load was <strong><u>~1 second</u></strong>. For some clear reasons, I like black, white & gray
+                        colors and will keep it as my primary theme.
+                    </p>
+
+                    <p>
+                        Pre-requisites :
+                        <ul>
+                            <li>Bootstrap v4.3.1(only CSS)</li>
+                            <li>Font Awesome v5.15.1</li>
+                            <li>Google Fonts</li>
+                            <li>App CSS</li>
+                        </ul>
+                    </p>
+                    <p>
+                        <img src="/assets/posts/2020/11/blazor-part2/blazor-initial-sketch.jpg" alt="Blazor initial sketch" class="image" />
+
+                        Explain
+                    </p>
+
+                    <p>
+                        <div class="terminal-header">
+                            CSS
+                        </div>
+                        <div class="terminal-body">
+                            <span class="terminal-comment">/* Blog header */</span>
+                            <span class="break">.header {</span>
+                            <span class="break">&nbsp;&nbsp;&nbsp;overflow: auto;</span>
+                            <span class="break">&nbsp;&nbsp;&nbsp;background-color: #f1f1f1;</span>
+                            <span class="break">&nbsp;&nbsp;&nbsp;padding: 20px 10px;</span>
+                            <span class="break">&nbsp;&nbsp;&nbsp;font-weight: bold;</span>
+                            <span class="break">}</span>
+                        </div>
+
+                        Explain
+                    </p>
+                    <p>
+                        <div class="terminal-header">
+                            CSS
+                        </div>
+                        <div class="terminal-body">
+                            <span class="terminal-comment">/* Blog content */</span>
+                            <span class="break">.content {</span>
+                            <span class="break">&nbsp;&nbsp;&nbsp;max-width: 800px;</span>
+                            <span class="break">&nbsp;&nbsp;&nbsp;margin: auto;</span>
+                            <span class="break">&nbsp;&nbsp;&nbsp;padding: 10px;</span>
+                            <span class="break">
+                                &nbsp;&nbsp;&nbsp;padding-bottom: 60px;<span class="terminal-comment">/* Height of the footer */</span>
+                            </span>
+                            <span class="break">}</span>
+                        </div>
+
+                        Explain
+                    </p>
+                    <p>
+                        <div class="terminal-header">
+                            CSS
+                        </div>
+                        <div class="terminal-body">
+                            <span class="terminal-comment">/* Blog footer */</span>
+                            <span class="break">.footer {</span>
+                            <span class="break">&nbsp;&nbsp;&nbsp;padding: 20px;</span>
+                            <span class="break">&nbsp;&nbsp;&nbsp;bottom: 0;</span>
+                            <span class="break">&nbsp;&nbsp;&nbsp;background-color: #f1f1f1;</span>
+                            <span class="break">&nbsp;&nbsp;&nbsp;text-align: center;</span>
+                            <span class="break"> &nbsp;&nbsp;&nbsp;color: black;</span>
+                            <span class="break">}</span>
+                        </div>
+
+                        Explain
+                    </p>
+                    <p>
+                        <h4>In closing</h4>
+                    </p>
+                </td>
+            </tr>
+            <tr class="post-footer">
+                <td colspan="2">
+                    <SocialMedia />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+@code {
+    private string PostHeader = "Building blog with Blazor - Styling it up!";
+    private string PostDate = "14th November 2020";
+    private string PostReadDuration = "10 minutes";
+    private string PostImageLocation = "/assets/posts/2020/11/blazor-part1/blazor-head.jpg";
+}

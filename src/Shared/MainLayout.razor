@@ -2,21 +2,22 @@
 
 <div class="main">
     <div class="header">
-        <a href="#default" class="logo">Baskaran Blog</a>
-        <div class="header-right">
-            <a href="#contact">Contact</a>
-            <a href="#about">About</a>
-        </div>
+        <NavMenu />
     </div>
+  
     <p></p>
-    <div class="content">
+    <div class="container content">
         @Body
     </div>
     <p></p>
     <div class="footer">
-        <a href="https://www.facebook.com/saibaskar57" class="fa fa-facebook"></a>
-        <a href="https://github.com/saibaskaran57" class="fa fa-github"></a>
-        <a href="https://my.linkedin.com/in/baskaran-govindaras" class="fa fa-linkedin"></a>
-        <p>Copyrights © 2020 Baskaran. All Rights Reserved.</p>
+        <a href="https://www.facebook.com/saibaskar57" class="fab fa-facebook-f"></a>
+        <a href="https://github.com/saibaskaran57" class="fab fa-github"></a>
+        <a href="https://my.linkedin.com/in/baskaran-govindaras" class="fab fa-linkedin-in"></a>
+        <p>Copyrights © @currentYear Baskaran. All Rights Reserved.</p>
     </div>
 </div>
+
+@code {
+    private string currentYear = DateTime.Now.ToString("yyyy");
+}

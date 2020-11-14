@@ -6,13 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Baskaran Blog</title>
     <base href="/" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="//fonts.googleapis.com/css?family=Pacifico" type="text/css"  rel="stylesheet"/>
+    <link href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous"  rel="stylesheet">
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
     <link href="css/app.css" rel="stylesheet" />
+    <script data-name="BMC-Widget" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="baskaran" data-description="Support me on Buy me a coffee!" data-message="If you enjoy the posts, would you care to buy me a coffee?" data-color="#FFDD00" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
 </head>
 
 <body>
-    <app>Loading...</app>
+    <app>
+        <div style="position:absolute; top:30vh; width:100%; text-align:center">
+            <p class="logo">Baskaran</p>
+            <p><i class="fas fa-spin fa-spinner"></i> Waking up...</p>
+        </div>
+    </app>
 
     <div id="blazor-error-ui">
         An unhandled error has occurred.
@@ -21,4 +28,5 @@
     </div>
     <script src="_framework/blazor.webassembly.js"></script>
 </body>
+
 </html>

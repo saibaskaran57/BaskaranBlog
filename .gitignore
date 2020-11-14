@@ -10,3 +10,9 @@
 /src/.vs/BaskaranBlog/config/applicationhost.config
 /src/.vs/BaskaranBlog/DesignTimeBuild/.dtbcache.v2
 /src/bin/Release/netstandard2.1
+/src/bin/Debug/net5.0
+/src/bin/Release/net5.0/ref
+/src/bin/Release/net5.0
+/src/Properties/PublishProfiles
+/src/Properties/ServiceDependencies/BaskaranTest - Web Deploy/profile.arm.json
+/src/debug.log
