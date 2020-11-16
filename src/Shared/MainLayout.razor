@@ -2,22 +2,12 @@
 
 <div class="main">
     <div class="header">
-        <NavMenu />
+        <Header />
     </div>
-  
-    <p></p>
-    <div class="container content">
+    <div class="content">
         @Body
     </div>
-    <p></p>
     <div class="footer">
-        <a href="https://www.facebook.com/saibaskar57" class="fab fa-facebook-f"></a>
-        <a href="https://github.com/saibaskaran57" class="fab fa-github"></a>
-        <a href="https://my.linkedin.com/in/baskaran-govindaras" class="fab fa-linkedin-in"></a>
-        <p>Copyrights © @currentYear Baskaran. All Rights Reserved.</p>
+        <Footer />
     </div>
 </div>
-
-@code {
-    private string currentYear = DateTime.Now.ToString("yyyy");
-}

@@ -3,10 +3,10 @@
 <div class="container">
     <table>
         <tbody>
-            <tr class="container post-header">
+            <tr class="post-header">
                 <td colspan="2">@PostHeader</td>
             </tr>
-            <tr class="container post-sub-header">
+            <tr class="post-sub-header">
                 <td colspan="2">
                     <span class="tags">C#</span>
                     <span class="tags">Blazor</span>
@@ -16,12 +16,12 @@
                     <span>@PostReadDuration read</span>
                 </td>
             </tr>
-            <tr class="container post-image">
+            <tr>
                 <td colspan="2">
                     <img src="@PostImageLocation" alt="Blazor" class="image" />
                 </td>
             </tr>
-            <tr class="container post-body">
+            <tr class="post-body">
                 <td colspan="2">
                     <p>
                         In this post, I will share with you on my journey on how I started my blog with
@@ -49,7 +49,7 @@
                         <br />
                         <h5>Here's the requirements that I needed:</h5>
                         <ul>
-                            <li>Hosting as a static content (does not need ASP.NET Core on the server)</li>
+                            <li>Single Page App (does not need ASP.NET Core on the server)</li>
                             <li>Faster loading (No SignalR dependancies exchange with server)</li>
                             <li>Offline support (CLR & Assemblies are downloaded to client browser under WASM)</li>
                             <li>Works in all modern web browsers, including mobile browsers</li>
@@ -64,6 +64,22 @@
                             On a side note, Blazor server helps when you require a long running operation to be done in the server-side
                             like scheduling a batch operations which you can offload to the work to the server.
                         </div>
+                    </p>
+                    <p>
+                        <h4>How is ASP.NET Core MVC different from Blazor?</h4>
+                        I have worked with numerous amount of MVC projects and always my go to project when I needed my project with
+                        UI where it provides controller routes with <code>Views</code>. The views also leverage Razor syntax but it has one difference.
+                        Each request made in MVC will receive a full HTML with CSS, images, Javascript and back-end data over each requests
+                        made.
+                        <br />
+                        <br />
+                        In Blazor, it leverages the same Razor syntax but the key difference here is that it does not depend on <code>Views</code> and <strong><u>only
+                        render specific components</u></strong> called <a href="https://docs.microsoft.com/en-us/aspnet/core/blazor/components/?view=aspnetcore-5.0&viewFallbackFrom=aspnetcore-3.0" target="_blank">Razor components</a>.
+                        After the component is initially rendered, the component regenerates its render tree in response to events. Blazor then
+                        compares the new render tree against the previous one and applies any modifications to the browser's Document Object Model (DOM).
+                        <br />
+                        <br />
+                        Therefore, the benefits here is that you will not require to re-render the page each time when page is requested. Only when it has changes. Perfect!
                     </p>
                     <p>
                         <h4>How did I get started?</h4>
@@ -106,7 +122,7 @@
                                                                 <i class="far fa-folder"></i>
                                                                 11
                                                                 <ul>
-                                                                    <li><i class="far fa-file-code"></i> article1.razor <span class="terminal-comment">#article 1 page</span></li>
+                                                                    <li><i class="far fa-file-code"></i> article1.razor</li>
                                                                     <li><i class="far fa-file-code"></i> article2.razor</li>
                                                                 </ul>
                                                             </li>
@@ -191,7 +207,7 @@
                     </p>
                 </td>
             </tr>
-            <tr class="container post-footer">
+            <tr class="post-footer">
                 <td colspan="2">
                     <SocialMedia />
                 </td>
