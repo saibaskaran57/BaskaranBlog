@@ -245,6 +245,44 @@
             </span>
         </div>
         <br />
+        Next up, how about passing data from parent to child component? I'm going to pass 'New Post' data from home page
+        to post page.
+        <br />
+        <br />
+        <div class="terminal-header">
+            Razor(Child component)
+        </div>
+        <div class="terminal-body">
+            <span class="break"><span class="code-highlight-yellow">&commat;page</span> "/post"</span>
+            <span class="break">&nbsp;</span>
+            <span class="break">&lt;p&gt;Title : <span class="code-highlight-yellow">&commat;</span>Title&lt;/p&gt;</span>
+            <span class="break">&lt;p&gt;Copyrights © <span class="code-highlight-yellow">&commat;</span>currentYear Baskaran. All Rights Reserved.&lt;/p&gt;</span>
+            <span class="break">&nbsp;</span>
+            <span class="break">
+                <span class="code-highlight-yellow">&commat;code</span>
+                <span class="code-highlight-yellow">{</span>
+            </span>
+            <span class="break">&nbsp;&nbsp;&nbsp;[Parameter]</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;public string Title { get; set; }</span>
+            <span class="break">&nbsp;</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;private string currentYear = DateTime.Now.ToString("yyyy");</span>
+            <span class="break">
+                <span class="code-highlight-yellow">}</span>
+            </span>
+        </div>
+        <br />
+        <div class="terminal-header">
+            Razor(Parent component)
+        </div>
+        <div class="terminal-body">
+            <span class="break"><span class="code-highlight-yellow">&commat;page</span> "/home"</span>
+            <span class="break">&nbsp;</span>
+            <span class="break">
+                <span class="code-blue">&lt;Post Title="New Post" /&gt;</span>
+                <span class="terminal-comment">&lt;!-- Razor component --&gt;</span>
+            </span>
+        </div>
+        <br />
         Easy right? It's almost whatever you can do with Javascript, now you can do it on C#.
     </p>
     <p>
@@ -259,7 +297,7 @@
 </div>
 
 <div class="post-footer">
-    <SocialMedia />
+    <SocialMedia Title="@PostHeader"/>
 </div>
 
 @code {
