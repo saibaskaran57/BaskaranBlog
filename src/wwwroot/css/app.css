@@ -32,21 +32,6 @@ app {
     flex-direction: column;
 }
 
-    .main .top-row {
-        background-color: #f7f7f7;
-        border-bottom: 1px solid #d6d5d5;
-        justify-content: flex-end;
-    }
-
-        .main .top-row > a, .main .top-row .btn-link {
-            white-space: nowrap;
-            margin-left: 1.5rem;
-        }
-
-.main .top-row a:first-child {
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
 
 .valid.modified:not([type=checkbox]) {
     outline: 1px solid #26b050;
@@ -86,20 +71,6 @@ app {
     font-family: Pacifico;
     font-style: normal;
     font-variant: normal;
-}
-
-/* Post images */
-.image {
-    margin-bottom: 15px;
-    margin-top: 15px;
-    margin-left: auto;
-    margin-right: auto;
-    max-height: 300px;
-    width: 100%;
-    position: center;
-    border: 1px solid #dedede;
-    border-radius: 1%;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
 }
 
 /* Blog avatar */
@@ -217,46 +188,11 @@ app {
     color: black;
 }
 
-/* Social Media Links */
-.fab {
-    padding: 20px;
-    font-size: 30px;
-    width: 70px;
-    text-align: center;
-    text-decoration: none;
-    border-radius: 50%;
-}
-
-    .fab:hover {
-        opacity: 0.7;
-        text-decoration: none;
-    }
-
-/* Facebook */
-.fa-facebook-f {
-    background: #3B5998;
-    color: white;
-}
-
-/* Github */
-.fa-github {
-    background: black;
-    color: white;
-}
-
-/* LinkedIn */
-.fa-linkedin-in {
-    background: #55ACEE;
-    color: white;
-}
-
-/* Post styling */
+/* For posts */
 .post-header {
     font-weight: bolder;
     font-size: xx-large;
-    height: 80px;
     text-align: left;
-    padding-bottom: 50px;
 }
 
 .post-sub-header {
@@ -265,15 +201,27 @@ app {
 }
 
 .post-body {
-    height: 100px;
     text-align: justify;
     text-justify: inter-word;
 }
 
 .post-footer {
-    height: 100px;
     text-align: center;
     font-size:12px;
+}
+
+/* Post images */
+.image {
+    margin-bottom: 15px;
+    margin-top: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    max-height: 300px;
+    width: 100%;
+    position: center;
+    border: 1px solid #dedede;
+    border-radius: 1%;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
 }
 
 /* Code terminal styling */
@@ -288,15 +236,20 @@ app {
 .terminal-comment {
     color: limegreen;
     text-align: left;
+    font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
 }
 
 .terminal-body {
-    background-color: black;
+    background-color: #2e2e2e;
     color: white;
     padding: 10px;
-    font-family: "Segoe UI",Helvetica,Arial,sans-serif;
-    display: block;
+    font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
     text-align: left;
+    display: block;
+    overflow: auto;
+    white-space: nowrap;
+    word-break: normal;
+    overflow-wrap: break-word;
 }
 
     .terminal-body ul {
@@ -305,6 +258,16 @@ app {
 
 .break {
     display: block;
+}
+
+/* Code terminal highlights */
+.code-highlight-yellow {
+    background-color: #dedf79;
+    color:black;
+}
+
+.code-blue {
+    color: #2795e9;
 }
 
 .note {
@@ -319,7 +282,6 @@ app {
     padding: 1rem;
     margin-top: 1rem;
     word-break: break-word;
-    outline-color: var(--theme-text);
 }
 
 /* Social media sharing links */
@@ -403,53 +365,41 @@ app {
         border-color: #046293;
     }
 
-@media (max-width: 767.98px) {
-    .main .top-row:not(.auth) {
-        display: none;
-    }
-
-    .main .top-row.auth {
-        justify-content: space-between;
-    }
-
-    .main .top-row a, .main .top-row .btn-link {
-        margin-left: 0;
-    }
+/* Social media direct Links */
+.fab {
+    padding: 20px;
+    font-size: 30px;
+    width: 70px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 50%;
 }
 
-@media (min-width: 768px) {
-    app {
-        flex-direction: row;
+    .fab:hover {
+        opacity: 0.7;
+        text-decoration: none;
     }
 
-    .main .top-row {
-        position: sticky;
-        top: 0;
-    }
-
-    .main > div {
-        padding-left: 2rem !important;
-        padding-right: 1.5rem !important;
-    }
+/* Facebook */
+.fa-facebook-f {
+    background: #3B5998;
+    color: white;
 }
 
-/* Add media queries for responsiveness - when the screen is 500px wide or less, stack the links on top of each other */
-@media screen and (max-width: 500px) {
-    .header a {
-        float: none;
-        display: block;
-        text-align: left;
-    }
-
-    .header-right {
-        float: none;
-    }
+/* Github */
+.fa-github {
+    background: black;
+    color: white;
 }
 
-@media screen and (max-width: 600px) {
-    .column {
+/* LinkedIn */
+.fa-linkedin-in {
+    background: #55ACEE;
+    color: white;
+}
+
+@media screen and (max-width: 799.99px) {
+    .content {
         width: 100%;
-        display: block;
-        margin-bottom: 20px;
     }
 }

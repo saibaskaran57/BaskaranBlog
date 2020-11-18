@@ -1,224 +1,270 @@
 ﻿@page "/posts/2020/11/blazor-part-2"
 
-<div class="container">
-    <table>
-        <tbody>
-            <tr class="post-header">
-                <td colspan="2">@PostHeader</td>
-            </tr>
-            <tr class="post-sub-header">
-                <td colspan="2">
-                    <span class="tags">C#</span>
-                    <span class="tags">Blazor</span>
-                    <span>&middot;</span>
-                    <span>Posted on @PostDate</span>
-                    <span>&middot;</span>
-                    <span>@PostReadDuration read</span>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <img src="@PostImageLocation" alt="Blazor" class="image" />
-                </td>
-            </tr>
-            <tr class="post-body">
-                <td colspan="2">
-                    <p>
-                        In this post, it's all about styling the pages and making it look consistent. I am no UI/UX expert
-                        and therefore, will keep the initial setup simply simple. I will also want to be able to load my
-                        page faster given that the initial size was at <strong><u>8.65 MB</u></strong> and time taken for the
-                        page to load was <strong><u>~1 second</u></strong>. For some clear reasons, I like black, white & gray
-                        colors and will keep it as my primary theme.
-                    </p>
+<div class="post-header">
+    @PostHeader
+</div>
 
-                    <p>
-                        <h4>Pre-requisites</h4>
-                        <ul>
-                            <li><a href="https://getbootstrap.com/" target="_blank">Bootstrap v4.3.1(only CSS)</a> - For responsive web design, which able to render for mobile.</li>
-                            <li><a href="https://fontawesome.com/" target="_blank">Font Awesome v5.15.1</a> - For blog icons</li>
-                            <li><a href="https://fonts.google.com/" target="_blank">Google Fonts</a> - For different form of fonts</li>
-                            <li>App CSS - Customize Blog with custom styles</li>
-                            <li>C# (Where is Javascript?)</li>
-                        </ul>
-                    </p>
-                    <p>
-                        <img src="/assets/posts/2020/11/blazor-part2/blazor-initial-sketch.jpg" alt="Blazor initial sketch" class="image" />
+<div class="post-sub-header">
+    <span class="tags">C#</span>
+    <span class="tags">Blazor</span>
+    <span>&middot;</span>
+    <span>Posted on @PostDate</span>
+    <span>&middot;</span>
+    <span>@PostReadDuration read</span>
+</div>
 
-                        The blog layout is separated in three sections which is <strong>header</strong>, <strong>content</strong> and <strong>footer</strong>.
-                        Nothing complicated here and I want it to be manageable in future to extend my requirements without having to be worried of design
-                        issues. I find it's easier to convert your view to simple UI sketch whether in a piece of blank paper/any sketching tools to get some
-                        understanding how you would like your blog to be designed. From there, it's all much easier to come up with simple HTML design. Using the
-                        design sketch above for my blog, it's now time to come with simple HTML & CSS design.
-                        <br />
-                        <br />
-                        Switch to project structure, go to <code>/Shared/MainLayout.razor</code>:
-                        <div class="terminal-header">
-                            HTML, Razor
-                        </div>
-                        <div class="terminal-body">
-                            <span class="break">&lt;div class="main"&gt;</span>
-                            <span class="break">&nbsp;&nbsp;&nbsp;&lt;div class="header"&gt;</span>
-                            <span class="break">
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Header /&gt;
-                            <span class="terminal-comment">&lt;!-- Razor component --&gt;</span>
-                                    </span>
-                            <span class="break">&nbsp;&nbsp;&nbsp;&lt;/div&gt;</span>
-                            <span class="break">&nbsp;&nbsp;&nbsp;&lt;div class="content"&gt;</span>
-                            <span class="break">
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&commat;Body
-                            <span class="terminal-comment">&lt;!-- Razor sytax where content is rendered --&gt;</span>
-                                    </span>
-                            <span class="break">&nbsp;&nbsp;&nbsp;&lt;/div&gt;</span>
-                            <span class="break">&nbsp;&nbsp;&nbsp;&lt;div class="footer"&gt;</span>
-                            <span class="break">
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Footer /&gt;
-                            <span class="terminal-comment">&lt;!-- Razor component --&gt;</span>
-                                    </span>
-                            <span class="break">&nbsp;&nbsp;&nbsp;&lt;/div&gt;</span>
-                            <span class="break">&lt;/div&gt;</span>
-                        </div>
-                        <br />
-                        As you see above, all I needed four <code>div</code> to accomplish my simple design. If you also notice above,
-                        I have separate the content of the <code>div</code> into reusable Blazor Razor components. I want to ensure that
-                        the separated Blazor component will only be changed if modification is needed to comply Open-closed principle.
-                        Sounds simple? Let's see how I styled them up with CSS.
-                    </p>
+<div>
+    <img src="@PostImageLocation" alt="Blazor" class="image" />
+</div>
 
-                    <p>
-                        <h4>Simple CSS to style up your blog</h4>
-                        Switch to project structure, go to <code>/wwwroot/css/app.css</code>:
-                        <div class="terminal-header">
-                            CSS
-                        </div>
-                        <div class="terminal-body">
-                            <span class="terminal-comment">/* Blog Main */</span>
-                            <span class="break">.main {</span>
-                            <span class="break">&nbsp;&nbsp;&nbsp;flex: 1;</span>
-                            <span class="break">&nbsp;&nbsp;&nbsp;position: relative;</span>
-                            <span class="break">&nbsp;&nbsp;&nbsp;min-height: 100vh;</span>
-                            <span class="break">&nbsp;&nbsp;&nbsp;display: flex;</span>
-                            <span class="break">&nbsp;&nbsp;&nbsp;flex-direction: column;</span>
-                            <span class="break">}</span>
-                        </div>
-                    </p>
-                    <p>
-                        <div class="terminal-header">
-                            CSS
-                        </div>
-                        <div class="terminal-body">
-                            <span class="terminal-comment">/* Blog header */</span>
-                            <span class="break">.header {</span>
-                            <span class="break">&nbsp;&nbsp;&nbsp;background-color: #f1f1f1;</span>
-                            <span class="break">&nbsp;&nbsp;&nbsp;padding: 20px 10px;</span>
-                            <span class="break">&nbsp;&nbsp;&nbsp;font-weight: bold;</span>
-                            <span class="break">}</span>
-                        </div>
-                    </p>
-                    <p>
-                        <div class="terminal-header">
-                            CSS
-                        </div>
-                        <div class="terminal-body">
-                            <span class="terminal-comment">/* Blog content */</span>
-                            <span class="break">.content {</span>
-                            <span class="break">&nbsp;&nbsp;&nbsp;max-width: 800px;</span>
-                            <span class="break">
-                                &nbsp;&nbsp;&nbsp;margin: auto;<span class="terminal-comment">/* Center the content */</span>
-                            </span>
-                            <span class="break">&nbsp;&nbsp;&nbsp;padding: 10px;</span>
-                            <span class="break">&nbsp;&nbsp;&nbsp;flex: 1;</span>
-                            <span class="break">}</span>
-                        </div>
-                        <br />
-                        <strong>800px</strong> width seems reasonable to keep readabiliy centralized rather than streching based on
-                        responsive design. It also keep's it consistent on mobile browsers.
-                    </p>
-                    <p>
-                        <div class="terminal-header">
-                            CSS
-                        </div>
-                        <div class="terminal-body">
-                            <span class="terminal-comment">/* Blog footer */</span>
-                            <span class="break">.footer {</span>
-                            <span class="break">&nbsp;&nbsp;&nbsp;padding: 20px;</span>
-                            <span class="break">&nbsp;&nbsp;&nbsp;bottom: 0;</span>
-                            <span class="break">&nbsp;&nbsp;&nbsp;background-color: #f1f1f1;</span>
-                            <span class="break">&nbsp;&nbsp;&nbsp;text-align: center;</span>
-                            <span class="break">&nbsp;&nbsp;&nbsp;color: black;</span>
-                            <span class="break">}</span>
-                        </div>
-                        <div class="note">
-                            <i class="fas fa-info-circle"></i> Note:
-                            <br />
-                            Setting up blog footer was indeed a big challenge because it sticks to the blog content when you zoom in and out 
-                            It does not render at the bottom of the page where most example out there are based on if your footer has fixed height. 
-                            After searching through the internet, I came across this <a href="https://philipwalton.github.io/solved-by-flexbox/demos/sticky-footer/">page</a>
-                            by Philip Walton that demonstrates how we can achieve this with <a href="https://www.w3schools.com/css/css3_flexbox.asp">Flexbox</a>.
-                        </div>
-                    </p>
-                    <p>
-                        Now that, we have base style setup. It's time to feed the layouts with contents. Remember, <strong>header</strong>, <strong>content</strong>
-                        and <strong>footer</strong> design!
-                    </p>
-                    <p>
-                        <h4>Build with ASP.NET Core Razor components</h4>
-                        Blazor apps are built using components. A component is a self-contained chunk of user interface (UI), such as a page, dialog, or form.
-                        A component includes HTML markup and the processing logic required to inject data or respond to UI events. Components are flexible and lightweight.
-                        They can be nested, reused, and shared among projects.
-                        <br />
-                        <br />
-                        Firstly, to indicate a page is routable, a directive <code>&commat;page</code> added which also means when you call
-                        <code>/home</code>, the component below will be loaded:
-                        <div class="terminal-header">
-                            Razor
-                        </div>
-                        <div class="terminal-body">
-                            <span class="break">&commat;page "/home"</span>
-                            <span class="break">&nbsp;</span>
-                            <span class="break">&lt;your-ui-markup&gt;</span>
-                        </div>
-                        <div class="note">
-                            <i class="fas fa-info-circle"></i> Note:
-                            <br />
-                            Page directives is only needed when you want to indicate a page is routable. You can still decorate it with HTML markup
-                            and reuse in a another routable page without a routable page.
-                        </div>
-                        <br />
-                        Next up, let's look at one example on how you can inject the current year into HTML markup element with Razor.
-                        <br />
-                        <br />
-                        <div class="terminal-header">
-                            Razor
-                        </div>
-                        <div class="terminal-body">
-                            <span class="break">&commat;page "/home"</span>
-                            <span class="break">&nbsp;</span>
-                            <span class="break">&lt;p&gt;Copyrights © &commat;currentYear Baskaran. All Rights Reserved.&lt;/p&gt;</span>
-                            <span class="break">&nbsp;</span>
-                            <span class="break">&commat;code {</span>
-                            <span class="break">&nbsp;&nbsp;&nbsp;private string currentYear = DateTime.Now.ToString("yyyy");</span>
-                            <span class="break">}</span>
-                        </div>
-                        <br />
-                        Its easy right? It's almost whatever you can do with Javascript, now you can do it on C#.
-                    </p>
-                    <p>
-                        <h4>In closing</h4>
-                    </p>
-                </td>
-            </tr>
-            <tr class="post-footer">
-                <td colspan="2">
-                    <SocialMedia />
-                </td>
-            </tr>
-        </tbody>
-    </table>
+<div class="post-body">
+    <p>
+        In this post, it's all about styling the pages and making it look consistent. I am no UI/UX expert
+        and therefore, will keep the initial setup simply simple. I will go through on the CSS setup for 
+        the blog which able to fluid render on any devices and how Blazor helps the rendering as well.
+    </p>
+
+    <p>
+        <h4>Pre-requisites</h4>
+        <ul>
+            <li><a href="https://getbootstrap.com/" target="_blank">Bootstrap v4.3.1(only CSS)</a> - For responsive web design, which able to render for mobile.</li>
+            <li><a href="https://fontawesome.com/" target="_blank">Font Awesome v5.15.1</a> - For blog icons</li>
+            <li><a href="https://fonts.google.com/" target="_blank">Google Fonts</a> - For different form of fonts</li>
+            <li>CSS - Customize Blog with custom styles</li>
+            <li>C# (Where is Javascript?)</li>
+        </ul>
+    </p>
+    <p>
+        <img src="/assets/posts/2020/11/blazor-part2/blazor-initial-sketch.jpg" alt="Blazor initial sketch" class="image" />
+
+        The blog layout is separated in three sections which is <strong>header</strong>, <strong>content</strong> and <strong>footer</strong>.
+        Nothing complicated here and I want it to be manageable in future to extend my requirements without having to be worried of design
+        issues. I find it's easier to convert your view to simple UI sketch whether in a piece of blank paper/any sketching tools to get some
+        understanding how you would like your blog to be designed. From there, it's all much easier to come up with simple HTML design. Using the
+        design sketch above for my blog, it's now time to come with simple HTML & CSS design.
+        <br />
+        <br />
+        Switch to project structure, go to <code>/Shared/MainLayout.razor</code>:
+        <div class="terminal-header">
+            HTML, Razor
+        </div>
+        <div class="terminal-body">
+            <span class="break">&lt;div class="main"&gt;</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;&lt;div class="header"&gt;</span>
+            <span class="break">
+                <span class="code-blue">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Header /&gt;</span>
+                <span class="terminal-comment">&lt;!-- Razor component --&gt;</span>
+            </span>
+            <span class="break">&nbsp;&nbsp;&nbsp;&lt;/div&gt;</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;&lt;div class="content"&gt;</span>
+            <span class="break">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-highlight-yellow">&commat;</span>Body
+                <span class="terminal-comment">&lt;!-- Razor sytax where content is rendered --&gt;</span>
+            </span>
+            <span class="break">&nbsp;&nbsp;&nbsp;&lt;/div&gt;</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;&lt;div class="footer"&gt;</span>
+            <span class="break">
+                <span class="code-blue">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Footer /&gt;</span>
+                <span class="terminal-comment">&lt;!-- Razor component --&gt;</span>
+            </span>
+            <span class="break">&nbsp;&nbsp;&nbsp;&lt;/div&gt;</span>
+            <span class="break">&lt;/div&gt;</span>
+        </div>
+        <br />
+        As you see above, all I needed four <code>div</code> to accomplish my simple design. If you also notice above,
+        I have separate the content of the <code>div</code> into reusable Blazor Razor components. I want to ensure that
+        the separated Blazor component will only be changed if modification is needed to comply Open-closed principle.
+        Sounds simple? Let's see how I styled them up with CSS.
+    </p>
+
+    <p>
+        <h4>Simple CSS to setup style for your blog</h4>
+        Switch to project structure, go to <code>/wwwroot/css/app.css</code>:
+        <div class="terminal-header">
+            CSS
+        </div>
+        <div class="terminal-body">
+            <span class="terminal-comment">/* Blog Main */</span>
+            <span class="break">.main {</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;flex: 1;</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;position: relative;</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;min-height: 100vh;</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;display: flex;</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;flex-direction: column;</span>
+            <span class="break">}</span>
+        </div>
+    </p>
+    <p>
+        <div class="terminal-header">
+            CSS
+        </div>
+        <div class="terminal-body">
+            <span class="terminal-comment">/* Blog header */</span>
+            <span class="break">.header {</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;background-color: #f1f1f1;</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;padding: 20px 10px;</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;font-weight: bold;</span>
+            <span class="break">}</span>
+        </div>
+    </p>
+    <p>
+        <div class="terminal-header">
+            CSS
+        </div>
+        <div class="terminal-body">
+            <span class="terminal-comment">/* Blog content */</span>
+            <span class="break">.content {</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;max-width: 800px;</span>
+            <span class="break">
+                &nbsp;&nbsp;&nbsp;margin: auto;<span class="terminal-comment">/* Center the content */</span>
+            </span>
+            <span class="break">&nbsp;&nbsp;&nbsp;padding: 10px;</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;flex: 1;</span>
+            <span class="break">}</span>
+        </div>
+        <br />
+        <strong>800px</strong> max-width seems reasonable to keep readabiliy centralized rather than streching based on
+        responsive design. However on mobile rendering, there is a catch here. If you have a child <code>div</code> that
+        overflows, it will break the rendering and stretch fully. That's where media screen comes handy. Below shows on
+        how you can render for mobile which lesser than 800px. In my scenario, I would like to re-render it 100% again.
+        <br />
+        <br />
+        <div class="terminal-header">
+            CSS
+        </div>
+        <div class="terminal-body">
+            <span class="break"><span class="code-blue">&commat;media</span> screen and (max-width: 799.99px) {</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;.content {</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width: 100%;</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;}</span>
+            <span class="break">}</span>
+        </div>
+    </p>
+    <p>
+        <div class="terminal-header">
+            CSS
+        </div>
+        <div class="terminal-body">
+            <span class="terminal-comment">/* Blog footer */</span>
+            <span class="break">.footer {</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;padding: 20px;</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;bottom: 0;</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;background-color: #f1f1f1;</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;text-align: center;</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;color: black;</span>
+            <span class="break">}</span>
+        </div>
+        <br />
+        Setting up blog footer was indeed a big challenge because it sticks to the blog content when you zoom in and out
+        It does not render at the bottom of the page where most example out there are based on if your footer has fixed height.
+        After searching through the internet, I came across this <a href="https://philipwalton.github.io/solved-by-flexbox/demos/sticky-footer/">page</a>
+        by Philip Walton that demonstrates how we can achieve this with <a href="https://www.w3schools.com/css/css3_flexbox.asp">Flexbox</a>.
+    </p>
+    <p>
+        <h4>Navigation for your blog</h4>
+        With simple Blazor basics as above, let's create a navigation with bootstrap that helps with responsive design.
+        I've always appreciated the power of bootstrap especially with the given technologies out there to build websites, this
+        has been a fundamental reason why devs less worry on ensuring it works on all desktop/mobile browsers. However, for most
+        of the bootstrap functionalities, it requires Javascript to be able change state(e.g. onClick). So, do we need to restore Bootstrap
+        Javascript to the blog? <strong>In short - No</strong>
+        <br />
+        <br />
+        Let's look on how we can solve DOM event changes with Razor directly. Firstly, to create a nice navigation, <a href="https://getbootstrap.com/docs/4.0/components/navbar/">Navbar</a> by Boostrap
+        provides all the functionalies we need to render on desktop/mobile browsers which on screen changes, it will transform your navigation
+        to <i class="fas fa-bars"></i>. You can also refer to an example right <a href="https://github.com/saibaskaran57/BaskaranBlog/blob/main/src/Shared/Header.razor" target="_blank">here</a> on GitHub.
+        <br />
+        <br />
+        Next up, now that we created navigation bars, you will need to toggle the bars when page is minimized to change the DOM where you
+        can collapse the selection. With Razor, you can do it as below:
+        <div class="terminal-header">
+            Razor
+        </div>
+        <div class="terminal-body">
+            <span class="break">
+                <span class="code-highlight-yellow">&commat;code</span>
+                <span class="code-highlight-yellow">{</span>
+            </span>
+            <span class="break">&nbsp;&nbsp;&nbsp;private bool collapseNavMenu = true;</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;</span>
+            <span class="break">&nbsp;</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;private void ToggleNavMenu()</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;{</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;collapseNavMenu = !collapseNavMenu;</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;}</span>
+            <span class="break">
+                <span class="code-highlight-yellow">}</span>
+            </span>
+        </div>
+    </p>
+    <p>
+        Now that, we have base style setup. It's time to feed the layouts with contents. Remember, <strong>header</strong>, <strong>content</strong>
+        and <strong>footer</strong> design!
+    </p>
+    <p>
+        <h4>Building page content with Blazor</h4>
+        Blazor apps are built using components. A component is a self-contained chunk of user interface (UI), such as a page, dialog, or form.
+        A component includes HTML markup and the processing logic required to inject data or respond to UI events. Components are flexible and lightweight.
+        They can be nested, reused, and shared among projects.
+        <br />
+        <br />
+        Firstly, to indicate a page is routable, a directive <code>&commat;page</code> added which also means when you call
+        <code>/home</code>, the component below will be loaded:
+        <div class="terminal-header">
+            Razor
+        </div>
+        <div class="terminal-body">
+            <span class="break"><span class="code-highlight-yellow">&commat;page</span> "/home"</span>
+            <span class="break">&nbsp;</span>
+            <span class="break">&lt;your-html-markup&gt;</span>
+        </div>
+        <div class="note">
+            <i class="fas fa-info-circle"></i> Note:
+            <br />
+            Page directives is only needed when you want to indicate a page is routable. You can still decorate it with HTML markup
+            and reuse in a another routable page without a routable page.
+        </div>
+        <br />
+        Next up, let's look at one example on how you can inject the current year into HTML markup element with Razor.
+        <br />
+        <br />
+        <div class="terminal-header">
+            Razor
+        </div>
+        <div class="terminal-body">
+            <span class="break"><span class="code-highlight-yellow">&commat;page</span> "/home"</span>
+            <span class="break">&nbsp;</span>
+            <span class="break">&lt;p&gt;Copyrights © <span class="code-highlight-yellow">&commat;</span>currentYear Baskaran. All Rights Reserved.&lt;/p&gt;</span>
+            <span class="break">&nbsp;</span>
+            <span class="break">
+                <span class="code-highlight-yellow">&commat;code</span>
+                <span class="code-highlight-yellow">{</span>
+            </span>
+            <span class="break">&nbsp;&nbsp;&nbsp;private string currentYear = DateTime.Now.ToString("yyyy");</span>
+            <span class="break">
+                <span class="code-highlight-yellow">}</span>
+            </span>
+        </div>
+        <br />
+        Easy right? It's almost whatever you can do with Javascript, now you can do it on C#.
+    </p>
+    <p>
+        <h4>In closing</h4>
+        For UI, I have always been using Javascript to make DOM changes especially calling a function when onClick event is
+        triggered. It's definately something different for me where I'm adapting over the usages of Razor for my pages. However,
+        the positive side of this, it's still C# .NET which the learning curve only revolves on understanding Blazor. Furthermore,
+        build components as small as possible and only re-rendering the components again sounds really efficient. On the CSS styling
+        part, nothing has changed which I can still use bootstrap or native css to style up page as I can do on other technologies.
+        Next up, let's look at how .NET 5 changes Blazor.
+    </p>
+</div>
+
+<div class="post-footer">
+    <SocialMedia />
 </div>
 
 @code {
     private string PostHeader = "Building blog with Blazor - Styling it up!";
     private string PostDate = "14th November 2020";
-    private string PostReadDuration = "10 minutes";
+    private string PostReadDuration = "15 minutes";
     private string PostImageLocation = "/assets/posts/2020/11/blazor-part1/blazor-head.jpg";
 }

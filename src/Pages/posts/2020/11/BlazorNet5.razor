@@ -1,0 +1,94 @@
+﻿@page "/posts/2020/11/blazor-net-5"
+
+<div class="post-header">
+    @PostHeader
+</div>
+
+<div class="post-sub-header">
+    <span class="tags">C#</span>
+    <span class="tags">Blazor</span>
+    <span>&middot;</span>
+    <span>Posted on @PostDate</span>
+    <span>&middot;</span>
+    <span>@PostReadDuration read</span>
+</div>
+
+<div>
+    <img src="@PostImageLocation" alt="Blazor" class="image" />
+</div>
+
+<div class="post-body">
+    <p>
+        Microsoft have annouced the release of .NET 5 which it's globally available. I'm pretty excited on what
+        .NET 5 can bring improvements to the .NET ecosystem and to my blog. Worthy of a upgrade to .NET 5? Let's
+        see!
+    </p>
+    <p>
+        <h4>Pre-requisites</h4>
+        <ul>
+            <li><a href="https://docs.microsoft.com/en-us/aspnet/core/release-notes/aspnetcore-5.0?view=aspnetcore-5.0#blazor" target="_blank">What's new in Blazor?</a></li>
+            <li><a href="https://dotnet.microsoft.com/download/dotnet/5.0/" target="_blank">Download .NET 5</a></li>
+            <li><a href="https://docs.microsoft.com/en-us/visualstudio/releases/2019/release-notes" target="_blank">Download Visual Studio 2019 version 16.8 and above</a></li>
+        </ul>
+    </p>
+    <p>
+        Once you have understood & download the pre-requisites, to upgrade current Blazor project structure to .NET 5, all you need to do is to edit your <code>.csproj</code>
+        file with the content below:
+        <div class="terminal-header">
+            csproj
+        </div>
+        <div class="terminal-body">
+            <span class="break">&lt;Project Sdk="<span class="code-highlight-yellow">Microsoft.NET.Sdk.BlazorWebAssembly</span>"&gt;</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;&lt;PropertyGroup&gt;</span>
+            <span class="break">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;TargetFramework><span class="code-highlight-yellow">net5.0</span>&lt;/TargetFramework&gt;
+            </span>
+            <span class="break">&nbsp;&nbsp;&nbsp;&lt;/PropertyGroup&gt;</span>
+            <span class="break">&nbsp;</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;&lt;ItemGroup&gt;</span>
+            <span class="break">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.0" /&gt;
+            </span>
+            <span class="break">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="5.0.0" PrivateAssets="all" /&gt;
+            </span>
+            <span class="break">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;PackageReference Include="System.Net.Http.Json" Version="5.0.0" /&gt;
+            </span>
+            <span class="break">&nbsp;&nbsp;&nbsp;&lt;/ItemGroup&gt;</span>
+            <span class="break">&lt;/Project&gt;</span>
+        </div>
+    </p>
+    <p>
+        <h4>CSS isolation</h4>
+    </p>
+    <p>
+        <h4>Trimming/linking improvements</h4>
+    </p>
+    <p>
+        <h4>Blazor WebAssembly prerendering</h4>
+    </p>
+    <p>
+        <h4>Lazy load assemblies</h4>
+    </p>
+    <p>
+        <h4>In closing</h4>
+        For UI, I have always been using Javascript to make DOM changes especially calling a function when onClick event is
+        triggered. It's definately something different for me where I'm adapting over the usages of Razor for my pages. However,
+        the positive side of this, it's still C# .NET which the learning curve only revolves on understanding Blazor. Furthermore,
+        build components as small as possible and only re-rendering the components again sounds really efficient. On the CSS styling
+        part, nothing has changed which I can still use bootstrap or native css to style up page as I can do on other technologies.
+        Next up, let's look at how .NET 5 changes Blazor.
+    </p>
+</div>
+
+<div class="post-footer">
+    <SocialMedia />
+</div>
+
+@code {
+    private string PostHeader = "Building blog with Blazor - Upgrading to .NET 5";
+    private string PostDate = "16th November 2020";
+    private string PostReadDuration = "15 minutes";
+    private string PostImageLocation = "/assets/posts/2020/11/blazor-part1/blazor-head.jpg";
+}
