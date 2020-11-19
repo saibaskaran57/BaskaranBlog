@@ -139,14 +139,21 @@
         </div>
     </p>
     <p>
-        Once you have succesfully setup the entire project, it's now time to test it out locally. Open your preferred
-        terminal and run the following command:
-
+        Before running locally, run below command once in Windows/Mac environment to trust HTTPS locally for .NET Core
         <div class="terminal-header">
             Command Prompt
         </div>
         <div class="terminal-body">
-            >  dotnet watch run debug
+            <span class="break">>  dotnet dev-certs https --trust</span>
+        </div>
+        <br />
+        Once you have succesfully setup the entire project, it's now time to test it out locally. Open your preferred
+        terminal and run the following command:
+        <div class="terminal-header">
+            Command Prompt
+        </div>
+        <div class="terminal-body">
+            <span class="break">>  dotnet watch run debug</span>
         </div>
         <div class="note">
             <i class="fas fa-info-circle"></i> Note:
