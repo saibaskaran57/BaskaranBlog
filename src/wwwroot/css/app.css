@@ -5,6 +5,8 @@
     height: 100%;
     min-height: 100vh;
     position: relative;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
 }
 
 p {
@@ -29,7 +31,6 @@ app {
     display: flex;
     flex-direction: column;
 }
-
 
 .valid.modified:not([type=checkbox]) {
     outline: 1px solid #26b050;
@@ -198,8 +199,20 @@ app {
     text-align: left;
 }
 
+.post-image {
+    text-align: center;
+    font-size: small;
+    color: darkgray;
+    margin-bottom: 10px;
+}
+
+    .post-image a {
+        text-decoration: underline;
+        color: darkgray;
+    }
+
 .post-body {
-    text-align: justify;
+    text-align: left;
     text-justify: inter-word;
 }
 
@@ -210,12 +223,13 @@ app {
 
 /* Post images */
 .image {
-    margin-bottom: 15px;
-    margin-top: 15px;
+    margin-bottom: 10px;
+    margin-top: 10px;
     margin-left: auto;
     margin-right: auto;
-    max-height: 300px;
-    width: 100%;
+    width:100%;
+    max-height: 400px;
+    background-size: cover;
     position: center;
     border: 1px solid #dedede;
     border-radius: 1%;
@@ -280,6 +294,10 @@ app {
     padding: 1rem;
     margin-top: 1rem;
     word-break: break-word;
+}
+
+.table {
+    width: 800px;
 }
 
 /* Social media sharing links */
@@ -398,6 +416,10 @@ app {
 
 @media screen and (max-width: 799.99px) {
     .content {
+        width: 100%;
+    }
+
+    .table {
         width: 100%;
     }
 }

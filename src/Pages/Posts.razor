@@ -1,0 +1,50 @@
+﻿@page "/posts"
+
+@using System.Linq
+@using BaskaranBlog.Models
+
+@inject HttpClient Http
+
+<table class="table table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Year</th>
+            <th scope="col">Posts</th>
+            <th scope="col">Tags</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (posts == null)
+        {
+            <tr align="center">
+                <td colspan="3" scope="row"><i class="fas fa-spin fa-spinner"></i> Loading...</td>
+            </tr>
+        }
+        else
+        {
+            <Virtualize Context="post" Items="@posts">
+                <tr>
+                    <td scope="row">@post.Year</td>
+                    <td>
+                        <a href="@post.Url">@post.Name</a>
+                    </td>
+                    <td>
+                        @foreach (var tag in post.Tags)
+                        {
+                            <span class="tags">@tag</span>
+                        }
+                    </td>
+                </tr>
+            </Virtualize>
+        }
+    </tbody>
+</table>
+
+@code{
+    private Post[] posts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        posts = await Http.GetFromJsonAsync<Post[]>("posts.json");
+    }
+}

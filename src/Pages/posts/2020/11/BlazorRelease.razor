@@ -1,4 +1,5 @@
-﻿@page "/posts/2020/11/BlazorNet5"
+﻿@page "/posts/2020/11/BlazorRelease"
+
 
 <div class="post-header">
     @PostHeader
@@ -13,9 +14,8 @@
     <span>@PostReadDuration read</span>
 </div>
 
-<div class="post-image">
-    <img src="@PostBaseImage/dotnet5.jpg" alt="Blazor" class="image" />
-    Photo by Microsoft
+<div>
+    <img src="@PostImageLocation" alt="Blazor" class="image" />
 </div>
 
 <div class="post-body">
@@ -33,7 +33,7 @@
         </ul>
     </p>
     <p>
-        Once you have downloaded the pre-requisites, to upgrade current Blazor project structure to .NET 5, all you need to do is to edit your <code>.csproj</code>
+        Once you have understood & downloaded the pre-requisites, to upgrade current Blazor project structure to .NET 5, all you need to do is to edit your <code>.csproj</code>
         file with the content below:
         <div class="terminal-header">
             csproj
@@ -184,7 +184,7 @@
         Inspect to the content of the loaded items and start scrolling. You will observe with Virtualization, Blazor will re-calculate the
         height of the items. The best part is that as soon as you scroll down, it will reset the items at the top which provides efficient
         scrolling without any lags.
-        <img src="@PostBaseImage/blazor-virtualization.jpg" alt="Blazor" class="image" />
+        <img src="/assets/posts/2020/11/blazor-net5/blazor-virtualization.jpg" alt="Blazor" class="image" />
         <br />
         <div class="note">
             <i class="fas fa-info-circle"></i> Note:
@@ -208,8 +208,8 @@
 </div>
 
 @code {
-    private string PostHeader = "Building blog with Blazor - Upgrading to .NET 5";
-    private string PostDate = "16th November 2020";
-    private string PostReadDuration = "15 minutes";
-    private string PostBaseImage = "/assets/posts/2020/11/blazor-net5";
+    private string PostHeader = "Building blog with Blazor - Shipping it!";
+    private string PostDate = "20th November 2020";
+    private string PostReadDuration = "10 minutes";
+    private string PostImageLocation = "/assets/posts/2020/11/blazor-part1/blazor-head.jpg";
 }

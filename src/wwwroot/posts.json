@@ -1,0 +1,59 @@
+[
+  {
+    "year": "2020",
+    "name": "Building blog with Blazor - Getting Started",
+    "url": "/posts/2020/11/BlazorGettingStarted",
+    "date": "11th November 2020",
+    "description": "",
+    "pinned": {
+      "order": 1
+    },
+    "tags": [
+      "C#",
+      "Blazor"
+    ]
+  },
+  {
+    "year": "2020",
+    "name": "Building blog with Blazor - Styling it up!",
+    "url": "/posts/2020/11/BlazorPart2",
+    "date": "14th November 2020",
+    "description": "",
+    "pinned": {
+      "order": 2
+    },
+    "tags": [
+      "C#",
+      "Blazor"
+    ]
+  },
+  {
+    "year": "2020",
+    "name": "Building blog with Blazor - Upgrading to .NET 5",
+    "url": "/posts/2020/11/BlazorNet5",
+    "date": "16th November 2020",
+    "description": "",
+    "pinned": {
+      "order": 3
+    },
+    "tags": [
+      "C#",
+      "Blazor"
+    ]
+  },
+  {
+    "year": "2020",
+    "name": "Building blog with Blazor - Shipping it!",
+    "url": "/posts/2020/11/BlazorRelease",
+    "date": "20th November 2020",
+    "description": "",
+    "pinned": {
+      "order": 4
+    },
+    "tags": [
+      "C#",
+      "Blazor"
+    ]
+  }
+]
+

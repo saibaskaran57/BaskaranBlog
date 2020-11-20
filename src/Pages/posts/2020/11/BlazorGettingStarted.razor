@@ -1,4 +1,4 @@
-﻿@page "/posts/2020/11/blazor-part-1"
+﻿@page "/posts/2020/11/BlazorGettingStarted"
 
 <div class="post-header">
     @PostHeader
@@ -13,8 +13,9 @@
     <span>@PostReadDuration read</span>
 </div>
 
-<div>
-    <img src="@PostImageLocation" alt="Blazor" class="image" />
+<div class="post-image">
+    <img src="@PostBaseImage/jesuskiteque-header.jpg" alt="Blazor" class="image" />
+    Photo by <a href="https://unsplash.com/&commat;jesuskiteque">Jesus Kiteque</a> on Unsplash
 </div>
 
 <div class="post-body">
@@ -68,8 +69,8 @@
         made.
         <br />
         <br />
-        In Blazor, it leverages the same Razor syntax but the key difference here is that it does not depend on <code>Views</code> and <strong>
-        <u>only render specific components </u></strong> called <a href="https://docs.microsoft.com/en-us/aspnet/core/blazor/components/?view=aspnetcore-5.0&viewFallbackFrom=aspnetcore-3.0" target="_blank">
+        In Blazor, it leverages the same Razor syntax but the key difference here is that it does not re-render <code>Views</code> and <strong>
+        <u>only render specific components</u></strong> called <a href="https://docs.microsoft.com/en-us/aspnet/core/blazor/components/?view=aspnetcore-5.0&viewFallbackFrom=aspnetcore-3.0" target="_blank">
         Razor components</a>. After the component is initially rendered, the component regenerates its render tree in response to events. Blazor then
         compares the new render tree against the previous one and applies any modifications to the browser's Document Object Model (DOM).
         <br />
@@ -169,15 +170,15 @@
         The most interesting part that I've noticed is I went on to inspect <a href="https://developers.google.com/web/tools/chrome-devtools/open">Chrome developer console</a>
         and found the below screenshot on application startup which provides logs to application overview:
 
-        <img src="/assets/posts/2020/11/blazor-part1/blazor-console.jpg" alt="Blazor Dev Console" class="image" />
+        <img src="@PostBaseImage/blazor-console.jpg" alt="Blazor Dev Console" class="image" />
         A typical .NET debugging will be putting breakpoints on application and running <kbd>F5</kbd> command on Visual Studio/Visual
         Studio Code. If you see the above logs, I was keen to know what's with Debugging hotkey <kbd>SHIFT + ALT + D</kbd>
         in windows. Once I hit the debugging hotkey, I was redirected to this page below:
-        <img src="/assets/posts/2020/11/blazor-part1/blazor-debug.jpg" alt="Blazor Dev Debug" class="image" />
+        <img src="@PostBaseImage/blazor-debug.jpg" alt="Blazor Dev Debug" class="image" />
         If we follow the steps accordingly as the image above, a new Chrome window will be launched and you can hit <kbd>SHIFT + ALT + D</kbd> again.
         Once you done that, you will be directed to the page below where now you can debug .NET codes via Chrome Dev Console. That's
         amazing!!
-        <img src="/assets/posts/2020/11/blazor-part1/blazor-dev-console.jpg" alt="Blazor Dev Console" class="image" />
+        <img src="@PostBaseImage/blazor-dev-console.jpg" alt="Blazor Dev Console" class="image" />
         If we look closely on why we are able to debug .NET codes directly via browser is because by using WebAssembly, it will download
         CLR & assemblies of .NET and compiles it under Javascript Interop. Therefore, we will be able to debug .NET codes directly from
         browser. Use cases like debugging in a test environment without needing an IDE.
@@ -211,5 +212,5 @@
     private string PostHeader = "Building blog with Blazor - Getting Started";
     private string PostDate = "11th November 2020";
     private string PostReadDuration = "15 minutes";
-    private string PostImageLocation = "/assets/posts/2020/11/blazor-part1/blazor-head.jpg";
+    private string PostBaseImage = "/assets/posts/2020/11/blazor-gettingstarted";
 }

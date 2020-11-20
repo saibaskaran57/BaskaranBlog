@@ -1,4 +1,4 @@
-﻿@page "/posts/2020/11/blazor-part-2"
+﻿@page "/posts/2020/11/BlazorPart2"
 
 <div class="post-header">
     @PostHeader
@@ -13,8 +13,9 @@
     <span>@PostReadDuration read</span>
 </div>
 
-<div>
-    <img src="@PostImageLocation" alt="Blazor" class="image" />
+<div class="post-image">
+    <img src="@PostBaseImage/halacious-header.jpg" alt="Blazor" class="image" />
+    Photo by <a href="https://unsplash.com/&commat;halacious">Halacious</a> on Unsplash
 </div>
 
 <div class="post-body">
@@ -35,7 +36,7 @@
         </ul>
     </p>
     <p>
-        <img src="/assets/posts/2020/11/blazor-part2/blazor-initial-sketch.jpg" alt="Blazor initial sketch" class="image" />
+        <img src="@PostBaseImage/blazor-initial-sketch.jpg" alt="Blazor initial sketch" class="image" />
 
         The blog layout is separated in three sections which is <strong>header</strong>, <strong>content</strong> and <strong>footer</strong>.
         Nothing complicated here and I want it to be manageable in future to extend my requirements without having to be worried of design
@@ -50,24 +51,24 @@
         </div>
         <div class="terminal-body">
             <span class="break">&lt;div class="main"&gt;</span>
-            <span class="break">&nbsp;&nbsp;&nbsp;&lt;div class="header"&gt;</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;&lt;header class="header"&gt;</span>
             <span class="break">
-                <span class="code-blue">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Header /&gt;</span>
+                <span class="code-blue">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Navigation /&gt;</span>
                 <span class="terminal-comment">&lt;!-- Razor component --&gt;</span>
             </span>
-            <span class="break">&nbsp;&nbsp;&nbsp;&lt;/div&gt;</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;&lt;/header&gt;</span>
             <span class="break">&nbsp;&nbsp;&nbsp;&lt;div class="content"&gt;</span>
             <span class="break">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-highlight-yellow">&commat;</span>Body
                 <span class="terminal-comment">&lt;!-- Razor sytax where content is rendered --&gt;</span>
             </span>
             <span class="break">&nbsp;&nbsp;&nbsp;&lt;/div&gt;</span>
-            <span class="break">&nbsp;&nbsp;&nbsp;&lt;div class="footer"&gt;</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;&lt;footer class="footer"&gt;</span>
             <span class="break">
-                <span class="code-blue">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Footer /&gt;</span>
+                <span class="code-blue">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Copyrights /&gt;</span>
                 <span class="terminal-comment">&lt;!-- Razor component --&gt;</span>
             </span>
-            <span class="break">&nbsp;&nbsp;&nbsp;&lt;/div&gt;</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;&lt;/footer&gt;</span>
             <span class="break">&lt;/div&gt;</span>
         </div>
         <br />
@@ -126,7 +127,8 @@
         <strong>800px</strong> max-width seems reasonable to keep readabiliy centralized rather than streching based on
         responsive design. However on mobile rendering, there is a catch here. If you have a child <code>div</code> that
         overflows, it will break the rendering and stretch fully. That's where media screen comes handy. Below shows on
-        how you can render for mobile which lesser than 800px. In my scenario, I would like to re-render it 100% again.
+        how you can render for mobile which lesser than 800px. In my scenario, I would like to re-render it 100% again to
+        fit fully on mobile devices according to its device screen.
         <br />
         <br />
         <div class="terminal-header">
@@ -207,7 +209,7 @@
         and <strong>footer</strong> design!
     </p>
     <p>
-        <h4>Building page content with Blazor</h4>
+        <h4>Building page content</h4>
         Blazor apps are built using components. A component is a self-contained chunk of user interface (UI), such as a page, dialog, or form.
         A component includes HTML markup and the processing logic required to inject data or respond to UI events. Components are flexible and lightweight.
         They can be nested, reused, and shared among projects.
@@ -291,7 +293,6 @@
                 <span class="code-highlight-yellow">&commat;code</span>
                 <span class="code-highlight-yellow">{</span>
             </span>
-            <span class="break">&nbsp;</span>
             <span class="break">&nbsp;&nbsp;&nbsp;private string currentYear = DateTime.Now.ToString("yyyy");</span>
             <span class="break">
                 <span class="code-highlight-yellow">}</span>
@@ -320,5 +321,6 @@
     private string PostHeader = "Building blog with Blazor - Styling it up!";
     private string PostDate = "14th November 2020";
     private string PostReadDuration = "15 minutes";
-    private string PostImageLocation = "/assets/posts/2020/11/blazor-part1/blazor-head.jpg";
+    private string PostImageLocation = "/assets/posts/2020/11/blazor-styling";
+    private string PostBaseImage = "/assets/posts/2020/11/blazor-styling";
 }

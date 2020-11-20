@@ -4,10 +4,10 @@
         <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="@NavMenuCssClass navbar-collapse justify-content-end" id="navbarNav">
+    <div class="@NavMenuCssClass navbar-collapse justify-content-end" id="navbarNav" @onclick="ToggleNavMenu">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <NavLink class="nav-link" href="#1" Match="NavLinkMatch.All">
+                <NavLink class="nav-link" href="/posts" Match="NavLinkMatch.All">
                     <i class="fas fa-blog"></i> Posts
                 </NavLink>
             </li>
