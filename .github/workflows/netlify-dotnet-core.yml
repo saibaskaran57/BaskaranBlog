@@ -1,5 +1,9 @@
 name: BaskaranBlog # Name of the workflow.
-on: [push] # Action on which the workflow runs. Can be push, pull_request, page_build, or many others
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   build:
