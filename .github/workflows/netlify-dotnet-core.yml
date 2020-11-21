@@ -1,9 +1,12 @@
 name: Netlify CI/CD # Name of the workflow.
 on:
   push:
-    branches: [ main ]
+     branches:
+      - main
   pull_request:
-    branches: [ main ]
+    types: [opened, synchronize, reopened, closed]
+    branches:
+      - main
 
 jobs:
   build:
