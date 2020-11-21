@@ -1,4 +1,4 @@
-name: BaskaranBlog # Name of the workflow.
+name: Netlify CI/CD # Name of the workflow.
 on:
   push:
     branches: [ main ]
