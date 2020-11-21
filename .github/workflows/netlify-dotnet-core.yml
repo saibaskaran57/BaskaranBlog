@@ -15,8 +15,10 @@ jobs:
       with:
         dotnet-version: 5.0.100 # Change to your version of .NET Core
     - name: Build with dotnet
+      working-directory: src
       run: dotnet build --configuration Release 
     - name: Publish Blazor webassembly using dotnet 
+      working-directory: src
       #create Blazor WebAssembly dist output folder in the project directory
       run: dotnet publish -c Release --no-build -o publishoutput # Don't build again, just publish
     - name: Publish generated Blazor webassembly to Netlify
