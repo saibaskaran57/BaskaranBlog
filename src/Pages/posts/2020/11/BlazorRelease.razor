@@ -14,8 +14,9 @@
     <span>@PostReadDuration read</span>
 </div>
 
-<div>
-    <img src="@PostImageLocation" alt="Blazor" class="image" />
+<div class="post-image">
+    <img src="@PostBaseImage/javier-allegue-barros-header.jpg" alt="Blazor" class="image" />
+    Photo by <a href="https://unsplash.com/&commat;soymeraki">Javier Allegue Barros</a> on Unsplash
 </div>
 
 <div class="post-body">
@@ -23,176 +24,6 @@
         Microsoft have announced the release of .NET 5 which it's globally available. I'm pretty excited on what
         .NET 5 can bring improvements to the .NET ecosystem and to my blog. Worthy of a upgrade to .NET 5? Let's
         see!
-    </p>
-    <p>
-        <h4>Pre-requisites</h4>
-        <ul>
-            <li><a href="https://docs.microsoft.com/en-us/aspnet/core/release-notes/aspnetcore-5.0?view=aspnetcore-5.0#blazor" target="_blank">What's new in Blazor?</a></li>
-            <li><a href="https://dotnet.microsoft.com/download/dotnet/5.0/" target="_blank">Download .NET 5</a></li>
-            <li><a href="https://docs.microsoft.com/en-us/visualstudio/releases/2019/release-notes" target="_blank">Download Visual Studio 2019 version 16.8 and above</a></li>
-        </ul>
-    </p>
-    <p>
-        Once you have understood & downloaded the pre-requisites, to upgrade current Blazor project structure to .NET 5, all you need to do is to edit your <code>.csproj</code>
-        file with the content below:
-        <div class="terminal-header">
-            csproj
-        </div>
-        <div class="terminal-body">
-            <span class="break">&lt;Project Sdk="<span class="code-highlight-yellow">Microsoft.NET.Sdk.BlazorWebAssembly</span>"&gt;</span>
-            <span class="break">&nbsp;&nbsp;&nbsp;&lt;PropertyGroup&gt;</span>
-            <span class="break">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;TargetFramework><span class="code-highlight-yellow">net5.0</span>&lt;/TargetFramework&gt;
-            </span>
-            <span class="break">&nbsp;&nbsp;&nbsp;&lt;/PropertyGroup&gt;</span>
-            <span class="break">&nbsp;</span>
-            <span class="break">&nbsp;&nbsp;&nbsp;&lt;ItemGroup&gt;</span>
-            <span class="break">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.0" /&gt;
-            </span>
-            <span class="break">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="5.0.0" PrivateAssets="all" /&gt;
-            </span>
-            <span class="break">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;PackageReference Include="System.Net.Http.Json" Version="5.0.0" /&gt;
-            </span>
-            <span class="break">&nbsp;&nbsp;&nbsp;&lt;/ItemGroup&gt;</span>
-            <span class="break">&lt;/Project&gt;</span>
-        </div>
-    </p>
-    <p>
-        Microsoft have released many improvements to Blazor .NET 5 which I find it's going to help Blazor usability across
-        Production environment. Let's review some .NET 5 improvements and will cover more in future posts.
-    </p>
-    <p>
-        <h4>Debugging experience</h4>
-        On Blazor WebAssembly 3.2, I've mentioned that it lacks of hot reload when code is changed where you will require to
-        always rebuild/refresh the application manually. Good news! With .NET 5, you no longer have to do that manually where
-        auto-refresh is introduced to <code>dotnet watch</code> command.As soon as you hit save, it will re-compile your changes,
-        and hot reload the page. Annoucement right
-        <a href=" https://docs.microsoft.com/en-us/aspnet/core/release-notes/aspnetcore-5.0?view=aspnetcore-5.0#auto-refresh-with-dotnet-watch" target="_blank">here</a>.
-    </p>
-
-    <p>
-        <h4>CSS isolation</h4>
-        Ever came across when you needed only specific styling applicable for a specific page (e.g. <code>h1</code>,
-        <code>p</code>) and not affecting to the rest of the pages. What do we do to overcome that? We eventually create
-        a specific CSS class to assign like below:
-        <div class="terminal-header">
-            CSS
-        </div>
-        <div class="terminal-body">
-            <span class="terminal-comment">/* For global */</span>
-            <span class="break">h1 {</span>
-            <span class="break">&nbsp;&nbsp;&nbsp;color: blue;</span>
-            <span class="break">}</span>
-            <span class="break">&nbsp;</span>
-            <span class="terminal-comment">/* For specific */</span>
-            <span class="break">.h1-specific-page {</span>
-            <span class="break">&nbsp;&nbsp;&nbsp;color: red;</span>
-            <span class="break">}</span>
-        </div>
-        <br />
-        With CSS isolation, we can now create a specific CSS just for a page(e.g. <code>Footer.razor.css</code>) along side
-        <code>Footer.razor</code>  page. That's it, now you have a specific CSS handling for a page that will not conflict with
-        the global CSS created.
-    </p>
-    <p>
-        <h4>Virtualization</h4>
-        <strong><a href="https://docs.microsoft.com/en-us/aspnet/core/blazor/components/virtualization?view=aspnetcore-5.0">Virtualization</a></strong>
-        is a technique for limiting UI rendering to just the parts that are currently visible. For example, you may have
-        thousands of records that you will want to display to client side. While rendering this records, you will experience noticeable
-        lag/stutters when fetching it from background. Therefore, with Virtualization, it will <u>only render what you can see rather</u>
-        than all to improve performance of component rendering.
-        <br />
-        <br />
-        Before we go further, there are couple of caveats to take note:
-        <ul>
-            <li>Virtualization requires fixed height to render to know the scroll range to render the given items.</li>
-            <li>If the content can be text-wrapped/responsive to screen widths, this may disrupt the rendering.</li>
-            <li>
-                I faced an issue where I've set <code>overflow-y:scroll;</code> style to <code>html</code> tag. When there is a
-                fixed scroll, Virtualization does not recognize the height of the items.
-            </li>
-        </ul>
-        Let's take a look at how it usually rendered for large list in UI where in this example will load all the posts, I will
-        get the data from a <code>posts.json</code>
-        file:
-        <div class="terminal-header">
-            HTML, Razor
-        </div>
-        <div class="terminal-body">
-            <span class="break"><span class="code-highlight-yellow">&commat;</span>foreach (var post in posts)</span>
-            <span class="break">{</span>
-            <span class="break">&nbsp;&nbsp;&nbsp;&lt;a href="&commat;post.Url">&commat;post.Name&lt;/a&gt;</span>
-            <span class="break">}</span>
-            <span class="break">&nbsp;</span>
-            <span class="break">
-                <span class="code-highlight-yellow">&commat;code</span>
-                <span class="code-highlight-yellow">{</span>
-            </span>
-            <span class="break">&nbsp;&nbsp;&nbsp;private Post[] posts;</span>
-            <span class="break">&nbsp;</span>
-            <span class="break">&nbsp;&nbsp;&nbsp;protected override async Task OnInitializedAsync()</span>
-            <span class="break">&nbsp;&nbsp;&nbsp;{</span>
-            <span class="break">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;posts = await Http.GetFromJsonAsync&lt;Post[]&gt;("posts.json");
-            </span>
-            <span class="break">&nbsp;&nbsp;&nbsp;}</span>
-            <span class="break">
-                <span class="code-highlight-yellow">}</span>
-            </span>
-        </div>
-        <br />
-        Now, let's change this to use Virtualization technique. On <code>_Imports.razor</code> file, you will require to add the below code first:
-        <div class="terminal-header">
-            Razor
-        </div>
-        <div class="terminal-body">
-            <span class="break">....</span>
-            <span class="break"><span class="code-highlight-yellow">&commat;</span>using Microsoft.AspNetCore.Components.Web.Virtualization</span>
-            <span class="break">...</span>
-        </div>
-        <br />
-        Virtualize component replaces <code>foreach</code> and is used to render records which does not block the rendering on UI.
-        <div class="terminal-header">
-            HTML, Razor
-        </div>
-        <div class="terminal-body">
-            <span class="break">&lt;Virtualize Context="post" Items="posts"&gt;</span>
-            <span class="break">&nbsp;&nbsp;&nbsp;&lt;a href="&commat;post.Url">&commat;post.Name&lt;/a&gt;</span>
-            <span class="break">&lt;Virtualize /&gt;</span>
-            <span class="break">&nbsp;</span>
-            <span class="break">
-                <span class="code-highlight-yellow">&commat;code</span>
-                <span class="code-highlight-yellow">{</span>
-            </span>
-            <span class="break">&nbsp;&nbsp;&nbsp;private Post[] posts;</span>
-            <span class="break">&nbsp;</span>
-            <span class="break">&nbsp;&nbsp;&nbsp;protected override async Task OnInitializedAsync()</span>
-            <span class="break">&nbsp;&nbsp;&nbsp;{</span>
-            <span class="break">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;posts = await Http.GetFromJsonAsync&lt;Post[]&gt;("posts.json");
-            </span>
-            <span class="break">&nbsp;&nbsp;&nbsp;}</span>
-            <span class="break">
-                <span class="code-highlight-yellow">}</span>
-            </span>
-        </div>
-        <br />
-        If you have done right, to test this out, you can generate more data to the <code>posts.json</code> and open Chrome Dev console.
-        Inspect to the content of the loaded items and start scrolling. You will observe with Virtualization, Blazor will re-calculate the
-        height of the items. The best part is that as soon as you scroll down, it will reset the items at the top which provides efficient
-        scrolling without any lags.
-        <img src="/assets/posts/2020/11/blazor-net5/blazor-virtualization.jpg" alt="Blazor" class="image" />
-        <br />
-        <div class="note">
-            <i class="fas fa-info-circle"></i> Note:
-            <br />
-            For this example, the data is fetched <kbd>OnInitializedAsync</kbd> and kept in client browser memory. You may have a question
-            on how to fetch data on demand. Virtualization has <strong>Item provider delegate</strong> capability where we can fetch based on continuation
-            rather than all at once.
-        </div>
     </p>
     <p>
         <h4>In closing</h4>
@@ -211,5 +42,5 @@
     private string PostHeader = "Building blog with Blazor - Shipping it!";
     private string PostDate = "20th November 2020";
     private string PostReadDuration = "10 minutes";
-    private string PostImageLocation = "/assets/posts/2020/11/blazor-part1/blazor-head.jpg";
+    private string PostBaseImage = "/assets/posts/2020/11/blazor-release";
 }
