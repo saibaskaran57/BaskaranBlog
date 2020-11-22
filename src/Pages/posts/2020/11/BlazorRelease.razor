@@ -6,8 +6,8 @@
 </div>
 
 <div class="post-sub-header">
-    <span class="tags">C#</span>
-    <span class="tags">Blazor</span>
+    <span class="tags">Azure</span>
+    <span class="tags">Netlify</span>
     <span>&middot;</span>
     <span>Posted on @PostDate</span>
     <span>&middot;</span>
@@ -21,7 +21,227 @@
 
 <div class="post-body">
     <p>
-        Stay tuned! In progress now..
+        In this modern web world, almost all minor part of software ecosystem are being evolved from the time
+        we choose programming language until we deploy the developed application. Efficieny & agility is made easier
+        for organization to release changes rapidly. If we looked back 20 years ago, hosting a website required a
+        server and needed maintenance overtime in improving server specifications when traffic increases.
+    </p>
+    <p>
+        Today, creating servers to maintaining them, all have evolved under the term of <strong><i>serverless</i></strong> and
+        can be done within a few clicks.Today, let's look and review at two growing platforms for deploying static websites. Before
+        we drill down on the pros & cons of each, let's see the steps to have Blazor WebAssembly app deployed to Azure Static Web Apps 
+        & Netlify.
+    </p>
+    <p>
+        <h4>Azure Static Web Apps</h4>
+        Microsoft released Azure Static Web Apps(Preview) on Build 2020.The best explanation about this is that "<i>I got my website up
+        running in <strong>5 minutes</strong></i>". In my opinion, probably the fastest to get your application to the internet today. I
+        would say Azure Static Web Apps provides service to accelarate the CI/CD process from local development to deploying to the cloud.
+        <br />
+        <br />
+        <h5>Pre-requisites</h5>
+        <ul>
+            <li>Azure subscription</li>
+            <li>GitHub</li>
+            <li>
+                Add <code>routes.json</code> file to <code>wwwroot</code> folder
+                (More information right <a href="https://docs.microsoft.com/en-us/azure/static-web-apps/routes#fallback-routes">here</a>)
+                <br />
+                <div class="note warning">
+                    <i class="fas fa-info-circle"></i> Warning:
+                    <br />
+                    Consequences of not doing so will end <kbd>404 Not Found</kbd> when application is refreshed/navigate directly to locations.
+                </div>
+                <br />
+                <div class="terminal-header">
+                    JSON
+                </div>
+                <div class="terminal-body">
+                    <span class="break">{</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;"routes": [</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"route": "/*",</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"serve": "/index.html",</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"statusCode": 200</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;]</span>
+                    <span class="break">}</span>
+                </div>
+            </li>
+        </ul>
+        <h5>Steps to setup & deploy</h5>
+        <ol>
+            <li>Go to <a href="https://portal.azure.com/">Azure Portal</a></li>
+            <li>Search for Static Web Apps (Preview) & click Add</li>
+            <li>
+                Configure as below & click Review + create:
+                <br />
+                <img src="@PostBaseImage/staticwebapp-configure.jpg" alt="Azure Static Web App configure" class="image-vertical" />
+                <div class="note">
+                    <i class="fas fa-info-circle"></i> Note:
+                    <br />
+                    App location is where your <kbd>wwwroot</kbd> resides & Api location is optional and only configure it if you
+                    have a directory which contains only Azure Functions JavaScript, C#, or Python Azure Functions app.
+                </div>
+            </li>
+            <li>
+                During the provisioning, it will create <a href="https://docs.microsoft.com/en-us/azure/static-web-apps/github-actions-workflow#file-location">.yml</a> file &
+                commit to GitHub application repository under <code>.github\workflows</code> directory
+            </li>
+            <li>
+                Navigate to <code>GitHub > Application Repository(e.g. BaskaranBlog) > Actions</code> and you will notice the below:
+                <br />
+                <img src="@PostBaseImage/staticwebapp-build.jpg" alt="Azure Static Web App build" class="image" />
+            </li>
+            <li>Congratulations, with easy 6 steps, you have succesfully provisioned & deployed under <code>https://*.azurestaticapps.net</code></li>
+        </ol>
+    </p>
+    <p>
+        <h4>Netlify</h4>
+        Microsoft released Azure Static Web Apps(Preview) on Build 2020.The best explanation about this is that "<i>I got my website up
+        running in <strong>5 minutes</strong></i>". In my opinion, probably the fastest to get your application to the internet today. I
+        would say Azure Static Web Apps provides service to accelarate the CI/CD process from local development to deploying to the cloud.
+        <br />
+        <br />
+        <h5>Pre-requisites</h5>
+        <ul>
+            <li><a href="https://app.netlify.com/signup?_ga=2.172406691.1290708335.1605870673-1378412957.1605275049">Netlify account</a></li>
+            <li>GitHub</li>
+            <li>
+                Add <code>_redirects</code> file to <code>wwwroot</code> folder
+                (More information right <a href="https://docs.netlify.com/configure-builds/file-based-configuration/#redirects">here</a>)
+                <br />
+                <div class="note warning">
+                    <i class="fas fa-info-circle"></i> Warning:
+                    <br />
+                    Consequences of not doing so will end <kbd>404 Not Found</kbd> when application is refreshed/navigate directly to locations.
+                </div>
+                <br />
+                <div class="terminal-header">
+                    TXT
+                </div>
+                <div class="terminal-body">
+                    <span class="break">[[redirects]]</span>
+                    <span class="break">from = "/*"</span>
+                    <span class="break">to = "/index.html"</span>
+                    <span class="break"> status = 200</span>
+                </div>
+            </li>
+        </ul>
+        <h5>Steps to setup & deploy</h5>
+        <ol>
+            <li>Login to <a href="https://app.netlify.com/?_ga=2.252991497.1290708335.1605870673-1378412957.1605275049">Netlify Portal</a></li>
+            <li>
+                Click <strong>New Site From Git</strong>
+                <br />
+                <img src="@PostBaseImage/netlify-step-1.jpg" alt="Netlify step 1" class="image" />
+            </li>
+            <li>
+                Choose Git Provider
+                <br />
+                <img src="@PostBaseImage/netlify-step-2.jpg" alt="Netlify step 2" class="image" />
+            </li>
+            <li>
+                Pick a repository that you would want to deploy
+                <br />
+                <img src="@PostBaseImage/netlify-step-3.jpg" alt="Netlify step 3" class="image" />
+            </li>
+            <li>
+                Configure accordingly and leaving <strong>Build command</strong> & <strong>Publish directory empty</strong>.
+                <br />
+                <img src="@PostBaseImage/netlify-step-4.jpg" alt="Netlify step 4" class="image-vertical" />
+            </li>
+            <li>
+                Once configured, click <strong>Deploy Site</strong>. On success, you will be redirected to the page below:
+                <br />
+                <img src="@PostBaseImage/netlify-step-5.jpg" alt="Netlify step 5" class="image" />
+            </li>
+            <li>
+                From the navigation, go to <strong>Deploys</strong> and click <strong>Deploy settings</strong>
+                <br />
+                <img src="@PostBaseImage/netlify-step-6.jpg" alt="Netlify step 6" class="image" />
+            </li>
+            <li>
+                Netlify <u>does not support .NET core build within their infrastructure</u> and therefore, we will require to do via GitHub CI/CD pipeline.
+                Click <strong>Edit settings</strong>
+                <br />
+                <img src="@PostBaseImage/netlify-step-7.jpg" alt="Netlify step 7" class="image" />
+            </li>
+            <li>
+                Under Builds, select <strong>Stop builds</strong> and click <strong>Save</strong>.
+                <br />
+                <img src="@PostBaseImage/netlify-step-8.jpg" alt="Netlify step 8" class="image" />
+            </li>
+            <li>
+                Now, go to User Settings > Applications and you will require to create a Personal access token which named <strong>NETLIFY_AUTH_TOKEN</strong>
+                <br />
+                <img src="@PostBaseImage/netlify-step-9.jpg" alt="Netlify step 9" class="image" />
+            </li>
+            <li>
+                Go to Site Settings an you will require to copy API ID to be added into secrets which named <strong>NETLIFY_SITE_ID</strong>
+                <br />
+                <img src="@PostBaseImage/netlify-step-10.jpg" alt="Netlify step 10" class="image" />
+            </li>
+            <li>
+                Go to GitHub source code Settings > Secrets and configure as below:
+                <br />
+                <img src="@PostBaseImage/netlify-step-11.jpg" alt="Netlify step 11" class="image" />
+            </li>
+            <li>
+                Go to GitHub source code Actions > New Workflow and choose .NET Core
+                <br />
+                <img src="@PostBaseImage/netlify-step-12.jpg" alt="Netlify step 12" class="image" />
+            </li>
+            <li>
+                Under Edit new file, copy the <code>.yml</code> code and configure as below:
+                <br />
+                <div class="terminal-header">
+                    YML
+                </div>
+                <div class="terminal-body">
+                    <span class="break">name: Netlify CI/CD # Name of the workflow.</span>
+                    <span class="break">on:</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;push:</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;branches:</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- main</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;pull_request:</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;types: [opened, synchronize, reopened, closed]</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;branches:</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- main</span>
+                    <span class="break">&nbsp;</span>
+                    <span class="break">jobs:</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;build:</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;runs-on: ubuntu-latest</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;steps:</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- uses: actions/checkout@v2</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- name: Setup .NET Core</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uses: actions/setup-dotnet@v1 # Setup .NET Core</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with:</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dotnet-version: 5.0.100 <span class="terminal-comment"> #Change to your version of .NET Core</span></span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- name: Build with dotnet</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;working-directory: src <span class="terminal-comment"> #Source directory where wwwroot exist</span></span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;run: dotnet build --configuration Release </span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- name: Publish Blazor webassembly using dotnet </span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;working-directory: src <span class="terminal-comment"> #Source directory where wwwroot exist</span></span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;run: dotnet publish -c Release --no-build -o publishoutput</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- name: Publish generated Blazor webassembly to Netlify</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uses: netlify/actions/cli@master #uses Netlify Cli actions</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;env: <span class="terminal-comment">#These are the environment variables added in GitHub Secrets for this repo</span></span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with:</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;args: deploy --dir=src/publishoutput/wwwroot --prod <span class="terminal-comment">#Push this folder to Netlify</span></span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;secrets: '["NETLIFY_AUTH_TOKEN", "NETLIFY_SITE_ID"]' </span>
+                </div>
+            </li>
+            <li>Click Start commit & now, it will start to build & deploy.</li>
+            <li>
+                Go to GitHub source code Actions >  Netlify CI/CD, you will notice the below if the build is successful!
+                <br />
+                <img src="@PostBaseImage/netlify-step-13.jpg" alt="Netlify step 13" class="image" />
+            </li>
+            <li>Congratulations, you have succesfully provisioned & deployed under <code>https://*.netlify.app</code></li>
+        </ol>
     </p>
 </div>
 
@@ -32,6 +252,6 @@
 @code {
     private string PostHeader = "Building blog with Blazor - Shipping it!";
     private string PostDate = "20th November 2020";
-    private string PostReadDuration = "10 minutes";
+    private string PostReadDuration = "15 minutes";
     private string PostBaseImage = "/assets/posts/2020/11/blazor-release";
 }

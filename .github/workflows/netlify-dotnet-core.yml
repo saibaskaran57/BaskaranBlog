@@ -1,7 +1,8 @@
 name: Netlify CI/CD # Name of the workflow.
+
 on:
   push:
-     branches:
+    branches:
       - main
   pull_request:
     types: [opened, synchronize, reopened, closed]
@@ -9,7 +10,8 @@ on:
       - main
 
 jobs:
-  build:
+  build_and_deploy_job:
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -22,13 +24,37 @@ jobs:
       run: dotnet build --configuration Release 
     - name: Publish Blazor webassembly using dotnet 
       working-directory: src
-      #create Blazor WebAssembly dist output folder in the project directory
-      run: dotnet publish -c Release --no-build -o publishoutput # Don't build again, just publish
+      run: dotnet publish -c Release --no-build -o publishoutput
     - name: Publish generated Blazor webassembly to Netlify
       uses: netlify/actions/cli@master #uses Netlify Cli actions
       env: # These are the environment variables added in GitHub Secrets for this repo
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
       with:
-          args: deploy --dir=src/publishoutput/wwwroot --prod #push this folder to Netlify
+          args: deploy --dir=src/publishoutput/wwwroot #push this folder to Netlify Preview
           secrets: '["NETLIFY_AUTH_TOKEN", "NETLIFY_SITE_ID"]' 
+
+  close_pull_request_job:
+    if: github.event_name == 'pull_request' && github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1 # Setup .NET Core
+      with:
+        dotnet-version: 5.0.100 # Change to your version of .NET Core
+    - name: Build with dotnet
+      working-directory: src
+      run: dotnet build --configuration Release 
+    - name: Publish Blazor webassembly using dotnet 
+      working-directory: src
+      run: dotnet publish -c Release --no-build -o publishoutput
+    - name: Publish generated Blazor webassembly to Netlify
+      uses: netlify/actions/cli@master #uses Netlify Cli actions
+      env: # These are the environment variables added in GitHub Secrets for this repo
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+      with:
+          args: deploy --dir=src/publishoutput/wwwroot --prod #push this folder to Netlify Production
+          secrets: '["NETLIFY_AUTH_TOKEN", "NETLIFY_SITE_ID"]' 
+

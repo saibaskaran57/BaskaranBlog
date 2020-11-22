@@ -51,8 +51,22 @@
       "order": 4
     },
     "tags": [
-      "C#",
-      "Blazor"
+      "Azure",
+      "Netlify"
+    ]
+  },
+  {
+    "year": "2020",
+    "name": "Building blog with Blazor - Adding custom domains",
+    "url": "/posts/2020/11/BlazorRelease",
+    "date": "22th November 2020",
+    "description": "",
+    "pinned": {
+      "order": 4
+    },
+    "tags": [
+      "Azure",
+      "Netlify"
     ]
   }
 ]
