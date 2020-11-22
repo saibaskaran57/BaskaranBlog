@@ -1,4 +1,4 @@
-﻿@page "/posts/2020/11/BlazorRelease"
+﻿@page "/posts/2020/11/blazor-release"
 
 
 <div class="post-header">
@@ -29,13 +29,15 @@
     <p>
         Today, creating servers to maintaining them, all have evolved under the term of <strong><i>serverless</i></strong> and
         can be done within a few clicks.Today, let's look and review at two growing platforms for deploying static websites. Before
-        we drill down on the pros & cons of each, let's see the steps to have Blazor WebAssembly app deployed to Azure Static Web Apps
-        & Netlify.
+        we drill down on the pros & cons of each technologies, let's see the steps to have Blazor WebAssembly app deployed to Azure 
+        Static Web Apps & Netlify.
     </p>
     <p>
         <h4>Azure Static Web Apps</h4>
-        Microsoft released Azure Static Web Apps(Preview) on Build 2020.The best explanation about this is that "<i>I got my website up
-        running in <strong>5 minutes</strong></i>". In my opinion, probably the fastest to get your application to the internet today. I
+        Microsoft released Azure Static Web Apps(Preview) on Build 2020.The best explanation about this is that "<i>
+            I got my website up
+            running in <strong>5 minutes</strong>
+        </i>". In my opinion, probably the fastest to get your application to the internet today. I
         would say Azure Static Web Apps provides service to accelarate the CI/CD process from local development to deploying to the cloud.
         <br />
         <br />
@@ -48,7 +50,7 @@
                 (More information right <a href="https://docs.microsoft.com/en-us/azure/static-web-apps/routes#fallback-routes">here</a>)
                 <br />
                 <div class="note warning">
-                    <i class="fas fa-info-circle"></i> Warning:
+                    <i class="fas fa-exclamation-triangle"></i> Warning:
                     <br />
                     Consequences of not doing so will end <kbd>404 Not Found</kbd> when application is refreshed/navigate directly to locations.
                 </div>
@@ -98,8 +100,8 @@
     </p>
     <p>
         <h4>Netlify</h4>
-        I heard about Netlify first time on my Twitter feeds where it was advertised I can deploy my static website with few clicks <strong>FREE</strong>.
-        I'm eager to know what can Netlify bring and I must say I was stunned by the level of features they have and it offers so many capabilities even on a 
+        I heard about Netlify first time on my Twitter feeds where it was advertised as I can deploy my static website with few clicks <strong>FREE</strong>.
+        I'm eager to know what can Netlify bring and I must say I was stunned by the level of features they have and it offers so many capabilities even on a
         <strong>FREE</strong> tier(e.g. Draft deployment, Continous Deployment, etc). The best part of this is that it's all-in-one solution and offers great
         encouragement to start personal projects, hobby or experiments.
         <br />
@@ -114,13 +116,16 @@
                 redirect file right <a href="https://play.netlify.com/redirects">here</a>)
                 <br />
                 <div class="note warning">
-                    <i class="fas fa-info-circle"></i> Warning:
+                    <i class="fas fa-exclamation-triangle"></i> Warning:
                     <br />
                     Consequences of not doing so will end <kbd>404 Not Found</kbd> when application is refreshed/navigate directly to locations.
+                    After some investigation, even if we set /* to redirect to index.html, it will only work if it's being navigated at locations
+                    where index.html exist. Therefore, in order to get non-root paths work, at this point, it's required to add each non-root path
+                    page to index.html.
                 </div>
                 <br />
                 <div class="terminal-header">
-                    TXT
+                    Blank File
                 </div>
                 <div class="terminal-body">
                     <span class="break">/*   /index.html   200!</span>
@@ -164,7 +169,7 @@
             <li>
                 Click <strong>Edit settings</strong>
                 <div class="note warning">
-                    <i class="fas fa-info-circle"></i> Warning:
+                    <i class="fas fa-exclamation-triangle"></i> Warning:
                     <br />
                     Netlify <strong><u>does not support .NET core build within their infrastructure</u></strong> and therefore, we will require to do via GitHub CI/CD pipeline.
                 </div>
@@ -258,6 +263,65 @@
             </li>
             <li>Congratulations, you have succesfully provisioned & deployed under <code>https://*.netlify.app</code></li>
         </ol>
+    </p>
+    <p>
+        <h4>Opinion on the technology stacks</h4>
+        Both technology stacks offers great potential to deploy your first application. It's best to view the below as individual 
+        preferences due to the fact that technology requirements can change every now & then. This opinion is never to influence 
+        the decisioning & follow what best suits your requirements.
+        <h5>Azure Static Web Apps</h5>
+        <strong>Pros</strong>
+        <ul>
+            <li>
+                Free tier(for preview)
+            </li>
+            <li>Fast - able to get it up & running under 5 minutes</li>
+            <li>Auto Github CI/CD process configured during provisioning - speeds up go-live without having need to manually create scripts</li>
+            <li>Staging environment - able to test via Pull Request before merging the changes</li>
+            <li>Build & Deploy email/pull request notification are sent via GitHub CI/CD pipelines.</li>
+        </ul>
+        <strong>Cons</strong>
+        <ul>
+            <li>Limited to GitHub for now</li>
+            <li>
+                For someone new exploring Azure infrastructure, it requires to add billing information which many steps to get your
+                first app up and running which may prevent users to signup to avoid accidental charges.
+            </li>
+            <li>
+                Hopefully when it gets launched to GA, it will remain free tier option where it will benefit new startups,  professionals as
+                encouragement to get their site up in few minutes.
+            </li>
+            <li>
+                Azure Static Web Hosting technology stack does not support SSL for certain URLs. For example, if foo.com were the domain using Static
+                Web Hosting, traffic destined for https://www.foo.com and https://foo.com could not use SSL, so we will require CloudFlare as reverse
+                proxy.
+            </li>
+        </ul>
+        <h5>Netlify</h5>
+        <strong>Pros</strong>
+        <ul>
+            <li>Easy signup and does not require billing information - just a valid GitHub account will do</li>
+            <li>Free tier by default which offers great boost new startups & professionals</li>
+            <li>Fast - able to get it up & running under 5 minutes</li>
+            <li>Netlify draft - able to test via Pull Request before merging the changes</li>
+            <li>All in one solution - which can done within Netlify portal</li>
+            <li>Netlify support in-house domain configuration without needing CloudFlare as reverse-proxy</li>
+        </ul>
+        <strong>Cons</strong>
+        <ul>
+            <li>For NET Core, the CI/CD ecosystem is not supported yet/no clear documentations to achieve it</li>
+            <li>CI/CD process needs to have more flexibility to get auto-integrated to GitHub/other Git providers.</li>
+            <li>Redirects setup documentations is not very clear - requires testing but hope this article will help out.</li>
+        </ul>
+    </p>
+    <p>
+        <h4>In closing</h4>
+        In my opinion, it's best to appreciate this technologies given that it solves problems we had 10 years ago where to 
+        get a single site available on the internet, we had to look in all aspects from development to maintenance of the
+        sites. Both this technologies offers great functionality to get a site up and running in 5 minutes. All of this depends 
+        on your use cases & nature of business. For my personal use, I tend to lean towards services that can bring my site
+        up and running quickly and I must say this technologies provides great platform for individuals to start their first 
+        app on the internet!
     </p>
 </div>
 

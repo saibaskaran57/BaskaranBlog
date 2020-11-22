@@ -2,7 +2,7 @@
   {
     "year": "2020",
     "name": "Building blog with Blazor - Getting Started",
-    "url": "/posts/2020/11/BlazorGettingStarted",
+    "url": "/posts/2020/11/blazor-getting-started",
     "date": "11th November 2020",
     "description": "",
     "pinned": {
@@ -16,7 +16,7 @@
   {
     "year": "2020",
     "name": "Building blog with Blazor - Styling it up!",
-    "url": "/posts/2020/11/BlazorPart2",
+    "url": "/posts/2020/11/blazor-styling",
     "date": "14th November 2020",
     "description": "",
     "pinned": {
@@ -30,7 +30,7 @@
   {
     "year": "2020",
     "name": "Building blog with Blazor - Upgrading to .NET 5",
-    "url": "/posts/2020/11/BlazorNet5",
+    "url": "/posts/2020/11/blazor-net5",
     "date": "16th November 2020",
     "description": "",
     "pinned": {
@@ -44,22 +44,8 @@
   {
     "year": "2020",
     "name": "Building blog with Blazor - Shipping it!",
-    "url": "/posts/2020/11/BlazorRelease",
+    "url": "/posts/2020/11/blazor-release",
     "date": "20th November 2020",
-    "description": "",
-    "pinned": {
-      "order": 4
-    },
-    "tags": [
-      "Azure",
-      "Netlify"
-    ]
-  },
-  {
-    "year": "2020",
-    "name": "Building blog with Blazor - Adding custom domains",
-    "url": "/posts/2020/11/BlazorRelease",
-    "date": "22th November 2020",
     "description": "",
     "pinned": {
       "order": 4
