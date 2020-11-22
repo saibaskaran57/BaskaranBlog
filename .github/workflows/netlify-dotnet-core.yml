@@ -1,31 +1,62 @@
 name: Netlify CI/CD # Name of the workflow.
+
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
   pull_request:
-    branches: [ main ]
+    types: [opened, synchronize, reopened, closed]
+    branches:
+      - main
 
 jobs:
-  build:
+  build_and_deploy_job:
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
+    name: Build and Deploy Job
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1 # Setup .NET Core
+      uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.100 # Change to your version of .NET Core
-    - name: Build with dotnet
+    - name: Build
       working-directory: src
       run: dotnet build --configuration Release 
-    - name: Publish Blazor webassembly using dotnet 
+    - name: Publish 
       working-directory: src
-      #create Blazor WebAssembly dist output folder in the project directory
-      run: dotnet publish -c Release --no-build -o publishoutput # Don't build again, just publish
-    - name: Publish generated Blazor webassembly to Netlify
-      uses: netlify/actions/cli@master #uses Netlify Cli actions
+      run: dotnet publish -c Release --no-build -o publishoutput
+    - name: Deploy
+      uses: netlify/actions/cli@master
       env: # These are the environment variables added in GitHub Secrets for this repo
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
       with:
-          args: deploy --dir=src/publishoutput/wwwroot --prod #push this folder to Netlify
+          args: deploy --dir=src/publishoutput/wwwroot # Push this folder to Netlify Preview
           secrets: '["NETLIFY_AUTH_TOKEN", "NETLIFY_SITE_ID"]' 
+
+  close_pull_request_job:
+    if: github.event_name == 'pull_request' && github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    name: Close Pull Request Job
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.100 # Change to your version of .NET Core
+    - name: Build
+      working-directory: src
+      run: dotnet build --configuration Release 
+    - name: Publish 
+      working-directory: src
+      run: dotnet publish -c Release --no-build -o publishoutput
+    - name: Deploy
+      uses: netlify/actions/cli@master
+      env: # These are the environment variables added in GitHub Secrets for this repo
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+      with:
+          args: deploy --dir=src/publishoutput/wwwroot --prod # Push this folder to Netlify Production
+          secrets: '["NETLIFY_AUTH_TOKEN", "NETLIFY_SITE_ID"]' 
+
