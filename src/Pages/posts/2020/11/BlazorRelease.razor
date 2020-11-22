@@ -34,10 +34,8 @@
     </p>
     <p>
         <h4>Azure Static Web Apps</h4>
-        Microsoft released Azure Static Web Apps(Preview) on Build 2020.The best explanation about this is that "<i>
-            I got my website up
-            running in <strong>5 minutes</strong>
-        </i>". In my opinion, probably the fastest to get your application to the internet today. I
+        Microsoft released Azure Static Web Apps(Preview) on Build 2020.The best explanation about this is that "<i>I got my website up
+        running in <strong>5 minutes</strong></i>". In my opinion, probably the fastest to get your application to the internet today. I
         would say Azure Static Web Apps provides service to accelarate the CI/CD process from local development to deploying to the cloud.
         <br />
         <br />
@@ -100,11 +98,10 @@
     </p>
     <p>
         <h4>Netlify</h4>
-        Microsoft released Azure Static Web Apps(Preview) on Build 2020.The best explanation about this is that "<i>
-            I got my website up
-            running in <strong>5 minutes</strong>
-        </i>". In my opinion, probably the fastest to get your application to the internet today. I
-        would say Azure Static Web Apps provides service to accelarate the CI/CD process from local development to deploying to the cloud.
+        I heard about Netlify first time on my Twitter feeds where it was advertised I can deploy my static website with few clicks <strong>FREE</strong>.
+        I'm eager to know what can Netlify bring and I must say I was stunned by the level of features they have and it offers so many capabilities even on a 
+        <strong>FREE</strong> tier(e.g. Draft deployment, Continous Deployment, etc). The best part of this is that it's all-in-one solution and offers great
+        encouragement to start personal projects, hobby or experiments.
         <br />
         <br />
         <h5>Pre-requisites</h5>
@@ -141,7 +138,7 @@
                 <img src="@PostBaseImage/netlify-step-1.jpg" alt="Netlify step 1" class="image" />
             </li>
             <li>
-                Choose Git Provider
+                Choose your Git Provider to be linked
                 <br />
                 <img src="@PostBaseImage/netlify-step-2.jpg" alt="Netlify step 2" class="image" />
             </li>
@@ -151,7 +148,7 @@
                 <img src="@PostBaseImage/netlify-step-3.jpg" alt="Netlify step 3" class="image" />
             </li>
             <li>
-                Configure accordingly and leaving <strong>Build command</strong> & <strong>Publish directory empty</strong>.
+                Configure as below and by leaving <strong>Build command</strong> & <strong>Publish directory</strong> empty.
                 <br />
                 <img src="@PostBaseImage/netlify-step-4.jpg" alt="Netlify step 4" class="image-vertical" />
             </li>
@@ -166,8 +163,12 @@
                 <img src="@PostBaseImage/netlify-step-6.jpg" alt="Netlify step 6" class="image" />
             </li>
             <li>
-                Netlify <u>does not support .NET core build within their infrastructure</u> and therefore, we will require to do via GitHub CI/CD pipeline.
                 Click <strong>Edit settings</strong>
+                <div class="note warning">
+                    <i class="fas fa-info-circle"></i> Warning:
+                    <br />
+                    Netlify <strong><u>does not support .NET core build within their infrastructure</u></strong> and therefore, we will require to do via GitHub CI/CD pipeline.
+                </div>
                 <br />
                 <img src="@PostBaseImage/netlify-step-7.jpg" alt="Netlify step 7" class="image" />
             </li>
@@ -215,7 +216,7 @@
                     <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- main</span>
                     <span class="break">&nbsp;</span>
                     <span class="break">jobs:</span>
-                    <span class="break">&nbsp;&nbsp;&nbsp;build_and_deploy_job: <span class="terminal-comment"> #For Netlify Preview</span></span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;build_and_deploy_job:</span>
                     <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;runs-on: ubuntu-latest</span>
                     <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Build and Deploy Job</span>
                     <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;steps:</span>
@@ -230,7 +231,8 @@
                     <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- name: Publish</span>
                     <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;working-directory: src <span class="terminal-comment"> #Source directory where wwwroot exist</span></span>
                     <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;run: dotnet publish -c Release --no-build -o publishoutput</span>
-                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- name: Deploy</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- name: Deploy Preview</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')</span>
                     <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uses: netlify/actions/cli@master #uses Netlify Cli actions</span>
                     <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;env: <span class="terminal-comment">#These are the environment variables added in GitHub Secrets for this repo</span></span>
                     <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}</span>
@@ -238,23 +240,8 @@
                     <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with:</span>
                     <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;args: deploy --dir=src/publishoutput/wwwroot <span class="terminal-comment">#Push this folder to Netlify Preview</span></span>
                     <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;secrets: '["NETLIFY_AUTH_TOKEN", "NETLIFY_SITE_ID"]' </span>
-                    <span class="break">&nbsp;</span>
-                    <span class="break">&nbsp;&nbsp;&nbsp;close_pull_request_job: <span class="terminal-comment"> #For Netlify Production</span></span>
-                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;runs-on: ubuntu-latest</span>
-                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Close Pull Request Job</span>
-                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;steps:</span>
-                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- uses: actions/checkout@v2</span>
-                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- name: Setup .NET Core</span>
-                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uses: actions/setup-dotnet@v1 # Setup .NET Core</span>
-                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with:</span>
-                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dotnet-version: 5.0.100 <span class="terminal-comment"> #Change to your version of .NET Core</span></span>
-                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- name: Build</span>
-                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;working-directory: src <span class="terminal-comment"> #Source directory where wwwroot exist</span></span>
-                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;run: dotnet build --configuration Release </span>
-                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- name: Publish</span>
-                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;working-directory: src <span class="terminal-comment"> #Source directory where wwwroot exist</span></span>
-                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;run: dotnet publish -c Release --no-build -o publishoutput</span>
-                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- name: Deploy</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- name: Deploy Production</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if: github.event_name != 'pull_request'</span>
                     <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uses: netlify/actions/cli@master #uses Netlify Cli actions</span>
                     <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;env: <span class="terminal-comment">#These are the environment variables added in GitHub Secrets for this repo</span></span>
                     <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}</span>
@@ -264,7 +251,7 @@
                     <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;secrets: '["NETLIFY_AUTH_TOKEN", "NETLIFY_SITE_ID"]' </span>
                 </div>
             </li>
-            <li>Click Start commit & now, it will start to build & deploy.</li>
+            <li>Click Start commit & now, it will start to build & deploy automatically.</li>
             <li>
                 Go to GitHub source code Actions >  Netlify CI/CD, you will notice the below if the build is successful!
                 <br />
