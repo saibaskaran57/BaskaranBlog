@@ -11,6 +11,10 @@ p {
     padding: 1px;
 }
 
+ul, ol {
+    padding: 0 0 0 1em;
+}
+
 h4, h5 {
     font-weight: bold;
 }

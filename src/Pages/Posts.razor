@@ -29,10 +29,7 @@
                         <a href="@post.Url">@post.Name</a>
                     </td>
                     <td>
-                        @foreach (var tag in post.Tags)
-                        {
-                            <span class="tags">@tag</span>
-                        }
+                        <span>@string.Join(", ", post.Tags)</span>
                     </td>
                 </tr>
             </Virtualize>
