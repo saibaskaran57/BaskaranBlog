@@ -200,6 +200,7 @@
                 </div>
                 <div class="terminal-body">
                     <span class="break">name: Netlify CI/CD # Name of the workflow.</span>
+                    <span class="break">&nbsp;</span>
                     <span class="break">on:</span>
                     <span class="break">&nbsp;&nbsp;&nbsp;push:</span>
                     <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;branches:</span>
@@ -210,27 +211,52 @@
                     <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- main</span>
                     <span class="break">&nbsp;</span>
                     <span class="break">jobs:</span>
-                    <span class="break">&nbsp;&nbsp;&nbsp;build:</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;build_and_deploy_job: <span class="terminal-comment"> #For Netlify Preview</span></span>
                     <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;runs-on: ubuntu-latest</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Build and Deploy Job</span>
                     <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;steps:</span>
                     <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- uses: actions/checkout@v2</span>
                     <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- name: Setup .NET Core</span>
                     <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uses: actions/setup-dotnet@v1 # Setup .NET Core</span>
                     <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with:</span>
                     <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dotnet-version: 5.0.100 <span class="terminal-comment"> #Change to your version of .NET Core</span></span>
-                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- name: Build with dotnet</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- name: Build</span>
                     <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;working-directory: src <span class="terminal-comment"> #Source directory where wwwroot exist</span></span>
                     <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;run: dotnet build --configuration Release </span>
-                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- name: Publish Blazor webassembly using dotnet </span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- name: Publish</span>
                     <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;working-directory: src <span class="terminal-comment"> #Source directory where wwwroot exist</span></span>
                     <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;run: dotnet publish -c Release --no-build -o publishoutput</span>
-                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- name: Publish generated Blazor webassembly to Netlify</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- name: Deploy</span>
                     <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uses: netlify/actions/cli@master #uses Netlify Cli actions</span>
                     <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;env: <span class="terminal-comment">#These are the environment variables added in GitHub Secrets for this repo</span></span>
                     <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}</span>
                     <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}</span>
                     <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with:</span>
-                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;args: deploy --dir=src/publishoutput/wwwroot --prod <span class="terminal-comment">#Push this folder to Netlify</span></span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;args: deploy --dir=src/publishoutput/wwwroot <span class="terminal-comment">#Push this folder to Netlify Preview</span></span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;secrets: '["NETLIFY_AUTH_TOKEN", "NETLIFY_SITE_ID"]' </span>
+                    <span class="break">&nbsp;</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;close_pull_request_job: <span class="terminal-comment"> #For Netlify Production</span></span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;runs-on: ubuntu-latest</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Build and Deploy Job</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;steps:</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- uses: actions/checkout@v2</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- name: Setup .NET Core</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uses: actions/setup-dotnet@v1 # Setup .NET Core</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with:</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dotnet-version: 5.0.100 <span class="terminal-comment"> #Change to your version of .NET Core</span></span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- name: Build</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;working-directory: src <span class="terminal-comment"> #Source directory where wwwroot exist</span></span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;run: dotnet build --configuration Release </span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- name: Publish</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;working-directory: src <span class="terminal-comment"> #Source directory where wwwroot exist</span></span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;run: dotnet publish -c Release --no-build -o publishoutput</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- name: Deploy</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uses: netlify/actions/cli@master #uses Netlify Cli actions</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;env: <span class="terminal-comment">#These are the environment variables added in GitHub Secrets for this repo</span></span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with:</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;args: deploy --dir=src/publishoutput/wwwroot --prod<span class="terminal-comment">#Push this folder to Netlify Production</span></span>
                     <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;secrets: '["NETLIFY_AUTH_TOKEN", "NETLIFY_SITE_ID"]' </span>
                 </div>
             </li>
