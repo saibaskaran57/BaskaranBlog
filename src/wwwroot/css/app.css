@@ -234,6 +234,21 @@ app {
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
 }
 
+/* Post images */
+.image-vertical {
+    margin-bottom: 10px;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%; 
+    height: 70%;
+    background-size: cover;
+    position: center;
+    border: 1px solid #dedede;
+    border-radius: 1%;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
+}
+
 /* Code terminal styling */
 .terminal-header {
     background-color: #e3e3e3;
@@ -292,6 +307,11 @@ app {
     padding: 1rem;
     margin-top: 1rem;
     word-break: break-word;
+}
+
+.warning {
+    background-color: #FFCC00;
+    color: black;
 }
 
 .table {
