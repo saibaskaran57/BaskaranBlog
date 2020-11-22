@@ -6,8 +6,8 @@
 </div>
 
 <div class="post-sub-header">
-    <span class="tags">C#</span>
-    <span class="tags">Blazor</span>
+    <span class="tags">Azure</span>
+    <span class="tags">Netlify</span>
     <span>&middot;</span>
     <span>Posted on @PostDate</span>
     <span>&middot;</span>
@@ -21,21 +21,89 @@
 
 <div class="post-body">
     <p>
-        Microsoft have announced the release of .NET 5 which it's globally available. I'm pretty excited on what
-        .NET 5 can bring improvements to the .NET ecosystem and to my blog. Worthy of a upgrade to .NET 5? Let's
-        see!
+        In this modern web world, almost all minor part of software ecosystem are being evolved from the time
+        we choose programming language until we deploy the developed application. Efficieny & agility is made easier
+        for organization to release changes rapidly. If we looked back 20 years ago, hosting a website required a
+        server and needed maintenance overtime in improving server specifications when traffic increases.
     </p>
     <p>
-        <h4>In closing</h4>
-        There are several benefits on .NET 5 which ultimately grows Blazor technology. I'm impressed on the efforts on Blazor
-        WebAssembly technology which will eventually be a norm. It seems to me that the focus was ultimately on improving performance,
-        my future post will definitely review on the underlying functionality & metrics as well. Till then, good luck with the .NET 5
-        upgrade.
+        Today, creating servers to maintaining them, all have evolved under the term of <strong><i>serverless</i></strong> and
+        can be done within a few clicks.Today, let's look and review at two growing platforms for deploying static websites. Before
+        we drill down on the pros & cons of each, let's see the steps to have Blazor WebAssembly app deployed to Azure Static Web Apps
+        & Netlify.
+    </p>
+    <p>
+        <h4>Azure Static Web Apps</h4>
+        Microsoft released Azure Static Web Apps(Preview) on Build 2020.The best explanation about this is that "<i>
+            I got my website up
+            running in <strong>5 minutes</strong>
+        </i>". In my opinion, probably the fastest to get your application to the internet today. I
+        would say Azure Static Web Apps provides service to accelarate the CI/CD process from local development to deploying to the cloud.
+        <br />
+        <br />
+        <h5>Pre-requisites</h5>
+        <ul>
+            <li>Azure subscription</li>
+            <li>GitHub</li>
+            <li>
+                Add <code>routes.json</code> file to <code>wwwroot</code> folder
+                (More information right <a href="https://docs.microsoft.com/en-us/azure/static-web-apps/routes#fallback-routes">here</a>)
+                <br />
+                <div class="note warning">
+                    <i class="fas fa-info-circle"></i> Warning:
+                    <br />
+                    Consequences of not doing so will end <kbd>404 Not Found</kbd> when application is refreshed/navigate directly to locations.
+                </div>
+                <br />
+                <div class="terminal-header">
+                    JSON
+                </div>
+                <div class="terminal-body">
+                    <span class="break">{</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;"routes": [</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"route": "/*",</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"serve": "/index.html",</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"statusCode": 200</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;]</span>
+                    <span class="break">}</span>
+                </div>
+            </li>
+        </ul>
+        <h5>Steps to setup & deploy</h5>
+        <ol>
+            <li>Go to <a href="https://portal.azure.com/">Azure Portal</a></li>
+            <li>Search for Static Web Apps (Preview) & click Add</li>
+            <li>
+                Configure as below & click Review + create:
+                <br />
+                <img src="@PostBaseImage/staticwebapp-configure.jpg" alt="Azure Static Web App configure" class="image-vertical" />
+                <div class="note">
+                    <i class="fas fa-info-circle"></i> Note:
+                    <br />
+                    App location is where your <kbd>wwwroot</kbd> resides & Api location is optional and only configure it if you
+                    have a directory which contains only Azure Functions JavaScript, C#, or Python Azure Functions app.
+                </div>
+            </li>
+            <li>
+                During the provisioning, it will create <a href="https://docs.microsoft.com/en-us/azure/static-web-apps/github-actions-workflow#file-location">.yml</a> file &
+                commit to GitHub application repository under <code>.github\workflows</code> directory
+            </li>
+            <li>
+                Navigate to <code>GitHub > Application Repository(e.g. BaskaranBlog) > Actions</code> and you will notice the below:
+                <br />
+                <img src="@PostBaseImage/staticwebapp-build.jpg" alt="Azure Static Web App build" class="image" />
+            </li>
+            <li>Congratulations, with easy 6 steps, you have succesfully provisioned & deployed under <code>https://*.azurestaticapps.net</code></li>
+        </ol>
     </p>
     <p>
         <h4>Netlify</h4>
-        Microsoft released Azure Static Web Apps(Preview) on Build 2020.The best explanation about this is that "<i>I got my website up
-        running in <strong>5 minutes</strong></i>". In my opinion, probably the fastest to get your application to the internet today. I
+        Microsoft released Azure Static Web Apps(Preview) on Build 2020.The best explanation about this is that "<i>
+            I got my website up
+            running in <strong>5 minutes</strong>
+        </i>". In my opinion, probably the fastest to get your application to the internet today. I
         would say Azure Static Web Apps provides service to accelarate the CI/CD process from local development to deploying to the cloud.
         <br />
         <br />
@@ -214,6 +282,6 @@
 @code {
     private string PostHeader = "Building blog with Blazor - Shipping it!";
     private string PostDate = "20th November 2020";
-    private string PostReadDuration = "10 minutes";
+    private string PostReadDuration = "15 minutes";
     private string PostBaseImage = "/assets/posts/2020/11/blazor-release";
 }
