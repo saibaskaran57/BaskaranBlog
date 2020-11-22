@@ -38,7 +38,7 @@ jobs:
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
     runs-on: ubuntu-latest
-    name: Build and Deploy Job
+    name: Close Pull Request Job
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET Core
