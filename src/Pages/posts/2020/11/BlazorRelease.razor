@@ -110,7 +110,8 @@
             <li>GitHub</li>
             <li>
                 Add <code>_redirects</code> file to <code>wwwroot</code> folder
-                (More information right <a href="https://docs.netlify.com/configure-builds/file-based-configuration/#redirects">here</a>)
+                (More information right <a href="https://docs.netlify.com/configure-builds/file-based-configuration/#redirects">here</a> and you can also test
+                redirect file right <a href="https://play.netlify.com/redirects">here</a>)
                 <br />
                 <div class="note warning">
                     <i class="fas fa-info-circle"></i> Warning:
@@ -122,10 +123,8 @@
                     TXT
                 </div>
                 <div class="terminal-body">
-                    <span class="break">[[redirects]]</span>
-                    <span class="break">from = "/*"</span>
-                    <span class="break">to = "/index.html"</span>
-                    <span class="break"> status = 200</span>
+                    <span class="break">/*   /index.html   200!</span>
+                    <span class="break">/posts/*   /index.html   200!</span>
                 </div>
             </li>
         </ul>
