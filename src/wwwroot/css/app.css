@@ -25,10 +25,6 @@ app {
     flex-direction: column;
 }
 
-.nav-item:hover {
-    display: block;
-}
-
 /* Blog Main */
 .main {
     flex: 1;
