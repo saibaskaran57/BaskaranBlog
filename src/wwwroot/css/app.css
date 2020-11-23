@@ -1,5 +1,5 @@
 ﻿html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: -apple-system,system-ui,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Fira Sans,Ubuntu,Oxygen,Oxygen Sans,Cantarell,Droid Sans,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Lucida Grande,Helvetica,Arial,sans-serif;
     margin: 0;
     padding: 0;
     position: relative;
@@ -23,6 +23,10 @@ app {
     position: relative;
     display: flex;
     flex-direction: column;
+}
+
+.nav-item:hover {
+    display: block;
 }
 
 /* Blog Main */
@@ -255,6 +259,7 @@ app {
 
 /* Code terminal styling */
 .terminal-header {
+    text-align:left;
     background-color: #e3e3e3;
     border: 1px solid rgba(0, 0, 0, 0.2);
     padding: 10px;
