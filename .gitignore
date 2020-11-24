@@ -16,3 +16,4 @@
 /src/Properties/PublishProfiles
 /src/Properties/ServiceDependencies/BaskaranTest - Web Deploy/profile.arm.json
 /src/debug.log
+/src/BaskaranBlog.csproj.user

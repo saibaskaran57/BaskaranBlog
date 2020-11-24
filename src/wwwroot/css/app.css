@@ -19,6 +19,11 @@ h4, h5 {
     font-weight: bold;
 }
 
+th, td {
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+} 
+
 app {
     position: relative;
     display: flex;
@@ -106,7 +111,6 @@ app {
     .header a {
         float: left;
         color: black;
-        text-align: center;
         padding: 12px;
         text-decoration: none;
         line-height: 25px;
@@ -123,6 +127,12 @@ app {
     margin-top: 10px;
     margin-bottom: 10px;
 }
+    .pinned div a {
+        color: black;
+        text-decoration: none;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
 
 .column {
     width: 100%;
@@ -143,7 +153,8 @@ app {
 .content {
     max-width: 800px;
     margin: auto;
-    padding: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
     flex: 1;
 }
 
@@ -159,12 +170,10 @@ app {
     }
 
 .content-body {
-    height: 65px;
     font-size: 14px;
 }
 
 .content-footer {
-    padding: 4px;
     font-size: 10px;
 }
 
@@ -197,6 +206,7 @@ app {
 }
 
 .post-sub-header {
+    padding-top: 5px;
     font-size: 10px;
     text-align: left;
 }
