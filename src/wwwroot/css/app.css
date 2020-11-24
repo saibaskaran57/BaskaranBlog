@@ -22,7 +22,7 @@ h4, h5 {
 th, td {
     padding-top: 0.5em;
     padding-bottom: 0.5em;
-} 
+}
 
 app {
     position: relative;
@@ -32,6 +32,8 @@ app {
 
 /* Blog Main */
 .main {
+    margin: auto;
+    width: 800px;
     flex: 1;
     position: relative;
     min-height: 100vh;
@@ -63,12 +65,12 @@ app {
     z-index: 1000;
 }
 
-#blazor-error-ui .dismiss {
-    cursor: pointer;
-    position: absolute;
-    right: 0.75rem;
-    top: 0.5rem;
-}
+    #blazor-error-ui .dismiss {
+        cursor: pointer;
+        position: absolute;
+        right: 0.75rem;
+        top: 0.5rem;
+    }
 
 /* Blog logo */
 .logo {
@@ -94,7 +96,6 @@ app {
 
 /* Blog about */
 .about {
-    padding-top: 1em;
     padding-bottom: 1em;
     vertical-align: middle;
     display: block;
@@ -105,7 +106,6 @@ app {
 
 /* Blog header */
 .header {
-    background-color: #f1f1f1;
     padding: 20px 0px 20px 0px;
     font-weight: bold;
 }
@@ -124,11 +124,20 @@ app {
             color: black;
         }
 
+    .header:after {
+        content: '';
+        width: 100%;
+        height: 1px;
+        display: inline-block;
+        background: rgba(0, 0, 0, 0.2);
+    }
+
 /* Blog pinned post */
 .pinned div {
     margin-top: 10px;
     margin-bottom: 10px;
 }
+
     .pinned div a {
         color: black;
         text-decoration: none;
@@ -153,10 +162,8 @@ app {
 
 /* Blog content */
 .content {
-    max-width: 800px;
     margin: auto;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding: 10px;
     flex: 1;
 }
 
@@ -168,7 +175,7 @@ app {
 
     .content-header a {
         text-decoration: none;
-        color:black;
+        color: black;
     }
 
 .content-body {
@@ -186,19 +193,26 @@ app {
 }
 
 
-.tags:hover {
-    color:white;
-    background-color:black;
-}
+    .tags:hover {
+        color: white;
+        background-color: black;
+    }
 
 /* Blog footer */
 .footer {
-    padding: 20px;
+    padding: 20px 0px 5px 0px;
     bottom: 0;
-    background-color: #f1f1f1;
     text-align: center;
     color: black;
 }
+
+    .footer:before {
+        content: '';
+        width: 100%;
+        height: 1px;
+        display: inline-block;
+        background: rgba(0, 0, 0, 0.2);
+    }
 
 /* For posts */
 .post-header {
@@ -232,7 +246,7 @@ app {
 
 .post-footer {
     text-align: center;
-    font-size:12px;
+    font-size: 12px;
 }
 
 /* Post images */
@@ -241,7 +255,7 @@ app {
     margin-top: 10px;
     margin-left: auto;
     margin-right: auto;
-    width:100%;
+    width: 100%;
     max-height: 400px;
     background-size: cover;
     position: center;
@@ -256,7 +270,7 @@ app {
     margin-top: 10px;
     margin-left: auto;
     margin-right: auto;
-    width: 50%; 
+    width: 50%;
     height: 70%;
     background-size: cover;
     position: center;
@@ -267,7 +281,7 @@ app {
 
 /* Code terminal styling */
 .terminal-header {
-    text-align:left;
+    text-align: left;
     background-color: #e3e3e3;
     border: 1px solid rgba(0, 0, 0, 0.2);
     padding: 10px;
@@ -305,12 +319,25 @@ app {
 /* Code terminal highlights */
 .code-highlight-yellow {
     background-color: #dedf79;
-    color:black;
+    color: black;
 }
 
 .code-blue {
     color: #2795e9;
 }
+
+.code-yellow {
+    color: #e2b90b;
+}
+
+.code-darkorange {
+    color: #e13c0e;
+}
+
+.code-applegreen {
+    color: #60be1f;
+}
+
 
 .note {
     padding: 10px;
@@ -347,11 +374,11 @@ app {
     margin: 0.5em;
 }
 
-.resp-sharing-button__link:hover {
-    text-decoration: none;
-    color: #fff;
-    margin: 0.5em;
-}
+    .resp-sharing-button__link:hover {
+        text-decoration: none;
+        color: #fff;
+        margin: 0.5em;
+    }
 
 .resp-sharing-button {
     border-radius: 5px;
@@ -450,7 +477,15 @@ app {
 }
 
 @media screen and (max-width: 799.99px) {
+    .main {
+        width: 100%;
+    }
+
     .content {
+        width: 100%;
+    }
+
+    .footer {
         width: 100%;
     }
 

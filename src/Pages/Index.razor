@@ -1,123 +1,134 @@
 ﻿@page "/"
 
-<div class="about">
-    <img src="/assets/avatar/baskaran.jpg" alt="Baskaran" class="avatar">
-    <div>
-        <h1>Hi, I'm Baskaran.</h1>
-        <p>
-            I'm a software developer with experience on Microsoft .NET technlogies & Azure development based in Malaysia. I've always
-            enjoyed learning new things and most importantly sharing it with people.
-        </p>
-    </div>
-</div>
-
-<div class="pinned">
-    <h3>Latest stories</h3>
-    <div class="column">
-        <a href="/posts/2020/11/blazor-getting-started">
-            <div class="card">
-                <table>
-                    <tbody>
-                        <tr class="content-header">
-                            <td colspan="2">Building blog with Blazor - Getting Started</td>
-                        </tr>
-                        <tr class="content-body">
-                            <td colspan="2">
-                                In this post, I will share with you on my journey on how I created my blog with
-                                Blazor WebAssembly 3.2, debugging experience & overall opinion on Blazor.
-                            </td>
-                        </tr>
-                        <tr class="content-footer">
-                            <td>
-                                <span class="tags">C#</span>
-                                <span class="tags">Blazor</span>
-                            </td>
-                            <td align="right">Posted on 11th November 2020</td>
-                        </tr>
-                    </tbody>
-                </table>
+    <div class="about">
+        <div class="row">
+            <div class="col-sm">
+                <img src="/assets/avatar/baskaran.jpg" alt="Baskaran" class="avatar">
             </div>
-        </a>
+            <div class="col-sm my-auto p-2">
+                <div class="terminal-header">
+                    Welcome to my blog!
+                </div>
+                <div class="terminal-body">
+                    <span class="break">> print baskaran.json</span>
+                    <span class="break"><span class="code-yellow">{</span></span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;<span class="code-darkorange">"name"</span> : <span class="code-applegreen">"Baskaran"</span></span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;<span class="code-darkorange">"location"</span> : <span class="code-applegreen">"Kuala Lumpur, Malaysia"</span></span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;<span class="code-darkorange">"position"</span> : <span class="code-applegreen">"Software Developer"</span></span>
+                    <span class="break">&nbsp;&nbsp;&nbsp;<span class="code-darkorange">"skills"</span> : <span class="code-applegreen">["c#.net", "node.js"]</span></span>
+                    <span class="break"><span class="code-yellow">}</span></span>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="column">
-        <a href="/posts/2020/11/blazor-styling">
-            <div class="card">
-                <table>
-                    <tbody>
-                        <tr class="content-header">
-                            <td colspan="2">Building blog with Blazor - Styling it up!</td>
-                        </tr>
-                        <tr class="content-body">
-                            <td colspan="2">
-                                Let's look at the basics of blog UI/UX requirements & see how we can leverage fully on .NET,
-                                Bootstrap & native CSS only to style up your blog.
-                            </td>
-                        </tr>
-                        <tr class="content-footer">
-                            <td>
-                                <span class="tags">C#</span>
-                                <span class="tags">Blazor</span>
-                            </td>
-                            <td align="right">Posted on 14th November 2020</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </a>
-    </div>
+    <div class="pinned">
+        <h3>Latest stories</h3>
+        <div class="column">
+            <a href="/posts/2020/11/blazor-getting-started">
+                <div class="card">
+                    <table>
+                        <tbody>
+                            <tr class="content-header">
+                                <td colspan="2">Building blog with Blazor - Getting Started</td>
+                            </tr>
+                            <tr class="content-body">
+                                <td colspan="2">
+                                    In this post, I will share with you on my journey on how I created my blog with
+                                    Blazor WebAssembly 3.2, debugging experience & overall opinion on Blazor.
+                                </td>
+                            </tr>
+                            <tr class="content-footer">
+                                <td>
+                                    <span class="tags">C#</span>
+                                    <span class="tags">Blazor</span>
+                                </td>
+                                <td align="right">Posted on 11th November 2020</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </a>
+        </div>
 
-    <div class="column">
-        <a href="/posts/2020/11/blazor-net5">
-            <div class="card">
-                <table>
-                    <tbody>
-                        <tr class="content-header">
-                            <td colspan="2">Building blog with Blazor - Upgrading to .NET 5</td>
-                        </tr>
-                        <tr class="content-body">
-                            <td colspan="2">
-                                Microsoft have announced the much awaiting .NET 5 is globally available on 10th November 2020. Blazor
-                                WebAssembly has some significant updates and let's see on how we can upgrade & review some improvements.
-                            </td>
-                        </tr>
-                        <tr class="content-footer">
-                            <td>
-                                <span class="tags">C#</span>
-                                <span class="tags">Blazor</span>
-                            </td>
-                            <td align="right">Posted on 16th November 2020</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </a>
-    </div>
+        <div class="column">
+            <a href="/posts/2020/11/blazor-styling">
+                <div class="card">
+                    <table>
+                        <tbody>
+                            <tr class="content-header">
+                                <td colspan="2">Building blog with Blazor - Styling it up!</td>
+                            </tr>
+                            <tr class="content-body">
+                                <td colspan="2">
+                                    Let's look at the basics of blog UI/UX requirements & see how we can leverage fully on .NET,
+                                    Bootstrap & native CSS only to style up your blog.
+                                </td>
+                            </tr>
+                            <tr class="content-footer">
+                                <td>
+                                    <span class="tags">C#</span>
+                                    <span class="tags">Blazor</span>
+                                </td>
+                                <td align="right">Posted on 14th November 2020</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </a>
+        </div>
 
-    <div class="column">
-        <a href="/posts/2020/11/blazor-release">
-            <div class="card">
-                <table>
-                    <tbody>
-                        <tr class="content-header">
-                            <td colspan="2">Building blog with Blazor - Shipping it!</td>
-                        </tr>
-                        <tr class="content-body">
-                            <td colspan="2">
-                                Finished develop Blazor WebAssembly application? Let's look on how we can make this available
-                                using Azure Static Web Apps & Netlify.
-                            </td>
-                        </tr>
-                        <tr class="content-footer">
-                            <td>
-                                <span class="tags">Azure</span>
-                                <span class="tags">Netlify</span>
-                            </td>
-                            <td align="right">Posted on 20th November 2020</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </a>
+        <div class="column">
+            <a href="/posts/2020/11/blazor-net5">
+                <div class="card">
+                    <table>
+                        <tbody>
+                            <tr class="content-header">
+                                <td colspan="2">Building blog with Blazor - Upgrading to .NET 5</td>
+                            </tr>
+                            <tr class="content-body">
+                                <td colspan="2">
+                                    Microsoft have announced the much awaiting .NET 5 is globally available on 10th November 2020. Blazor
+                                    WebAssembly has some significant updates and let's see on how we can upgrade & review some improvements.
+                                </td>
+                            </tr>
+                            <tr class="content-footer">
+                                <td>
+                                    <span class="tags">C#</span>
+                                    <span class="tags">Blazor</span>
+                                </td>
+                                <td align="right">Posted on 16th November 2020</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </a>
+        </div>
+
+        <div class="column">
+            <a href="/posts/2020/11/blazor-release">
+                <div class="card">
+                    <table>
+                        <tbody>
+                            <tr class="content-header">
+                                <td colspan="2">Building blog with Blazor - Shipping it!</td>
+                            </tr>
+                            <tr class="content-body">
+                                <td colspan="2">
+                                    Finished develop Blazor WebAssembly application? Let's look on how we can make this available
+                                    using Azure Static Web Apps & Netlify.
+                                </td>
+                            </tr>
+                            <tr class="content-footer">
+                                <td>
+                                    <span class="tags">Azure</span>
+                                    <span class="tags">Netlify</span>
+                                </td>
+                                <td align="right">Posted on 20th November 2020</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </a>
+        </div>
     </div>
-</div>

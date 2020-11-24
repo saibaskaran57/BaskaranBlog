@@ -4,9 +4,9 @@
         <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="@NavMenuCssClass navbar-collapse justify-content-end"  id="navbarNav" @onclick="ToggleNavMenu">
+    <div class="@NavMenuCssClass navbar-collapse justify-content-end" id="navbarNav" @onclick="ToggleNavMenu">
         <div class="navbar-nav">
-            <NavLink class="nav-item nav-link"href="/posts" Match="NavLinkMatch.All">
+            <NavLink class="nav-item nav-link" href="/posts" Match="NavLinkMatch.All">
                 <i class="fas fa-blog"></i> Posts
             </NavLink>
             <NavLink class="nav-item nav-link" href="/about" Match="NavLinkMatch.All">
@@ -15,7 +15,6 @@
         </div>
     </div>
 </div>
-
 @code {
     private bool collapseNavMenu = true;
 
