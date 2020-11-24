@@ -94,6 +94,8 @@ app {
 
 /* Blog about */
 .about {
+    padding-top: 1em;
+    padding-bottom: 1em;
     vertical-align: middle;
     display: block;
     margin-left: auto;
