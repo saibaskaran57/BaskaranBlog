@@ -74,6 +74,7 @@ app {
 
 /* Blog logo */
 .logo {
+    vertical-align: middle;
     font-size: 40px;
     font-weight: bold;
     font-family: Pacifico;
@@ -83,14 +84,10 @@ app {
 
 /* Blog avatar */
 .avatar {
-    vertical-align: middle;
     width: 250px;
     height: 250px;
     border-radius: 50%;
     position: center;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
     border: 1px solid #d2d0d0;
 }
 
@@ -99,8 +96,6 @@ app {
     height: 50px;
     border-radius: 50%;
     display: none;
-    margin-left: auto;
-    margin-right: auto;
     border: 1px solid #d2d0d0;
 }
 
@@ -514,9 +509,7 @@ app {
     .avatar-mobile {
         display: inline-block;
     }
-}
 
-@media screen and (max-width: 368px) {
     .logo {
         font-size: 30px;
     }
@@ -524,12 +517,11 @@ app {
 
 @media screen and (max-width: 325px) {
     .logo {
-        font-size: 25px;
+        font-size: 20px;
     }
 
     .avatar-mobile {
-        width: 25px;
-        height: 25px;
-        display: inline-block;
+        width: 35px;
+        height: 35px;
     }
 }
