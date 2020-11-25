@@ -82,6 +82,15 @@ app {
     font-variant: normal;
 }
 
+.logo-fixed {
+    vertical-align: middle;
+    font-size: 40px;
+    font-weight: bold;
+    font-family: Pacifico;
+    font-style: normal;
+    font-variant: normal;
+}
+
 /* Blog avatar */
 .avatar {
     width: 250px;
@@ -507,21 +516,17 @@ app {
     }
 
     .avatar-mobile {
+        width: 35px;
+        height: 35px;
         display: inline-block;
     }
 
     .logo {
-        font-size: 30px;
+        font-size: 25px;
     }
-}
 
-@media screen and (max-width: 325px) {
     .logo {
-        font-size: 20px;
-    }
-
-    .avatar-mobile {
-        width: 35px;
-        height: 35px;
+        display: flex;
+        align-items: center;
     }
 }
