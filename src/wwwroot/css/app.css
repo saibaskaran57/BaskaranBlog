@@ -19,6 +19,11 @@ h4, h5 {
     font-weight: bold;
 }
 
+th, td {
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+}
+
 app {
     position: relative;
     display: flex;
@@ -27,6 +32,8 @@ app {
 
 /* Blog Main */
 .main {
+    margin: auto;
+    width: 800px;
     flex: 1;
     position: relative;
     min-height: 100vh;
@@ -58,15 +65,25 @@ app {
     z-index: 1000;
 }
 
-#blazor-error-ui .dismiss {
-    cursor: pointer;
-    position: absolute;
-    right: 0.75rem;
-    top: 0.5rem;
-}
+    #blazor-error-ui .dismiss {
+        cursor: pointer;
+        position: absolute;
+        right: 0.75rem;
+        top: 0.5rem;
+    }
 
 /* Blog logo */
 .logo {
+    vertical-align: middle;
+    font-size: 40px;
+    font-weight: bold;
+    font-family: Pacifico;
+    font-style: normal;
+    font-variant: normal;
+}
+
+.logo-fixed {
+    vertical-align: middle;
     font-size: 40px;
     font-weight: bold;
     font-family: Pacifico;
@@ -76,19 +93,24 @@ app {
 
 /* Blog avatar */
 .avatar {
-    vertical-align: middle;
     width: 250px;
     height: 250px;
     border-radius: 50%;
     position: center;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+    border: 1px solid #d2d0d0;
+}
+
+.avatar-mobile {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: none;
     border: 1px solid #d2d0d0;
 }
 
 /* Blog about */
 .about {
+    padding-bottom: 1em;
     vertical-align: middle;
     display: block;
     margin-left: auto;
@@ -98,15 +120,13 @@ app {
 
 /* Blog header */
 .header {
-    background-color: #f1f1f1;
-    padding: 20px 10px;
+    padding: 0px 0px 15px 0px;
     font-weight: bold;
 }
 
     .header a {
         float: left;
         color: black;
-        text-align: center;
         padding: 12px;
         text-decoration: none;
         line-height: 25px;
@@ -118,11 +138,26 @@ app {
             color: black;
         }
 
+    .header:after {
+        content: '';
+        width: 100%;
+        height: 1px;
+        display: block;
+        background: rgba(0, 0, 0, 0.2);
+    }
+
 /* Blog pinned post */
 .pinned div {
     margin-top: 10px;
     margin-bottom: 10px;
 }
+
+    .pinned div a {
+        color: black;
+        text-decoration: none;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
 
 .column {
     width: 100%;
@@ -141,9 +176,7 @@ app {
 
 /* Blog content */
 .content {
-    max-width: 800px;
     margin: auto;
-    padding: 10px;
     flex: 1;
 }
 
@@ -155,16 +188,14 @@ app {
 
     .content-header a {
         text-decoration: none;
-        color:black;
+        color: black;
     }
 
 .content-body {
-    height: 65px;
     font-size: 14px;
 }
 
 .content-footer {
-    padding: 4px;
     font-size: 10px;
 }
 
@@ -175,19 +206,26 @@ app {
 }
 
 
-.tags:hover {
-    color:white;
-    background-color:black;
-}
+    .tags:hover {
+        color: white;
+        background-color: black;
+    }
 
 /* Blog footer */
 .footer {
-    padding: 20px;
+    padding: 20px 0px 5px 0px;
     bottom: 0;
-    background-color: #f1f1f1;
     text-align: center;
     color: black;
 }
+
+    .footer:before {
+        content: '';
+        width: 100%;
+        height: 1px;
+        display: block;
+        background: rgba(0, 0, 0, 0.2);
+    }
 
 /* For posts */
 .post-header {
@@ -197,6 +235,7 @@ app {
 }
 
 .post-sub-header {
+    padding-top: 5px;
     font-size: 10px;
     text-align: left;
 }
@@ -220,7 +259,7 @@ app {
 
 .post-footer {
     text-align: center;
-    font-size:12px;
+    font-size: 12px;
 }
 
 /* Post images */
@@ -229,7 +268,7 @@ app {
     margin-top: 10px;
     margin-left: auto;
     margin-right: auto;
-    width:100%;
+    width: 100%;
     max-height: 400px;
     background-size: cover;
     position: center;
@@ -244,7 +283,7 @@ app {
     margin-top: 10px;
     margin-left: auto;
     margin-right: auto;
-    width: 50%; 
+    width: 50%;
     height: 70%;
     background-size: cover;
     position: center;
@@ -255,18 +294,20 @@ app {
 
 /* Code terminal styling */
 .terminal-header {
-    text-align:left;
+    text-align: left;
     background-color: #e3e3e3;
     border: 1px solid rgba(0, 0, 0, 0.2);
     padding: 10px;
     font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
     display: block;
+    font-size: 12px;
 }
 
 .terminal-comment {
     color: limegreen;
     text-align: left;
     font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+    font-size: 12px;
 }
 
 .terminal-body {
@@ -280,6 +321,7 @@ app {
     white-space: nowrap;
     word-break: normal;
     overflow-wrap: break-word;
+    font-size: 12px;
 }
 
     .terminal-body ul {
@@ -293,12 +335,25 @@ app {
 /* Code terminal highlights */
 .code-highlight-yellow {
     background-color: #dedf79;
-    color:black;
+    color: black;
 }
 
 .code-blue {
     color: #2795e9;
 }
+
+.code-yellow {
+    color: #e2b90b;
+}
+
+.code-darkorange {
+    color: #e13c0e;
+}
+
+.code-applegreen {
+    color: #60be1f;
+}
+
 
 .note {
     padding: 10px;
@@ -335,11 +390,11 @@ app {
     margin: 0.5em;
 }
 
-.resp-sharing-button__link:hover {
-    text-decoration: none;
-    color: #fff;
-    margin: 0.5em;
-}
+    .resp-sharing-button__link:hover {
+        text-decoration: none;
+        color: #fff;
+        margin: 0.5em;
+    }
 
 .resp-sharing-button {
     border-radius: 5px;
@@ -438,11 +493,40 @@ app {
 }
 
 @media screen and (max-width: 799.99px) {
+    .main {
+        width: 100%;
+    }
+
     .content {
+        width: 100%;
+    }
+
+    .footer {
         width: 100%;
     }
 
     .table {
         width: 100%;
+    }
+}
+
+@media screen and (max-width: 574.99px) {
+    .avatar {
+        display: none;
+    }
+
+    .avatar-mobile {
+        width: 35px;
+        height: 35px;
+        display: inline-block;
+    }
+
+    .logo {
+        font-size: 25px;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
     }
 }
