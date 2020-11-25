@@ -94,6 +94,16 @@ app {
     border: 1px solid #d2d0d0;
 }
 
+.avatar-mobile {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: none;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #d2d0d0;
+}
+
 /* Blog about */
 .about {
     padding-bottom: 1em;
@@ -106,7 +116,7 @@ app {
 
 /* Blog header */
 .header {
-    padding: 20px 0px 20px 0px;
+    padding: 20px 0px 5px 0px;
     font-weight: bold;
 }
 
@@ -163,7 +173,6 @@ app {
 /* Blog content */
 .content {
     margin: auto;
-    padding: 10px;
     flex: 1;
 }
 
@@ -287,12 +296,14 @@ app {
     padding: 10px;
     font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
     display: block;
+    font-size: 12px;
 }
 
 .terminal-comment {
     color: limegreen;
     text-align: left;
     font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+    font-size: 12px;
 }
 
 .terminal-body {
@@ -306,6 +317,7 @@ app {
     white-space: nowrap;
     word-break: normal;
     overflow-wrap: break-word;
+    font-size: 12px;
 }
 
     .terminal-body ul {
@@ -491,5 +503,33 @@ app {
 
     .table {
         width: 100%;
+    }
+}
+
+@media screen and (max-width: 574.99px) {
+    .avatar {
+        display: none;
+    }
+
+    .avatar-mobile {
+        display: inline-block;
+    }
+}
+
+@media screen and (max-width: 368px) {
+    .logo {
+        font-size: 30px;
+    }
+}
+
+@media screen and (max-width: 325px) {
+    .logo {
+        font-size: 25px;
+    }
+
+    .avatar-mobile {
+        width: 25px;
+        height: 25px;
+        display: inline-block;
     }
 }
