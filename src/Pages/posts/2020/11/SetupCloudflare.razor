@@ -1,0 +1,127 @@
+﻿@page "/posts/2020/11/setup-cloud-flare"
+
+<div class="post-header">
+    @PostHeader
+</div>
+
+<div class="post-sub-header">
+    <span class="tags">C#</span>
+    <span class="tags">Blazor</span>
+    <span>&middot;</span>
+    <span>Posted on @PostDate</span>
+    <span>&middot;</span>
+    <span>@PostReadDuration read</span>
+</div>
+
+<div class="post-image">
+    <img src="@PostBaseImage/spacex-header.jpg" alt="Blazor" class="image" />
+     Photo by <a href="https://unsplash.com/&commat;spacex">SpaceX</a> on Unsplash
+</div>
+
+<div class="post-body">
+    <p>
+        As now you have already in the stage of going live to Internet? Have you already purchased a domain? If you are using
+        Azure Static Web Apps or Netlify that creates subdomain url in example <code>https://.*.subdomain.com</code> and you would
+        prefer to proxy that to your purchased root domain? You are at the right place to ensure this can be done!
+    </p>
+
+    <p>
+        <h4>Introducing Cloudflare</h4>
+        Ever thought about security, reliability & performance concerns before hosting your website live on internet? 
+        <a href="https://www.cloudflare.com/">Cloudflare</a> provides a platform to provide security, reliability and most importantly
+        performance that caches your website and serve to the nearest Cloudflare server.
+        
+        As easy as the solution sound, we don't need to have a own learning curve to know how to integrate your domain to cloudflare. All
+        you need to do is change your domain nameservers to point to Cloudflare which you can enjoy <strong>FREE</strong> fast DNS resolution 
+        which proxies your domain through Cloudflare.
+    </p>
+    <p>
+        <h4>Simple steps to get you started</h4>
+        <ol>
+            <li>Create an account with <a href="https://dash.cloudflare.com/sign-up">Cloudflare</a></li>
+            <li>Login to your account and you will be directed to <strong>Home</strong> page.</li>
+            <li>Click <strong>+Add a Site</strong></li>
+            <li>
+                Configure your site(e.g. test.com) as below and click <strong>Add Site</strong>
+                <br />
+                <img src="@PostBaseImage/cloudflare-step1.jpg" alt="Add a site" class="image" />
+            </li>
+            <li>Select a plan which consist Free, Pro, Business & Enterprise</li>
+            <li>
+                Now that you have selected the plan, it's time to set up the DNS to your website domain. There are two configurations which is
+                required to be configured. For my example, I'm using <code>baskaran.dev</code> which re-routes to <code>www.baskaran.dev</code> 
+                because most examples in internet uses <code>www.*.com</code> subdomains as an example. Therefore, we will see on how to configure 
+                root domains.
+                <br />
+                <br />
+                As you can see below, this will require two CNAME proxy settings to be configured. Click <strong>+ Add record</strong>
+                <ul>
+                    <li>baskaran.dev -> www.baskaran.dev with <strong>Proxied</strong> status.</li>
+                    <li>www -> azure static web apps/netlify with <strong>DNS only</strong> status.</li>
+                </ul>
+                <img src="@PostBaseImage/cloudflare-step2.jpg" alt="Add DNS record" class="image" />
+            </li>
+            <li>
+                Once you have managed the DNS records, you will now need to configure your registrar account and change to below CloudFlare's nameservers
+                as your primary DNS controller. If you don't configure the below, you won't be able to proxy your website.
+                <br />
+                <img src="@PostBaseImage/cloudflare-step3.jpg" alt="Add DNS record" class="image-vertical" />
+                <br />
+                <strong>Here are some guides for configuring domain hosting nameservers</strong>
+                <br />
+                <ul>
+                    <li><a href="https://my.godaddy.com/help/change-nameservers-for-my-domains-664">GoDaddy</a></li>
+                    <li><a href="https://www.namecheap.com/support/knowledgebase/article.aspx/767/10/how-to-change-dns-for-a-domain">NameCheap</a></li>
+                    <li><a href="https://www.bluehost.com/help/article/custom-nameservers">BlueHost</a></li>
+                </ul>
+                <br />
+                Once you have configured your domain hosting nameservers with some pointers on above guides, click <strong>Done, check nameservers</strong> to complete
+                the nameservers upgrade.
+                <br />
+            </li>
+            <li>
+                Now, when you access to your root domain <code>*.com</code>, you will be able to load it successfully. However, when you access
+                to <code>*.com/posts</code> or any subpaths, you will get <kbd>HTTP 404 Not Found</kbd>
+                <div class="note warning">
+                    <i class="fas fa-exclamation-triangle"></i> Warning:
+                    <br />
+                    Azure Static Web Apps & Netlify requires custom files in hosting environment to ensure when application is refreshed/navigate directly to locations,
+                    it will still redirect to the right page.
+                </div>
+                You will require to configure CloudFlare <strong>Page Rules</strong> as below to forward your root domain <code>*.com</code> to <code>*.com/$1</code>
+                which will perform <kbd>301 - Permanent Redirect</kbd>
+                <br />
+                <img src="@PostBaseImage/cloudflare-step4.jpg" alt="Configure page rule" class="image" />
+            </li>
+            <li>
+                I'll recommend to ensure the below step is configured as we would want to protect the site on every course
+                of security. To configure SSL/TLS, go to SSL/TLS > Edge Certificates and configure the TLS to minimum 1.2
+                as below:
+                <br />
+                <img src="@PostBaseImage/cloudflare-step5.jpg" alt="Configure TLS rules" class="image" />
+            </li>
+            <li>
+                <a href="https://www.ssllabs.com/ssltest/">SSL Server Test</a> provides great help in ensuring your domain
+                are fully graded with industry security standards. I'll strongly recommend to scan your website domain <u>at least</u>
+                once a month.
+            </li>
+        </ol>
+    </p>
+    <p>
+        <h4>In closing</h4>
+        As much as  we would want to release our website to internet, we will need to ensure it has followed and adhered to the
+        right security concerns. CloudFlare provide great ease of help in ensuring our websites are protected with security, reliability 
+        & performance. Now that we have seen the steps to configure root domains with CloudFlare, are you ready to go live? Good luck!
+    </p>
+</div>
+
+<div class="post-footer">
+    <SocialMedia Title="@PostHeader" />
+</div>
+
+@code {
+    private string PostHeader = "Setting up Cloudflare as reverse proxy for your root domains";
+    private string PostDate = "1st December 2020";
+    private string PostReadDuration = "10 minutes";
+    private string PostBaseImage = "/assets/posts/2020/11/setupcloudflare";
+}
