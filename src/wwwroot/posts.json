@@ -54,6 +54,19 @@
       "Azure",
       "Netlify"
     ]
+  },
+  {
+    "year": "2020",
+    "name": "Setting up Cloudflare as reverse proxy for your root domains",
+    "url": "/posts/2020/11/setup-cloud-flare",
+    "date": "1st December 2020",
+    "description": "",
+    "pinned": {
+      "order": 5
+    },
+    "tags": [
+      "CloudFlare"
+    ]
   }
 ]
 
