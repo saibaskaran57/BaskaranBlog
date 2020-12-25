@@ -67,6 +67,20 @@
     "tags": [
       "CloudFlare"
     ]
+  },
+  {
+    "year": "2020",
+    "name": "Exponential retries saves the day! Or not?",
+    "url": "/posts/2020/12/exponential-retries",
+    "date": "25th December 2020",
+    "description": "",
+    "pinned": {
+      "order": 6
+    },
+    "tags": [
+      "C#",
+      "Polly"
+    ]
   }
 ]
 

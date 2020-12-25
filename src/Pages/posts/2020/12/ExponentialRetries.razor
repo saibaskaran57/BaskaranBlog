@@ -1,0 +1,155 @@
+﻿@page "/posts/2020/12/exponential-retries"
+
+<div class="post-header">
+    @PostHeader
+</div>
+
+<div class="post-sub-header">
+    <span class="tags">C#</span>
+    <span class="tags">Polly</span>
+    <span>&middot;</span>
+    <span>Posted on @PostDate</span>
+    <span>&middot;</span>
+    <span>@PostReadDuration read</span>
+</div>
+
+<div class="post-image">
+    <img src="@PostBaseImage/aaron-header.jpg" alt="Blazor" class="image" />
+    Photo by <a href="https://unsplash.com/&commat;aaronphs">Aaron Thomas</a> on Unsplash
+</div>
+
+<div class="post-body">
+    <p>
+        Have you used retries in your software's? Did you consider the pros/cons before choosing it? In this article, we are going to take deep-dive 
+        into exponential retries in specific(most preferred retries). Do you think that all retries is only going to save
+        you from transient issues? As the above image, this article will uncover something that might erupt one day! Let's dive in!
+        <div class="note">
+            <i class="fas fa-info-circle"></i> Note:
+            <br />
+            The article will not claim that exponential retries is bad in general. When using retries patterns, use it with
+            extreme cautious.
+        </div>
+    </p>
+
+    <p>
+        <h4>Retries</h4>
+        <h5 style="color:#707070"><i>"When we fail in attempting X, performing retries often results in success"</i></h5>
+        <br />
+        <h5>Why do we need retries?</h5>
+        <ol>
+            <li>Services often has downtimes which can be intermittent/complete outage.</li>
+            <li>Most reliable services advertises services availability as ~99.9%.</li>
+            <li>With distributed architectures, failures or latency in remote interactions are <strong><i>inevitable!</i></strong></li>
+        </ol>
+    </p>
+
+    <p>
+        <h4>Use-case scenarios</h4>
+        Let's start with a simple use-case scenario where Customer A sends asynchronous requests to a middleware service that delegates the request to
+        SaaS provider. SaaS provider only accepts 100 requests per second and rejects the rest of it that exceeds the limit with <code>429 Too Many Request</code>
+        <br />
+        <br />
+        Customer A sends 10 request per second and all the request are executed successfully without any issues by the SaaS provider.
+        <img src="@PostBaseImage/scenario-1.jpg" alt="Scenario 1" class="image" />
+        <br />
+        <br />
+        Now, Customer A sends 200 request per second and SaaS provider accepts the first 100 and responds 429 Too Many Request for the next 100 requests. Middleware
+        service will now retry the next 100 in 1 second using exponential retry(1s, 2s, 4s, 8s) algorithm.
+        <img src="@PostBaseImage/scenario-2.jpg" alt="Scenario 2" class="image" />
+        <br />
+        <br />
+        Now, Customer A sends 1000 request per second and SaaS provider accepts the first 100 and responds 429 Too Many Request for the next 900 requests. Middleware
+        service will now exponentially retry the next 900 requests. However, after the 4th attempt, SaaS provider now decides to <span style="color:red;font-weight:bold;">block your account</span>! Why?
+        <img src="@PostBaseImage/scenario-3.jpg" alt="Scenario 3" class="image" />
+        <br />
+        <br />
+        Usually, SaaS providers comes with fair usage policy where if a client repeatedly violates number of requests for X minute/hour, account will get blocked. 
+        Below is an example with <a href="https://docs.microsoft.com/en-us/sharepoint/dev/general-development/how-to-avoid-getting-throttled-or-blocked-in-sharepoint-online?redirectedfrom=MSDN#what-is-throttling">
+        SharePoint Online</a>:
+        <img src="@PostBaseImage/sharepoint-limit.jpg" alt="Sharepoint fair usage limit" class="image" />
+        <a href="https://en.wikipedia.org/wiki/Acceptable_use_policy#:~:text=An%20acceptable%20use%20policy%20(AUP,how%20it%20should%20be%20used.">Fair usage policies</a>
+        are absolute necessary for SaaS providers to mitigate issues as such where unusual attempts that disrupts the service availability are violated
+        and can be blocked by providers. With the use-case above, exponential retries seems to keep hit the maximum throttling limit. Isn't that exponential retries help 
+        to take care this issues? Let's dive in further!
+    </p>
+
+    <p>
+        <h4>Introducing Retry Simulator .NET</h4>
+        Recently, I wanted to dive in with different types of retries and understand the potential & dangers on using it. When searched around
+        the internet, I could not find a simulator to go through & understand it. Therefore, I decided to create one using <a href="https://github.com/App-vNext/Polly">Polly .NET</a> which a nuget
+        package that wrapped to retry downstream services. I've been using Polly .NET for about 4 years now and it has never failed to disappoint me
+        because the behavior is perfectly described in their developer documentation & syntactically sugar code.
+        <br />
+        <br />
+        <h5><a href="https://github.com/saibaskaran57/RetrySimulator">Retry simulator</a> benefits</h5>
+        <ol>
+            <li>Provide quicker way to try different types of retries</li>
+            <li>Fires concurrent requests to server to simulate real-time retries. (Note - use it with extreme cautious)</li>
+            <li>Local server provided without needing to create a server to simulate retries and understand how it works.</li>
+            <li>Simulate retries with public server directly using simple JSON configuration file.</li>
+            <li>Provides tokenization(e.g. correlation-id) which able to correlate requests from client & server.</li>
+            <li>Writes results to project <code>/Result</code> directory in CSV format to visualize the data.</li>
+        </ol>
+        With Retry Simulator, my aim is to simulate locally and find out why by exponentially retrying can cause downstream servers to block
+        your account. I'm very curious to know the result!
+    </p>
+
+    <p>
+        <h4>Evidence</h4>
+        Let's take a closer look with the graph as below. With the below sampling, I have executed 5 requests on a server that only accepts
+        1 request per second. Y-axis represents total duration it took for each series of retries. X-axis represents retries in series. Each
+        block inside the X-axis represents request number.
+        <img src="@PostBaseImage/exponential-retry.jpg" alt="Exponential retry" class="image" />
+        As shown above, when exponentially retry, each requests are fired to the server at the same time(1s, 2s, 4s, 8s). This is what referred
+        as correlated requests. But how come? Exponential retries algorithm indicates 2<sup>N</sup> algorithm. When a transient issue occurred/rejected
+        by the server with 429 status code, the algorithm will ensure requests waits in a fixed duration before firing to the servers.
+        <br />
+        <br />
+        Exponential retries does not automatically knows how to balance your requests & fire in a way to streamline the load to the downstream server.
+        Additionally, there are time wasted as application is on idle where does not do anything else but just waits until it resumes where volcano is
+        just about to get erupted when you have that many requests idling before firing to the downstream server.
+    </p>
+    <p>
+        <h4>Solution</h4>
+        <h5>1) Exponential retry with Jitter</h5>
+        A very simplest approach is to jitter the requests. Jitter means to provide some additional random delays for each requests that prevents it from
+        colliding each other. The downsides to this is that it still does not solve the long idling time for request. If performance is not an issue, this
+        can be a solution to mitigate.
+        <img src="@PostBaseImage/exponential-retry-jitter.jpg" alt="Exponential retry with Jitter" class="image" />
+
+        <h5>2) AWS Decorrelated Jitter</h5>
+        Amazon have briefly described this issue <a href="https://aws.amazon.com/blogs/architecture/exponential-backoff-and-jitter/">here</a>. In short -
+        the algorithm randomizes between minimum & maximum delay which up to decimals. This can prevent correlated requests & long idling time for request
+        that can be completed in milliseconds. I would definitely recommend this approach when retrying requests where concurrent clients are expected.
+        <img src="@PostBaseImage/aws-decorrelated-jitter.jpg" alt="AWS Decorrelated Jitter" class="image" />
+
+        <h5>3) Polly community Decorrelated Jitter(NEW)</h5>
+        If you're support a service where high concurrency is expected, there seems to be some issues going on with AWS decorrelated jitter where in a
+        high concurrency environment, the algorithm can correlate. With the sample below, I have fired 1000 requests which minimum delay is 1 millisecond &
+        maximum delay is 500 milliseconds. The sampling is to identify whether in reality can AWS decorrelated jitter clash. In short - Yes! In a high concurrency
+        environment, it can correlate. 2 requests indicates collision.
+        <img src="@PostBaseImage/aws-collided.jpg" alt="AWS algorithm collided" class="image" />
+        George Polevoy have perfectly described the problem in this article and I would highly recommend everyone to have a look at this
+        <a href="https://github.com/App-vNext/Polly/issues/530">github issue</a>.
+    </p>
+    <p>
+        <h4>In closing</h4>
+        <ol>
+            <li>Use the right retry strategies to mitigate your use case scenario.</li>
+            <li>Exponential retries(without jitter) is helpful when no collision is expected to happen.</li>
+            <li>With concurrent clients, collision can happen and AWS decorrelated jitter helps to solve the collision and able to succeed faster.</li>
+            <li>Exponential retries can destabilize your service(by self ddos) and memory usage to spike up.</li>
+        </ol>
+    </p>
+</div>
+
+<div class="post-footer">
+    <SocialMedia Title="@PostHeader" />
+</div>
+
+@code {
+    private string PostHeader = "Exponential retries saves the day! Or not?";
+    private string PostDate = "25th December 2020";
+    private string PostReadDuration = "15 minutes";
+    private string PostBaseImage = "/assets/posts/2020/12/exponentialretries";
+}
