@@ -1,12 +1,12 @@
-using System;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Blazor.Analytics;
-using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Microsoft.Extensions.DependencyInjection;
-
 namespace BaskaranBlog
 {
+    using System;
+    using System.Net.Http;
+    using System.Threading.Tasks;
+    using Blazor.Analytics;
+    using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+    using Microsoft.Extensions.DependencyInjection;
+
     public class Program
     {
         public static async Task Main(string[] args)
