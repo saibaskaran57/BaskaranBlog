@@ -5,6 +5,7 @@
     position: relative;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
+    font-display: fallback;
 }
 
 p {
@@ -79,6 +80,7 @@ app {
     font-family: Pacifico;
     font-style: normal;
     font-variant: normal;
+    font-display: fallback;
 }
 
 .logo-fixed {
@@ -88,6 +90,7 @@ app {
     font-family: Pacifico;
     font-style: normal;
     font-variant: normal;
+    font-display: fallback;
 }
 
 /* Blog avatar */
