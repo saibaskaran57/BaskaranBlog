@@ -12,7 +12,7 @@
     [Parameter]
     public string Image { get; set; }
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    protected override async Task OnParametersSetAsync()
     {
         await JS.InvokeAsync<string>("headfactory.setTitle", Title);
         await JS.InvokeAsync<string>("headfactory.setMetadata", "description", Description);
