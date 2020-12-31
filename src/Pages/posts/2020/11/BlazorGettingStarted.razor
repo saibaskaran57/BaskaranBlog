@@ -1,6 +1,6 @@
 ﻿@page "/posts/2020/11/blazor-getting-started"
 
-<Head Title="@PostHeader" Description="@PostDescription" Image="@PostHeaderImage"></Head>
+<Title Value="@PostHeader"></Title>
 
 <div class="post-header">
     @PostHeader
@@ -16,7 +16,7 @@
 </div>
 
 <div class="post-image">
-    <img src="@PostHeaderImage" alt="Blazor" class="image" />
+    <img src="@PostBaseImage/jesuskiteque-header.jpg" alt="Blazor" class="image" />
     Photo by <a href="https://unsplash.com/&commat;jesuskiteque">Jesus Kiteque</a> on Unsplash
 </div>
 
@@ -212,9 +212,7 @@
 
 @code {
     private string PostHeader = "Building blog with Blazor - Getting Started";
-    private string PostDescription = "In this post, I will share with you on my journey on how I created my blog with Blazor WebAssembly 3.2, debugging experience & overall opinion on Blazor.";
     private string PostDate = "11th November 2020";
     private string PostReadDuration = "15 minutes";
     private string PostBaseImage = "/assets/posts/2020/11/blazor-gettingstarted";
-    private string PostHeaderImage = "/assets/posts/2020/11/blazor-gettingstarted/jesuskiteque-header.jpg";
 }
