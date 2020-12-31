@@ -1,12 +1,6 @@
 ﻿@inject NavigationManager MyNavigationManager
 
-<Title Value="@Title"></Title>
-<Meta name="description" content="@Description" />
-<Meta prefix="og: http://ogp.me/ns#" property="og:type" content="website" />
-<Meta prefix="og: http://ogp.me/ns#" property="og:title" content="@Title" />
-<Meta prefix="og: http://ogp.me/ns#" property="og:description" content="@Description" />
-<Meta prefix="og: http://ogp.me/ns#" property="og:image" content="@(MyNavigationManager.BaseUri.TrimEnd('/') + Image)" />
-<Meta prefix="og: http://ogp.me/ns#" property="og:url" content="@(MyNavigationManager.Uri)" />
+@inject IJSRuntime JS
 
 @code {
     [Parameter]
@@ -17,4 +11,15 @@
 
     [Parameter]
     public string Image { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await JS.InvokeAsync<string>("headfactory.setTitle", Title);
+        await JS.InvokeAsync<string>("headfactory.setMetadata", "description", Description);
+        await JS.InvokeAsync<string>("headfactory.setGraphMetadata", "og:type", "website");
+        await JS.InvokeAsync<string>("headfactory.setGraphMetadata", "og:title", Title);
+        await JS.InvokeAsync<string>("headfactory.setGraphMetadata", "og:description", Description);
+        await JS.InvokeAsync<string>("headfactory.setGraphMetadata", "og:image", MyNavigationManager.BaseUri.TrimEnd('/') + Image);
+        await JS.InvokeAsync<string>("headfactory.setGraphMetadata", "og:url", MyNavigationManager.Uri);
+    }
 }
