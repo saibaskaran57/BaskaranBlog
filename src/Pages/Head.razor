@@ -12,14 +12,18 @@
     [Parameter]
     public string Image { get; set; }
 
+    /*
     protected override async Task OnParametersSetAsync()
     {
-        await JS.InvokeAsync<string>("headfactory.setTitle", Title);
-        await JS.InvokeAsync<string>("headfactory.setMetadata", "description", Description);
-        await JS.InvokeAsync<string>("headfactory.setGraphMetadata", "og:type", "website");
-        await JS.InvokeAsync<string>("headfactory.setGraphMetadata", "og:title", Title);
-        await JS.InvokeAsync<string>("headfactory.setGraphMetadata", "og:description", Description);
-        await JS.InvokeAsync<string>("headfactory.setGraphMetadata", "og:image", MyNavigationManager.BaseUri.TrimEnd('/') + Image);
-        await JS.InvokeAsync<string>("headfactory.setGraphMetadata", "og:url", MyNavigationManager.Uri);
+
+     await JS.InvokeAsync<string>("headfactory.setTitle", Title);
+     await JS.InvokeAsync<string>("headfactory.setMetadata", "description", Description);
+     await JS.InvokeAsync<string>("headfactory.setGraphMetadata", "og:type", "website");
+     await JS.InvokeAsync<string>("headfactory.setGraphMetadata", "og:title", Title);
+     await JS.InvokeAsync<string>("headfactory.setGraphMetadata", "og:description", Description);
+     await JS.InvokeAsync<string>("headfactory.setGraphMetadata", "og:image", MyNavigationManager.BaseUri.TrimEnd('/') + Image);
+     await JS.InvokeAsync<string>("headfactory.setGraphMetadata", "og:url", MyNavigationManager.Uri);
+
     }
+    */
 }
