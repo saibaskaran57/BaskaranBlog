@@ -1,6 +1,6 @@
 ﻿@page "/about"
 
-<Title Value="Baskaran Blog - About me"></Title>
+<Head Title="@PostHeader" Description="@PostDescription" Image="@PostHeaderImage"></Head>
 
 <div class="about">
     <img src="/assets/avatar/baskaran.jpg" alt="Baskaran" class="avatar">
@@ -16,14 +16,14 @@
             My passion on software development started since 2009 where I wrote my first hello world program on C language. I went on to write
             classic ASP & PHP for my internship programme and started my first full-time professional job on .NET on 2015. I've managed to learn &
             grow with the right mentorship & guidance to release my first ever feature development with .NET Framework 4.6.1 to Production environment.
-            During the years, I've managed to experience on software best practices(e.g. Clean Code, TDD), CI/CD with TFS & Azure DevOps, project 
+            During the years, I've managed to experience on software best practices(e.g. Clean Code, TDD), CI/CD with TFS & Azure DevOps, project
             management frameworks like Scrum & Lean Six Sigma.
         </p>
 
         <p>
             Today, I'm fully focused on writing softwares that optimizes performance, productivity & most importantly cultivating clean practices
             on software development. It's never too late for anything & I have embarked a new journey to start blogging with technologies and share
-            what I have learned along the years. I love minimalist designs which explains my black & white blog theme. 
+            what I have learned along the years. I love minimalist designs which explains my black & white blog theme.
         </p>
 
         <p>
@@ -33,3 +33,9 @@
         </p>
     </div>
 </div>
+
+@code {
+    private string PostHeader = "Baskaran Blog - About me";
+    private string PostDescription = "Hey there, my name is Baskaran Govindaras. Do you love techy stuff relates to .NET development & architectures? Come & collaborate with me!";
+    private string PostHeaderImage = "/assets/avatar/baskaran.jpg";
+}

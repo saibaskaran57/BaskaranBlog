@@ -1,6 +1,6 @@
 ﻿@page "/posts/2020/11/blazor-net5"
 
-<Title Value="@PostHeader"></Title>
+<Head Title="@PostHeader" Description="@PostDescription" Image="@PostHeaderImage"></Head>
 
 <div class="post-header">
     @PostHeader
@@ -16,7 +16,7 @@
 </div>
 
 <div class="post-image">
-    <img src="@PostBaseImage/dotnet5.jpg" alt="Blazor" class="image" />
+    <img src="@PostHeaderImage" alt="Blazor" class="image" />
     Photo by Microsoft
 </div>
 
@@ -211,7 +211,9 @@
 
 @code {
     private string PostHeader = "Building blog with Blazor - Upgrading to .NET 5";
+    private string PostDescription = "Microsoft have announced the much awaiting .NET 5 is globally available on 10th November 2020. Blazor WebAssembly has some significant updates and let's see on how we can upgrade & review some improvements.";
     private string PostDate = "16th November 2020";
     private string PostReadDuration = "15 minutes";
     private string PostBaseImage = "/assets/posts/2020/11/blazor-net5";
+    private string PostHeaderImage = "/assets/posts/2020/11/blazor-net5/dotnet5.jpg";
 }

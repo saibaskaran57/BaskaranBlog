@@ -1,0 +1,20 @@
+﻿@inject NavigationManager MyNavigationManager
+
+<Title>@Title</Title>
+<Meta Name="description" Content="@Description" />
+<Meta Property="og:type" Content="website" />
+<Meta Property="og:title" Content="@Title" />
+<Meta Property="og:description" Content="@Description" />
+<Meta Property="og:image" Content="@(MyNavigationManager.BaseUri.TrimEnd('/') + Image)" />
+<Meta Property="og:url" Content="@MyNavigationManager.Uri" />
+
+@code {
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public string Description { get; set; }
+
+    [Parameter]
+    public string Image { get; set; }
+}

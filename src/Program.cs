@@ -6,6 +6,7 @@ namespace BaskaranBlog
     using Blazor.Analytics;
     using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
     using Microsoft.Extensions.DependencyInjection;
+    using Toolbelt.Blazor.Extensions.DependencyInjection;
 
     public class Program
     {
@@ -13,10 +14,9 @@ namespace BaskaranBlog
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("app");
-
-            builder.Services.AddGoogleAnalytics("G-7M86LVMGM4");
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-
+            builder.Services.AddGoogleAnalytics("G-7M86LVMGM4");
+            builder.Services.AddHeadElementHelper();
             await builder.Build().RunAsync();
         }
     }

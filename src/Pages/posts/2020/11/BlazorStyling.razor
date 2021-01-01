@@ -1,6 +1,6 @@
 ﻿@page "/posts/2020/11/blazor-styling"
 
-<Title Value="@PostHeader"></Title>
+<Head Title="@PostHeader" Description="@PostDescription" Image="@PostHeaderImage"></Head>
 
 <div class="post-header">
     @PostHeader
@@ -16,14 +16,14 @@
 </div>
 
 <div class="post-image">
-    <img src="@PostBaseImage/halacious-header.jpg" alt="Blazor" class="image" />
+    <img src="@PostHeaderImage" alt="Blazor" class="image" />
     Photo by <a href="https://unsplash.com/&commat;halacious">Halacious</a> on Unsplash
 </div>
 
 <div class="post-body">
     <p>
         In this post, it's all about styling the pages and making it look consistent. I am no UI/UX expert
-        and therefore, will keep the initial setup simply simple. I will go through on the CSS setup for 
+        and therefore, will keep the initial setup simply simple. I will go through on the CSS setup for
         the blog which able to fluid render on any devices and how Blazor helps the rendering as well.
     </p>
 
@@ -316,12 +316,14 @@
 </div>
 
 <div class="post-footer">
-    <SocialMedia Title="@PostHeader"/>
+    <SocialMedia Title="@PostHeader" />
 </div>
 
 @code {
     private string PostHeader = "Building blog with Blazor - Styling it up!";
+    private string PostDescription = "Let's look at the basics of blog UI/UX requirements & see how we can leverage fully on .NET, Bootstrap & native CSS only to style up your blog.";
     private string PostDate = "14th November 2020";
     private string PostReadDuration = "15 minutes";
     private string PostBaseImage = "/assets/posts/2020/11/blazor-styling";
+    private string PostHeaderImage = "/assets/posts/2020/11/blazor-styling/halacious-header.jpg";
 }

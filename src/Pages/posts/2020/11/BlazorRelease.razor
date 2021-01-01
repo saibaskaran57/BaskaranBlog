@@ -1,6 +1,6 @@
 ﻿@page "/posts/2020/11/blazor-release"
 
-<Title Value="@PostHeader"></Title>
+<Head Title="@PostHeader" Description="@PostDescription" Image="@PostHeaderImage"></Head>
 
 <div class="post-header">
     @PostHeader
@@ -16,7 +16,7 @@
 </div>
 
 <div class="post-image">
-    <img src="@PostBaseImage/javier-allegue-barros-header.jpg" alt="Blazor" class="image" />
+    <img src="@PostHeaderImage" alt="Blazor" class="image" />
     Photo by <a href="https://unsplash.com/&commat;soymeraki">Javier Allegue Barros</a> on Unsplash
 </div>
 
@@ -30,7 +30,7 @@
     <p>
         Today, creating servers to maintaining them, all have evolved under the term of <strong><i>serverless</i></strong> and
         can be done within a few clicks. Today, let's look and review at two growing platforms for deploying static websites. Before
-        we drill down on the pros & cons of each technologies, let's see the steps to have Blazor WebAssembly app deployed to Azure 
+        we drill down on the pros & cons of each technologies, let's see the steps to have Blazor WebAssembly app deployed to Azure
         Static Web Apps & Netlify.
     </p>
     <p>
@@ -275,8 +275,8 @@
     </p>
     <p>
         <h4>Opinion on the technology stacks</h4>
-        Both technology stacks offers great potential to deploy your first application. It's best to view the below as individual 
-        preferences due to the fact that technology requirements can change every now & then. This opinion is never to influence 
+        Both technology stacks offers great potential to deploy your first application. It's best to view the below as individual
+        preferences due to the fact that technology requirements can change every now & then. This opinion is never to influence
         the decisioning & follow what best suits your requirements.
         <h5>Azure Static Web Apps</h5>
         <strong>Pros</strong>
@@ -325,11 +325,11 @@
     </p>
     <p>
         <h4>In closing</h4>
-        In my opinion, it's best to appreciate this technologies given that it solves problems we had 10 years ago where to 
+        In my opinion, it's best to appreciate this technologies given that it solves problems we had 10 years ago where to
         get a single site available on the internet, we had to look in all aspects from development to maintenance of the
-        sites. Both this technologies offers great functionality to get a site up and running in 5 minutes. All of this depends 
+        sites. Both this technologies offers great functionality to get a site up and running in 5 minutes. All of this depends
         on your use cases & nature of business. For my personal use, I tend to lean towards services that can bring my site
-        up and running quickly and I must say this technologies provides great platform for individuals to start their first 
+        up and running quickly and I must say this technologies provides great platform for individuals to start their first
         app on the internet!
     </p>
 </div>
@@ -340,7 +340,9 @@
 
 @code {
     private string PostHeader = "Building blog with Blazor - Shipping it!";
+    private string PostDescription = "Finished develop Blazor WebAssembly application? Let's look on how we can make this available using Azure Static Web Apps & Netlify.";
     private string PostDate = "20th November 2020";
     private string PostReadDuration = "15 minutes";
     private string PostBaseImage = "/assets/posts/2020/11/blazor-release";
+    private string PostHeaderImage = "/assets/posts/2020/11/blazor-release/javier-allegue-barros-header.jpg";
 }
