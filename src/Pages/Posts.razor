@@ -4,7 +4,7 @@
 
 @inject HttpClient Http
 
-<Title Value="Baskaran Blog - Posts"></Title>
+<Head Title="@PostHeader" Description="@PostDescription" Image="@PostHeaderImage"></Head>
 
 <table class="table table-striped">
     <thead class="thead-dark">
@@ -45,4 +45,10 @@
     {
         posts = await Http.GetFromJsonAsync<Post[]>("posts.json");
     }
+}
+
+@code {
+    private string PostHeader = "Baskaran Blog - Posts";
+    private string PostDescription = "Hey there, my name is Baskaran Govindaras. Do you love techy stuff relates to .NET development & architectures? Come & collaborate with me!";
+    private string PostHeaderImage = "/assets/avatar/baskaran.jpg";
 }

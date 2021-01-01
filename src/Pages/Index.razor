@@ -1,6 +1,6 @@
 ﻿@page "/"
 
-<Title Value="Baskaran Blog"></Title>
+<Head Title="@PostHeader" Description="@PostDescription" Image="@PostHeaderImage"></Head>
 
 <div class="about">
     <div class="row">
@@ -170,8 +170,8 @@
                         </tr>
                         <tr class="content-body">
                             <td colspan="2">
-                                Have you used retries in your softwares? Did you consider the pros/cons before choosing it? Do you 
-                                think that all retries is only going to save you from transient issues? This article will uncover 
+                                Have you used retries in your softwares? Did you consider the pros/cons before choosing it? Do you
+                                think that all retries is only going to save you from transient issues? This article will uncover
                                 something that might erupt one day! Let's dive in!
                             </td>
                         </tr>
@@ -180,7 +180,7 @@
                                 <span class="tags">C#</span>
                                 <span class="tags">Polly</span>
                             </td>
-                            <td align="right">Posted on 25th November 2020</td>
+                            <td align="right">Posted on 25th December 2020</td>
                         </tr>
                     </tbody>
                 </table>
@@ -188,3 +188,9 @@
         </a>
     </div>
 </div>
+
+@code {
+    private string PostHeader = "Baskaran Blog";
+    private string PostDescription = "Hey there, my name is Baskaran Govindaras. Do you love techy stuff relates to .NET development & architectures? Come & collaborate with me!";
+    private string PostHeaderImage = "/assets/avatar/baskaran.jpg";
+}

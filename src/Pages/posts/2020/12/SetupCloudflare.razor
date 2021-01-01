@@ -1,6 +1,6 @@
 ﻿@page "/posts/2020/12/setup-cloud-flare"
 
-<Title Value="@PostHeader"></Title>
+<Head Title="@PostHeader" Description="@PostDescription" Image="@PostHeaderImage"></Head>
 
 <div class="post-header">
     @PostHeader
@@ -15,7 +15,7 @@
 </div>
 
 <div class="post-image">
-    <img src="@PostBaseImage/spacex-header.jpg" alt="Blazor" class="image" />
+    <img src="@PostHeaderImage" alt="SpaceX" class="image" />
      Photo by <a href="https://unsplash.com/&commat;spacex">SpaceX</a> on Unsplash
 </div>
 
@@ -122,7 +122,9 @@
 
 @code {
     private string PostHeader = "Setting up Cloudflare as reverse proxy for your root domains";
+    private string PostDescription = "We have seen numerous examples of configuring sub domains as reverse proxy. In this article, let's look at how we can configure root domains with Cloudflare.";
     private string PostDate = "1st December 2020";
     private string PostReadDuration = "10 minutes";
     private string PostBaseImage = "/assets/posts/2020/12/setupcloudflare";
+    private string PostHeaderImage = "/assets/posts/2020/12/setupcloudflare/spacex-header.jpg";
 }

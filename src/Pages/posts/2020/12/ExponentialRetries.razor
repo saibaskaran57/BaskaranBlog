@@ -1,6 +1,6 @@
 ﻿@page "/posts/2020/12/exponential-retries"
 
-<Title Value="@PostHeader"></Title>
+<Head Title="@PostHeader" Description="@PostDescription" Image="@PostHeaderImage"></Head>
 
 <div class="post-header">
     @PostHeader
@@ -16,13 +16,13 @@
 </div>
 
 <div class="post-image">
-    <img src="@PostBaseImage/aaron-header.jpg" alt="Blazor" class="image" />
+    <img src="@PostHeaderImage" alt="Aaron Thomas" class="image" />
     Photo by <a href="https://unsplash.com/&commat;aaronphs">Aaron Thomas</a> on Unsplash
 </div>
 
 <div class="post-body">
     <p>
-        Have you used retries in your software's? Did you consider the pros/cons before choosing it? In this article, we are going to take deep-dive 
+        Have you used retries in your software's? Did you consider the pros/cons before choosing it? In this article, we are going to take deep-dive
         into exponential retries in specific(most preferred retries). Do you think that all retries is only going to save
         you from transient issues? As the above image, this article will uncover something that might erupt one day! Let's dive in!
         <div class="note">
@@ -65,13 +65,14 @@
         <img src="@PostBaseImage/scenario-3.jpg" alt="Scenario 3" class="image" />
         <br />
         <br />
-        Usually, SaaS providers comes with fair usage policy where if a client repeatedly violates number of requests for X minute/hour, account will get blocked. 
+        Usually, SaaS providers comes with fair usage policy where if a client repeatedly violates number of requests for X minute/hour, account will get blocked.
         Below is an example with <a href="https://docs.microsoft.com/en-us/sharepoint/dev/general-development/how-to-avoid-getting-throttled-or-blocked-in-sharepoint-online?redirectedfrom=MSDN#what-is-throttling">
-        SharePoint Online</a>:
+            SharePoint Online
+        </a>:
         <img src="@PostBaseImage/sharepoint-limit.jpg" alt="Sharepoint fair usage limit" class="image" />
         <a href="https://en.wikipedia.org/wiki/Acceptable_use_policy#:~:text=An%20acceptable%20use%20policy%20(AUP,how%20it%20should%20be%20used.">Fair usage policies</a>
         are absolute necessary for SaaS providers to mitigate issues as such where unusual attempts that disrupts the service availability are violated
-        and can be blocked by providers. With the use-case above, exponential retries seems to keep hit the maximum throttling limit. Isn't that exponential retries help 
+        and can be blocked by providers. With the use-case above, exponential retries seems to keep hit the maximum throttling limit. Isn't that exponential retries help
         to take care this issues? Let's dive in further!
     </p>
 
@@ -151,7 +152,9 @@
 
 @code {
     private string PostHeader = "Exponential retries saves the day! Or not?";
+    private string PostDescription = @"Have you used retries in your softwares? Did you consider the pros/cons before choosing it? Do you think that all retries is only going to save you from transient issues? This article will uncover something that might erupt one day! Let's dive in!";
     private string PostDate = "25th December 2020";
     private string PostReadDuration = "15 minutes";
     private string PostBaseImage = "/assets/posts/2020/12/exponentialretries";
+    private string PostHeaderImage = "/assets/posts/2020/12/exponentialretries/aaron-header.jpg";
 }
