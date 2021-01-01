@@ -32,4 +32,8 @@
     <loc>https://www.baskaran.dev/posts/2020/12/setup-cloud-flare</loc>
     <lastmod>2020-12-31T10:42:47+00:00</lastmod>
   </url>
+  <url>
+    <loc>https://www.baskaran.dev/posts/2020/12/exponential-retries</loc>
+    <lastmod>2020-12-31T10:42:47+00:00</lastmod>
+  </url>
 </urlset>
