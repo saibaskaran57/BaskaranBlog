@@ -1,0 +1,246 @@
+﻿@page "/posts/2021/1/blazor-seo-prerendering"
+
+<Head Title="@PostHeader" Description="@PostDescription" Image="@PostHeaderImage">
+</Head>
+
+<div class="post-header">
+    @PostHeader
+</div>
+
+<div class="post-sub-header">
+    <span class="tags">Blazor</span>
+    <span class="tags">SEO</span>
+    <span class="tags">CloudFlare</span>
+    <span class="tags">Prerender.IO</span>
+    <span>&middot;</span>
+    <span>Posted on @PostDate</span>
+    <span>&middot;</span>
+    <span>@PostReadDuration read</span>
+</div>
+
+<div class="post-image">
+    <img src="@PostHeaderImage" alt="christianw" class="image" />
+    Photo by <a href="https://unsplash.com/&commat;christianw">Christian Wiediger</a> on Unsplash
+</div>
+
+<div class="post-body">
+    <p>
+        Can SEO pre-render Blazor WebAssembly apps? Is it possible to prerender Blazor WebAssembly without a ASP.NET Core hosted model?
+        This article will walkthrough on how to pre-render your Blazor site for SEO without hosting Blazor site as ASP.NET Core hosted model.
+        <div class="note">
+            <i class="fas fa-info-circle"></i> Note:
+            <br />
+            Below article will show & explain solely based on my blog with Blazor WebAssembly .NET 5 and my biggest motivation is to achieve
+            pre-rendering without an actual ASP.NET Core server hosted due to my hosted server is solely for static page app.
+        </div>
+    </p>
+
+    <p>
+        <h4>Problem</h4>
+        I've launched my Blazor WebAssembly .NET 5 blog around November 2020 with CloudFlare as my DNS management. As everybody else launching
+        their first site live on internet, I began to lookout on Google search results on when my blog will be indexed. Two weeks later - my
+        blog got indexed for the first time to the internet but it does not seem showing the results I wanted which as below:
+        <img src="@PostBaseImage/seo-blog-search.jpg" alt="christianw" class="image" />
+        <br />
+        <br />
+        I was expecting for the bot crawler to at least render the content of my <code>index.razor</code> component page but it skipped the actual
+        content and only rendered what was in <code>index.html</code> file which the first text was <i>'Baskaran. Loading... An unhandled error has occurred. Reload'</i>.
+        From there onwards, I thought let's capitalize on <a href="https://www.wordstream.com/meta-tags#:~:text=Meta%20tags%20are%20snippets%20of,a%20web%20page%20is%20about.">meta tags</a>,
+        which to use <code>description</code> meta tag as below on each of my <code>index.html</code> + <code>razor pages</code>:
+        <div class="terminal-header">
+            HTML
+        </div>
+        <div class="terminal-body">
+            <span class="break">&lt;meta name="description" content="your-text-description" /&gt;</span>
+        </div>
+
+        <br />
+
+        <h5>Home page(Index.html)</h5>
+        It worked perfectly fine with <code>index.html</code> which able to solve one of the main problems.
+        <img src="@PostBaseImage/updated-seo-blog-search.jpg" alt="updated-seo-blog-search" class="image" />
+
+        <br />
+        <br />
+
+        <h5>Razor component pages</h5>
+        It was unsuccessful on my <code>razor pages</code> which does not adhere my meta tags but still able to crawl my content of my site which
+        gave me relieve that Google can crawl through WebAssembly sites.
+        <img src="@PostBaseImage/seo-blog-subpage-search.jpg" alt="seo-blog-subpage-search" class="image" />
+
+        <br />
+        <br />
+
+        <h5>Slack crawler bots</h5>
+        Furthermore, I went on to test other bot crawlers(e.g. Slack bot) which results the same and can only preview links
+        from <code>index.html</code> pages and not in other razor component pages.
+        <img src="@PostBaseImage/bot-crawled-result.jpg" alt="updated-crawled-result" class="image" />
+    </p>
+
+    <p>
+        <h4>Why can't search engines identify Blazor WebAssembly client side pages ?</h4>
+        Let's get down to the basics of Blazor WebAssembly. The idea behind webassembly is that it provides flexibility for users
+        to choose the backend language(e.g. C#) and it downloads CLR & assemblies of .NET and compiles it under Javascript interop which
+        you can do a full-stack .NET development. However, the end outcome here is that it will be transformed to Javascript page which
+        is similar to Single page application(SPA) concept where on navigation it does not re-render the entire page from server and only renders
+        the specific component where requires new data.
+        <br />
+        <br />
+        To put everything together in our scenario, Blazor only returns <code>index.html</code> and the necessary assemblies which is transformed to
+        Javascript interop. Only the HTML <code>&lt;body&gt;</code> element is changed on each navigation where the <code>&lt;head&gt;</code> element remains unchanged here
+        since the initial load on <code>index.html</code>. That explains on why metatags is not discoverable on razor component pages. Microsoft does
+        not explain in their documentation which users is warned before using Blazor WebAssembly which can be a big disadvantage for users that
+        leverage sites fully on client side & requires SEO.
+        <br />
+        <br />
+        Recently, Microsoft have launched <a href="https://docs.microsoft.com/en-us/aspnet/core/blazor/components/prerendering-and-integration?view=aspnetcore-5.0&pivots=webassembly">
+        Pre-rendering</a> with Blazor on .NET 5. The solution requires ASP.NET Core in the deployed environment and which can solve all the
+        issues I'm going to share as below if you have IIS/NGINX server. However, I only want to solve SEO in my case here and would prefer to have the similar client side experience
+        with improved SEO which is what I'm going to share on a solution that does not require ASP.NET Core hosted in the deployed environment and you can
+        still deploy your sites as static page app (e.g. Azure Static Web App or Netlify).
+    </p>
+
+    <p>
+        <h4>Solution architecture</h4>
+        <img src="@PostBaseImage/prerender-architecture.jpg" alt="christianw" class="image" />
+        <strong>Process flow:</strong>
+        <ol>
+            <li>An user request will be requested through CloudFlare DNS.</li>
+            <li>Each requested url will be dispatched to CloudFlare Worker.</li>
+            <li>CloudFlare worker will indicate whether the request is from user/bot using <code>user-agent</code> header.</li>
+            <li>If <code>user-agent</code> is user, it will render from live Blazor site.</li>
+            <li>If <code>user-agent</code> is bot, it will request Prerender.IO to retrieve the cached site with meta tags.</li>
+            <li>Prerender.IO will retrieve sites from caching and return back to CloudFlare worker.</li>
+            <li>For each requested site, Prerender.IO has a copy urls from Blazor site sitemap.xml and use to evaluate which site to be returned.</li>
+        </ol>
+    </p>
+
+    <p>
+        <h4>Blazor Head Updater Razor Component</h4>
+        Firstly, we will require a component that updates titles, metatags and links dynamically on each component navigation and can modify
+        <code>&lt;head&gt;</code> element. I could have done it with simple Blazor Javascript injection but I bumped into the a Blazor community package
+        where it helps to add/update head element. The component Nuget package is called <a href="https://github.com/jsakamoto/Toolbelt.Blazor.HeadElement">Toolbelt.Blazor.HeadElement</a>.
+        The author have fully documented on how to use the package and it's pretty straightforward. For reference, you can check out my blog repository in
+        <a href="https://github.com/saibaskaran57/BaskaranBlog/blob/main/src/Shared/Head.razor">Github</a>.
+
+        <br />
+        <br />
+        Once configured, on each navigation you can inspect page elements on whether the page <code>&lt;head&gt;</code> element is updated as below:
+        <img src="@PostBaseImage/blazor-pagesource.jpg" alt="blazor pagesource" class="image" />
+        SEO Meta tags benefits:
+        <ol>
+            <li>Meta Description - to show short summary of your page on crawler bots</li>
+            <li>Meta Open graph - useful to render link previews to render in posts(e.g. Facebook, Twitter, LinkedIn, Slack, etc)</li>
+        </ol>
+    </p>
+
+    <p>
+        <h4>Sitemaps</h4>
+        In short - sitemaps are the blueprint of your site. <a href="https://www.sitemaps.org/protocol.html">Sitemaps</a> is a file where it provides information about the
+        pages on your site. Search engines like Google will read <code>sitemap.xml</code> to crawl your site. You can specify when the page was last updated,
+        how often the page is changed, and any alternate language versions of a page.
+        <br />
+        <br />
+        Google does recommends sitemaps.xml for a very large websites with lots of page links but for our use case, it's a <b>MUST</b> to have it because not only it
+        benefits Google search indexing but also it benefits sites like Prerender.IO (which will be discussed in next section) where it can read all the urls from your
+        sitemap.xml and cache it! Simply click <code>Add URLs from Sitemap</code> and it will load all the urls configured and cache it immediately.
+
+        <img src="@PostBaseImage/prerender-site.jpg" alt="Prerender.IO configuration page" class="image" />
+    </p>
+
+    <p>
+        <h4>Prerender.IO</h4>
+        <a href="https://prerender.io/">Prerender.IO</a> is a SaaS solution where it allows search engines to crawl seo-friendly version of
+        single page applications(SPA). Search bots always tries to crawl your pages, but they only see index.html page which does not see the updated page components.
+        Prerender.IO renders your subscribed page in a browser, saves it as static HTML and return that to the crawlers!
+        <br />
+        <br />
+        Based on the solution architecture above, we need prerendering to take effect when a page is requested only by crawlers and not by user
+        requests. So, the idea of this that it does not require a service with ASP.NET Core/Java hosted in the environment we host the static pages
+        and can be crawled immediately.
+        <br />
+        <br />
+        However, we are not done yet. Prerender.IO comes with a <strong><u><span style="color:red">limitation</span></u></strong> where the initial request has to go
+        through a <a href="https://docs.prerender.io/article/12-middlewares">middleware</a> to indicate whether its from user/bots based on user-agents. The suggested
+        documentation guide requires a server to be hosted which the only that it requires is some sort of a middleware that does the checking before it process the request.
+        With that - you can proceed to the next section where the magic happens!
+
+        <div class="note warning">
+            <i class="fas fa-exclamation-triangle"></i> Warning:
+            <br />
+            Free Prerender.IO license can only be cached up to 200 pages. If you have a large site, you can consider using Startup license which monthly
+            cost is about $9 USD with 30 days cache freshness.
+        </div>
+    </p>
+
+    <p>
+        <h4>CloudFlare Workers</h4>
+        Here the magic happens! <a href="https://cloudflareworkers.com/?_ga=2.78202388.1281935876.1609504826-909045958.1597499259&_gac=1.224769384.1609588466.Cj0KCQiA0MD_BRCTARIsADXoopZov7-RTySHYTOAaz7rFR090qejSfggShHK417On5tZj3i9x3R2IfIaAl_3EALw_wcB#12a9195720fe4ed660949efdbd9c0219:https://tutorial.cloudflareworkers.com/">Cloudflare</a>
+        provides a service called <strong>Cloudflare Worker</strong> that is JavaScript based you write that runs on Cloudflare's edge which is a high performance V8 JavaScript engine. Basically,
+        it can help to intercept each requests made to your site and deliver personalized user experiences. In most ideal use case scenarios, it can simplify A/B testing where
+        we can test out site before enabling to live traffic.
+        <br />
+        <br />
+        For our scenario, we need some sort of middleware that intercepts the requests to validate against crawled bots and dispatch requests to Prerender.IO. With that, we can
+        leverage the ever-ready Workers feature in CloudFlare to intercept requests. In my previous <a href="https://www.baskaran.dev/posts/2020/12/setup-cloud-flare">post</a>, I have
+        covered on how to configure CloudFlare with your static website. Succeeding on that, CloudFlare has documented the getting started steps to get your first CloudFlare Worker
+        right <a href="https://developers.cloudflare.com/workers/learning/getting-started">here</a>.
+        <br />
+        <br />
+        Once you have configured that, you can use this code to detect crawled bots and user requests. You will <strong>NEED</strong> to copy & paste Bot Detector code
+        directly to test it out which is right <a href="https://github.com/saibaskaran57/cloudflare-bot-detector/blob/main/bot-detector.js">here</a>. Before deploying it, you will need
+        to replace your Prerender.IO token in line 17 that is blanked out to get cached static content from Prerender.IO.
+        <img src="@PostBaseImage/cloudworker-sample.jpg" alt="CloudFlare worker sample" class="image" />
+        <br />
+        <br />
+        There are two criteria's which Bot Detector uses to detect if the request is from a crawled bot:
+        <ol>
+            <li>
+                <code>?_escaped_fragment_=</code> - Google seems to already <a href="https://docs.prerender.io/article/9-google-support">deprecated</a> where they have stopped crawling with this query-string
+            </li>
+            <li>
+                <code>user-agent</code> - Bot Detector only allows pre-rendering based on crawler bots as configured which a possible list on where your site can be crawled(e.g. Facebook,
+                Twitter, LinkedIn, Slack, Whatsapp, etc)
+            </li>
+        </ol>
+        <div class="note warning">
+            <i class="fas fa-exclamation-triangle"></i> Warning:
+            <br />
+            Free CloudFlare Workers have limits of 100,000 requests per day capacity. For more requests, you can upgrade to Workers Bundled plan for
+            monthly plan of $5. It includes 10 million requests per month.
+        </div>
+    </p>
+
+    <p>
+        <h4>Put it to test!</h4>
+        Once you have configured the previous sections, to quickly test it rather than waiting for couple of days for crawling to happen, you
+        can copy the links of razor component pages and test it out using Slack chat, Facebook status, Twitter tweets, etc.
+        <br />
+        <br />
+        In my example, I've used Slack chat to verify if the links can be previewed with my configured meta tags and YES, it successfully
+        crawled my site without the needing of actual server to be hosted for pre-rendering and delegates my request to Prerender.IO for
+        crawler user agents.
+        <img src="@PostBaseImage/updated-bot-crawled-result.jpg" alt="updated-crawled-result" class="image" />
+    </p>
+
+    <p>
+        <h4>In closing</h4>
+        With this solution architecture, you don't need ASP.NET Core hosted in the deployed environment where pre-rendering is
+        taken care by Prerender.IO and managed by CloudFlare workers to detect bot crawlers. Now, you can successfully share your links
+        in social media without being limited to only <code>index.html</code>. If you have any questions in related to this architecture,
+        you can reach out to me on my social media links in the footer links. Thanks!
+    </p>
+</div>
+
+<div class="post-footer">
+    <SocialMedia Title="@PostHeader" />
+</div>
+
+@code {
+    private string PostHeader = "Blazor WebAssembly Client Side SEO Pre-rendering";
+    private string PostDescription = "Can SEO pre-render Blazor WebAssembly apps? Is it possible to prerender Blazor WebAssembly without a server? This article will walkthrough on how to pre-render your Blazor site for SEO specifically on single page application.";
+    private string PostDate = "3rd January 2021";
+    private string PostReadDuration = "15 minutes";
+    private string PostBaseImage = "/assets/posts/2021/1/blazorseoprerendering";
+    private string PostHeaderImage = "/assets/posts/2021/1/blazorseoprerendering/christian-header.jpg";
+}

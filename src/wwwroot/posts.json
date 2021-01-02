@@ -81,6 +81,22 @@
       "C#",
       "Polly"
     ]
+  },
+  {
+    "year": "2021",
+    "name": "Blazor WebAssembly Client Side SEO Pre-rendering",
+    "url": "/posts/2021/1/blazor-seo-prerendering",
+    "date": "3rd January 2021",
+    "description": "",
+    "pinned": {
+      "order": 7
+    },
+    "tags": [
+      "Blazor",
+      "SEO",
+      "CloudFlare",
+      "Prerender.IO"
+    ]
   }
 ]
 

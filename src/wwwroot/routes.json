@@ -5,8 +5,5 @@
       "serve": "/index.html",
       "statusCode": 200
     }
-  ],
-  "defaultHeaders": {
-    "X-Prerender-Token": "E1vAWQMix1xYDevQIJhV"
-  }
+  ]
 }
