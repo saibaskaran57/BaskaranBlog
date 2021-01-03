@@ -25,13 +25,16 @@
 
 <div class="post-body">
     <p>
-        Can SEO pre-render Blazor WebAssembly apps? Is it possible to prerender Blazor WebAssembly without a ASP.NET Core hosted model?
-        This article will walkthrough on how to pre-render your Blazor site for SEO without hosting Blazor site as ASP.NET Core hosted model.
+        Can SEO pre-render Blazor WebAssembly apps? Is it possible to prerender Blazor WebAssembly without a ASP.NET Core hosted model for search engines?
+        This article will walkthrough on how to pre-render your Blazor site for SEO without hosting Blazor site as ASP.NET Core hosted model but pure static
+        web app.
         <div class="note">
             <i class="fas fa-info-circle"></i> Note:
             <br />
-            Below article will show & explain solely based on my blog with Blazor WebAssembly .NET 5 and my biggest motivation is to achieve
-            pre-rendering without an actual ASP.NET Core server hosted due to my hosted server is solely for static page app.
+            This post will show & explain solely based on my blog with Blazor WebAssembly .NET 5 and my biggest motivation is to achieve
+            pre-rendering without an actual ASP.NET Core server hosted due to my hosted server is dedicated for static page app. Also, the post
+            will not cover on leveraging this technique to improve loading performance which Blazor Server-side Pre-rendering is highly recommeded but it will target
+            only for SEO purposes.
         </div>
     </p>
 
@@ -39,8 +42,8 @@
         <h4>Problem</h4>
         I've launched my Blazor WebAssembly .NET 5 blog around November 2020 with CloudFlare as my DNS management. As everybody else launching
         their first site live on internet, I began to lookout on Google search results on when my blog will be indexed. Two weeks later - my
-        blog got indexed for the first time to the internet but it does not seem showing the results I wanted which as below:
-        <img src="@PostBaseImage/seo-blog-search.jpg" alt="christianw" class="image" />
+        blog got indexed for the first time to the internet but it does not seem to show the results I wanted which as below:
+        <img src="@PostBaseImage/seo-blog-search.jpg" alt="SEO blog search" class="image" />
         <br />
         <br />
         I was expecting for the bot crawler to at least render the content of my <code>index.razor</code> component page but it skipped the actual
@@ -102,16 +105,18 @@
 
     <p>
         <h4>Solution architecture</h4>
-        <img src="@PostBaseImage/prerender-architecture.jpg" alt="christianw" class="image" />
+        We don't need a complicated setup to achieve this. All we need is two main components, CloudFlare Worker & Prerender.IO that does the
+        magic of us!
+        <img src="@PostBaseImage/prerender-architecture.jpg" alt="Pre-render architecture" class="image" />
         <strong>Process flow:</strong>
         <ol>
-            <li>An user request will be requested through CloudFlare DNS.</li>
-            <li>Each requested url will be dispatched to CloudFlare Worker.</li>
+            <li>An user request will flow through CloudFlare DNS.</li>
+            <li>Each requested url will be dispatched to CloudFlare Worker which acts as a middleware.</li>
             <li>CloudFlare worker will indicate whether the request is from user/bot using <code>user-agent</code> header.</li>
-            <li>If <code>user-agent</code> is user, it will render from live Blazor site.</li>
-            <li>If <code>user-agent</code> is bot, it will request Prerender.IO to retrieve the cached site with meta tags.</li>
+            <li>If <code>user-agent</code> is from user, it will render from live Blazor site.</li>
+            <li>If <code>user-agent</code> is from crawler bot, it will request Prerender.IO to retrieve the cached site with meta tags.</li>
             <li>Prerender.IO will retrieve sites from caching and return back to CloudFlare worker.</li>
-            <li>For each requested site, Prerender.IO has a copy urls from Blazor site sitemap.xml and use to evaluate which site to be returned.</li>
+            <li>For each requested site, Prerender.IO has a copy urls from Blazor site <code>sitemap.xml</code> and use to evaluate which site to be returned.</li>
         </ol>
     </p>
 
@@ -129,7 +134,7 @@
         <img src="@PostBaseImage/blazor-pagesource.jpg" alt="blazor pagesource" class="image" />
         SEO Meta tags benefits:
         <ol>
-            <li>Meta Description - to show short summary of your page on crawler bots</li>
+            <li>Meta Description - to show short summary of your page to crawler bots</li>
             <li>Meta Open graph - useful to render link previews to render in posts(e.g. Facebook, Twitter, LinkedIn, Slack, etc)</li>
         </ol>
     </p>
@@ -141,9 +146,9 @@
         how often the page is changed, and any alternate language versions of a page.
         <br />
         <br />
-        Google does recommends sitemaps.xml for a very large websites with lots of page links but for our use case, it's a <b>MUST</b> to have it because not only it
+        Google does recommends <code>sitemap.xml</code> for large websites with lots of page links but for our use case, it's a <b>MUST</b> to have it because not only it
         benefits Google search indexing but also it benefits sites like Prerender.IO (which will be discussed in next section) where it can read all the urls from your
-        sitemap.xml and cache it! Simply click <code>Add URLs from Sitemap</code> and it will load all the urls configured and cache it immediately.
+        <code>sitemap.xml</code> and cache it! Simply click <code>Add URLs from Sitemap</code> and it will load all the urls configured and cache it immediately.
 
         <img src="@PostBaseImage/prerender-site.jpg" alt="Prerender.IO configuration page" class="image" />
     </p>
@@ -152,17 +157,18 @@
         <h4>Prerender.IO</h4>
         <a href="https://prerender.io/">Prerender.IO</a> is a SaaS solution where it allows search engines to crawl seo-friendly version of
         single page applications(SPA). Search bots always tries to crawl your pages, but they only see index.html page which does not see the updated page components.
-        Prerender.IO renders your subscribed page in a browser, saves it as static HTML and return that to the crawlers!
+        Prerender.IO renders your subscribed page in a browser, saves it as static HTML that consist of Javascript updated <code>&lt;head&gt;</code> element and return 
+        that to the crawlers!
         <br />
         <br />
         Based on the solution architecture above, we need prerendering to take effect when a page is requested only by crawlers and not by user
-        requests. So, the idea of this that it does not require a service with ASP.NET Core/Java hosted in the environment we host the static pages
-        and can be crawled immediately.
+        requests. So, the idea does not require a service with ASP.NET Core/Java hosted in the environment we host the static pages and can be 
+        crawled immediately and much faster!
         <br />
         <br />
         However, we are not done yet. Prerender.IO comes with a <strong><u><span style="color:red">limitation</span></u></strong> where the initial request has to go
         through a <a href="https://docs.prerender.io/article/12-middlewares">middleware</a> to indicate whether its from user/bots based on user-agents. The suggested
-        documentation guide requires a server to be hosted which the only that it requires is some sort of a middleware that does the checking before it process the request.
+        documentation guide requires a server to be hosted which it requires a middleware that does bot crawler detection before it decides to process the request.
         With that - you can proceed to the next section where the magic happens!
 
         <div class="note warning">
@@ -189,7 +195,7 @@
         <br />
         Once you have configured that, you can use this code to detect crawled bots and user requests. You will <strong>NEED</strong> to copy & paste Bot Detector code
         directly to test it out which is right <a href="https://github.com/saibaskaran57/cloudflare-bot-detector/blob/main/bot-detector.js">here</a>. Before deploying it, you will need
-        to replace your Prerender.IO token in line 17 that is blanked out to get cached static content from Prerender.IO.
+        to replace your Prerender.IO token in <code>line 17</code> that is blanked out to get cached static content from Prerender.IO.
         <img src="@PostBaseImage/cloudworker-sample.jpg" alt="CloudFlare worker sample" class="image" />
         <br />
         <br />
@@ -227,7 +233,8 @@
         <h4>In closing</h4>
         With this solution architecture, you don't need ASP.NET Core hosted in the deployed environment where pre-rendering is
         taken care by Prerender.IO and managed by CloudFlare workers to detect bot crawlers. Now, you can successfully share your links
-        in social media without being limited to only <code>index.html</code>. If you have any questions in related to this architecture,
+        in social media without being limited to only <code>index.html</code>. I believe if Azure services like Azure Static Web App offers
+        such a middleware scenario, it can definitely be a game changer. If you have any questions in related to this solution,
         you can reach out to me on my social media links in the footer links. Thanks!
     </p>
 </div>
