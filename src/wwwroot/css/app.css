@@ -371,10 +371,18 @@ app {
     word-break: break-word;
 }
 
+    .note a {
+        color: black;
+    }
+
 .warning {
     background-color: #FFCC00;
     color: black;
 }
+
+    .warning a {
+        color: black;
+    }
 
 .table {
     width: 800px;

@@ -157,12 +157,20 @@
         <h4>Prerender.IO</h4>
         <a href="https://prerender.io/">Prerender.IO</a> is a SaaS solution where it allows search engines to crawl seo-friendly version of
         single page applications(SPA). Search bots always tries to crawl your pages, but they only see index.html page which does not see the updated page components.
-        Prerender.IO renders your subscribed page in a browser, saves it as static HTML that consist of Javascript updated <code>&lt;head&gt;</code> element and return 
+        Prerender.IO renders your subscribed page in a browser, saves it as static HTML that consist of Javascript updated <code>&lt;head&gt;</code> element and return
         that to the crawlers!
-        <br />
+
+        <div class="note">
+            <i class="fas fa-info-circle"></i> Note:
+            <br />
+            This technique is recognized by Google which is called Dynamic Rendering and Googlebot doesn't consider dynamic rendering as cloaking.
+            As long as dynamic rendering produced similar content, Googlebot won't view dynamic rendering as cloaking. In fact - Google does recognize
+            common dynamic renderes like Prerender.IO right <a href="https://developers.google.com/search/docs/guides/dynamic-rendering#implement">here</a>.
+        </div>
+
         <br />
         Based on the solution architecture above, we need prerendering to take effect when a page is requested only by crawlers and not by user
-        requests. So, the idea does not require a service with ASP.NET Core/Java hosted in the environment we host the static pages and can be 
+        requests. So, the idea does not require a service with ASP.NET Core/Java hosted in the environment we host the static pages and can be
         crawled immediately and much faster!
         <br />
         <br />
