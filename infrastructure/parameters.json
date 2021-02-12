@@ -1,0 +1,36 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "name": {
+            "value": "baskaranblog"
+        },
+        "location": {
+            "value": "eastasia"
+        },
+        "sku": {
+            "value": "Free"
+        },
+        "skucode": {
+            "value": "Free"
+        },
+        "repositoryUrl": {
+            "value": "https://github.com/saibaskaran57/BaskaranBlog"
+        },
+        "branch": {
+            "value": "main"
+        },
+        "repositoryToken": {
+            "value": null
+        },
+        "appLocation": {
+            "value": "src"
+        },
+        "apiLocation": {
+            "value": "Api"
+        },
+        "appArtifactLocation": {
+            "value": "wwwroot"
+        }
+    }
+}
