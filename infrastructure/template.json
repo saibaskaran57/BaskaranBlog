@@ -1,0 +1,62 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "name": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    },
+    "sku": {
+      "type": "string"
+    },
+    "skucode": {
+      "type": "string"
+    },
+    "repositoryUrl": {
+      "type": "string"
+    },
+    "branch": {
+      "type": "string"
+    },
+    "repositoryToken": {
+      "type": "secureString"
+    },
+    "appLocation": {
+      "type": "string"
+    },
+    "apiLocation": {
+      "type": "string"
+    },
+    "appArtifactLocation": {
+      "type": "string"
+    }
+  },
+  "functions": [],
+  "resources": [
+    {
+      "type": "Microsoft.Web/staticSites",
+      "apiVersion": "2020-06-01",
+      "name": "[parameters('name')]",
+      "location": "[parameters('location')]",
+      "tags": {
+        "Project": "Blazor"
+      },
+      "properties": {
+        "repositoryUrl": "[parameters('repositoryUrl')]",
+        "branch": "[parameters('branch')]",
+        "repositoryToken": "[parameters('repositoryToken')]",
+        "buildProperties": {
+          "appLocation": "[parameters('appLocation')]",
+          "apiLocation": "[parameters('apiLocation')]",
+          "appArtifactLocation": "[parameters('appArtifactLocation')]"
+        }
+      },
+      "sku": {
+        "tier": "[parameters('sku')]",
+        "name": "[parameters('skucode')]"
+      }
+    }
+  ]
+}
