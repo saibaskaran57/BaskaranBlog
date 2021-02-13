@@ -1,6 +1,7 @@
 ﻿@page "/posts/2020/11/blazor-getting-started"
 
-<Head Title="@PostHeader" Description="@PostDescription" Image="@PostHeaderImage"></Head>
+<Head Title="@PostHeader" Description="@PostDescription" Image="@PostHeaderImage">
+</Head>
 
 <div class="post-header">
     @PostHeader
@@ -29,6 +30,18 @@
         In my opinion, choose what best fits your requirements. For me, I'm creating this blog
         for my personal hobby and would want to explore blazor technologies along my way.
     </p>
+
+    <div>
+        <amp-ad width="100vw" height="320"
+                type="adsense"
+                data-ad-client="ca-pub-4346682568527314"
+                data-ad-slot="3476236030"
+                data-auto-format="rspv"
+                data-full-width="">
+            <div overflow=""></div>
+        </amp-ad>
+    </div>
+
     <p>
         <h4>Why did I choose Blazor?</h4>
         Personally, I have been always developing software's revolving with C# .NET
@@ -72,8 +85,10 @@
         <br />
         <br />
         In Blazor, it leverages the same Razor syntax but the key difference here is that it does not re-render <code>Views</code> and <strong>
-        <u>only render specific components</u></strong> called <a href="https://docs.microsoft.com/en-us/aspnet/core/blazor/components/?view=aspnetcore-5.0&viewFallbackFrom=aspnetcore-3.0" target="_blank">
-        Razor components</a>. After the component is initially rendered, the component regenerates its render tree in response to events. Blazor then
+            <u>only render specific components</u>
+        </strong> called <a href="https://docs.microsoft.com/en-us/aspnet/core/blazor/components/?view=aspnetcore-5.0&viewFallbackFrom=aspnetcore-3.0" target="_blank">
+            Razor components
+        </a>. After the component is initially rendered, the component regenerates its render tree in response to events. Blazor then
         compares the new render tree against the previous one and applies any modifications to the browser's Document Object Model (DOM).
         <br />
         <br />
