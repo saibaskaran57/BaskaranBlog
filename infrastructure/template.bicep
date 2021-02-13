@@ -11,7 +11,7 @@ param appLocation string
 param apiLocation string
 param appArtifactLocation string
 
-resource name_resource 'Microsoft.Web/staticSites@2020-06-01' = {
+resource static_site 'Microsoft.Web/staticSites@2020-06-01' = {
   name: name
   location: location
   properties: {
