@@ -97,6 +97,21 @@
       "CloudFlare",
       "Prerender.IO"
     ]
+  },
+  {
+    "year": "2021",
+    "name": "Project Bicep - Deploy Azure resource declaratively",
+    "url": "/posts/2021/2/bicep",
+    "date": "12th February 2021",
+    "description": "",
+    "pinned": {
+      "order": 8
+    },
+    "tags": [
+      "Azure",
+      "Bicep",
+      "ARM"
+    ]
   }
 ]
 

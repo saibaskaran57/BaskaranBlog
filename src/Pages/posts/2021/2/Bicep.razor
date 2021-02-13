@@ -1,0 +1,272 @@
+﻿@page "/posts/2021/2/bicep"
+
+<Head Title="@PostHeader" Description="@PostDescription" Image="@PostHeaderImage">
+</Head>
+
+<div class="post-header">
+    @PostHeader
+</div>
+
+<div class="post-sub-header">
+    <span class="tags">Azure</span>
+    <span class="tags">Bicep</span>
+    <span class="tags">ARM</span>
+    <span>&middot;</span>
+    <span>Posted on @PostDate</span>
+    <span>&middot;</span>
+    <span>@PostReadDuration read</span>
+</div>
+
+<div class="post-image">
+    <img src="@PostHeaderImage" alt="microsoft" class="image" />
+    Photo by <a href="https://devblogs.microsoft.com/devops/project-bicep-next-generation-arm-templates/">Microsoft</a>
+</div>
+
+<div class="post-body">
+    <p>
+        Late last year, I first heard about Project Bicep at Ignite 2020 and it's goals of how it bring improvements to the current ARM template development experience. After a recent update on Project Bicep, I thought
+        about getting it started rightaway after watching a video by Microsoft on <a href="https://devblogs.microsoft.com/devops/project-bicep-next-generation-arm-templates/">Microsoft DevBlogs</a>.
+    </p>
+    <p>
+        <h4>What is Project Bicep?</h4>
+        Bicep is a Domain Specific Language (DSL) for deploying Azure resources declaratively. It aims to drastically simplify the authoring experience with a cleaner syntax and
+        better support for modularity and code re-use. It's a next generation tooling for ARM templates!
+        <div class="note warning">
+            <i class="fas fa-info-circle"></i> Warning:
+            <br />
+            Project Bicep is still in experimental preview and not advisable for production yet.
+        </div>
+    </p>
+
+    <p>
+        <h4>Thoughts about current ARM templates experience</h4>
+        <ol>
+            <li>When I initially started ARM template development, I find it difficult to understand without a proper documentation to refer - until today!</li>
+            <li>
+                I usually have more than one templates that needs almost a similar modules (e.g. ServerFarm, Storage, Certificates, etc.). All the time, <strong><u>copy & paste</u></strong> is the only
+                solution which does not adhere to DRY principle and I repeat myself on every templates.
+            </li>
+            <li>
+                Assigning parameters or variables needs <code>[...]</code> syntax. Template functions(e.g. <code>concat</code>) can get really complicated if you have more than three strings to combine which ends up as
+                <code>[concat(parameters('first'), parameters('second'), parameters('third'))]</code>
+            </li>
+            <li>If you're building templates from scratch, you can easily make mistakes by missing quotes, indent, etc as the usual JSON problems.</li>
+            <li>No proper type safety(e.g. <code>string</code>) validation can only be tested after running the Azure resource deployment.</li>
+            <li>Via Intellisense, when describing ARM templates, it does not provide an idea of the required fields.</li>
+        </ol>
+    </p>
+   
+    <p>
+        <h4>Getting started</h4>
+        I've been trying to learn Bicep for a couple of weeks now and how it can improvise my ARM template development experience. During this progress, I've the recorded the steps to get
+        started and I could achieve it in less than 10 minutes.
+        <br />
+        <br />
+        <h5>Pre-requisite</h5>
+        <ol>
+            <li>
+                Installing Bicep with <a href="https://github.com/Azure/bicep/blob/main/docs/installing.md">guide</a>
+            </li>
+            <li>
+                Try out <a href="https://bicepdemo.z22.web.core.windows.net/">Bicep playground</a> for learning with community examples
+            </li>
+        </ol>
+
+        <h5>Azure Static Web App example</h5>
+        In order to get started, I started building my first <code>.bicep</code> file using Visual Studio Code as the <a href="https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-bicep">Bicep extension</a>
+        provides the intellisense to build the <code>.bicep</code>. Please refer the example below for creating bicep for Azure Static Web App.
+        <div class="terminal-header">
+            main.bicep
+        </div>
+        <div class="terminal-body">
+            <span class="break">param name string  <span class="terminal-comment">// param is equivalent to parameters in ARM template</span></span>
+            <span class="break">param location string</span>
+            <span class="break">param sku string</span>
+            <span class="break">param skucode string</span>
+            <span class="break">param repositoryUrl string</span>
+            <span class="break">param branch string</span>
+            <span class="break">param repositoryToken string {</span>
+            <span class="break">&nbsp;&nbsp;secure: true <span class="terminal-comment">// helps to secure the string from printing out confidential information</span></span>
+            <span class="break">}</span>
+            <span class="break">param appLocation string</span>
+            <span class="break">param apiLocation string</span>
+            <span class="break">param appArtifactLocation string</span>
+            <span class="break">var simpleVariable = 'for example' <span class="terminal-comment">// var is equivalent to variables in ARM template</span></span>
+            <span class="break">&nbsp;</span>
+            <span class="break">resource static_site 'Microsoft.Web/staticSites@2020-06-01' = { <span class="terminal-comment">// static_site here refers as resource identifier to ease dependsOn implementation</span></span>
+            <span class="break">&nbsp;&nbsp;name: name <span class="terminal-comment">// parameter assignment is equivalent to [parameters('name')] in ARM template </span></span>
+            <span class="break">&nbsp;&nbsp;location: location</span>
+            <span class="break">&nbsp;&nbsp;properties: {</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;repositoryUrl: repositoryUrl</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;branch: branch</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;repositoryToken: repositoryToken</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;buildProperties: {</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;appLocation: appLocation</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;apiLocation: apiLocation</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;appArtifactLocation: appArtifactLocation</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;}</span>
+            <span class="break">&nbsp;&nbsp;}</span>
+            <span class="break">&nbsp;&nbsp;sku: {</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;tier: sku</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;name: skucode</span>
+            <span class="break">&nbsp;&nbsp;}</span>
+            <span class="break">}</span>
+        </div>
+        <br />
+        Once you are done and happy with the bicep file, on your Visual Studio Code terminal you can run the below
+        <div class="terminal-header">
+            Terminal
+        </div>
+        <div class="terminal-body">
+            <span class="break">>  bicep build ./main.bicep</span>
+        </div>
+        <br />
+        Upon a successful build, the bicep cli will transpiles the code to main.json which is your ARM template.
+        <div class="terminal-header">
+            main.json
+        </div>
+        <div class="terminal-body">
+            <span class="break">{</span>
+            <span class="break">&nbsp;"$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",</span>
+            <span class="break">&nbsp;"contentVersion": "1.0.0.0",</span>
+            <span class="break">&nbsp;"parameters": {</span>
+            <span class="break">&nbsp;&nbsp;"name": {</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;"type": "string"</span>
+            <span class="break">&nbsp;&nbsp;},</span>
+            <span class="break">&nbsp;&nbsp;"location": {</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;"type": "string"</span>
+            <span class="break">&nbsp;&nbsp;},</span>
+            <span class="break">&nbsp;&nbsp;"sku": {</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;"type": "string"</span>
+            <span class="break">&nbsp;&nbsp;},</span>
+            <span class="break">&nbsp;&nbsp;"skucode": {</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;"type": "string"</span>
+            <span class="break">&nbsp;&nbsp;},</span>
+            <span class="break">&nbsp;&nbsp;"repositoryUrl": {</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;"type": "string"</span>
+            <span class="break">&nbsp;&nbsp;},</span>
+            <span class="break">&nbsp;&nbsp;"branch": {</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;"type": "string"</span>
+            <span class="break">&nbsp;&nbsp;},</span>
+            <span class="break">&nbsp;&nbsp;"repositoryToken": {</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;"type": "string"</span>
+            <span class="break">&nbsp;&nbsp;},</span>
+            <span class="break">&nbsp;&nbsp;"appLocation": {</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;"type": "string"</span>
+            <span class="break">&nbsp;&nbsp;},</span>
+            <span class="break">&nbsp;&nbsp;"apiLocation": {</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;"type": "string"</span>
+            <span class="break">&nbsp;&nbsp;},</span>
+            <span class="break">&nbsp;&nbsp;"appArtifactLocation": {</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;"type": "string"</span>
+            <span class="break">&nbsp;&nbsp;}</span>
+            <span class="break">&nbsp;},</span>
+            <span class="break">&nbsp;"functions": [],</span>
+            <span class="break">&nbsp;"variables": {</span>
+            <span class="break">&nbsp;&nbsp;"simpleVariable": "for example"</span>
+            <span class="break">&nbsp;}</span>
+            <span class="break">&nbsp;"resources": [</span>
+            <span class="break">&nbsp;&nbsp;{</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;"type": "Microsoft.Web/staticSites",</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;"apiVersion": "2020-06-01",</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;"name": "[parameters('name')]",</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;"location": "[parameters('location')]",</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;"properties": {</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;"repositoryUrl": "[parameters('repositoryUrl')]",</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;"branch": "[parameters('branch')]",</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;"repositoryToken": "[parameters('repositoryToken')]",</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;"buildProperties": {</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"appLocation": "[parameters('appLocation')]",</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"apiLocation": "[parameters('apiLocation')]",</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"appArtifactLocation": "[parameters('appArtifactLocation')]"</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;}</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;},</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;"sku": {</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;"tier": "[parameters('sku')]",</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;&nbsp;"name": "[parameters('skucode')]"</span>
+            <span class="break">&nbsp;&nbsp;&nbsp;}</span>
+            <span class="break">&nbsp;&nbsp;}</span>
+            <span class="break">&nbsp;]</span>
+            <span class="break">}</span>
+        </div>
+        <br />
+        You can now deploy this template via Powershell commands
+        <div class="terminal-header">
+            Powershell
+        </div>
+        <div class="terminal-body">
+            <span class="break">>  az deployment group create -f ./main.json -g my-rg</span>
+        </div>
+        <br />
+        Okay, how about your existing ARM templates, can you convert it into <code>.bicep</code> format? YES, you can!
+        <div class="terminal-header">
+            Terminal
+        </div>
+        <div class="terminal-body">
+            <span class="break">>  bicep decompile ./main.json</span>
+        </div>
+        <br />
+        Things have become so much easier now with Project Bicep help where you can now start generating ARM template with Project Bicep!
+    </p>
+
+    <p>
+        <h4>How does Project Bicep solves?</h4>
+        <ol>
+            <li>
+                Breaking part of templates to separate <a href="https://github.com/Azure/bicep/blob/main/docs/spec/modules.md">modules</a> is the best improvement. I don't need to repeat myself anymore
+                for common templates (e.g. ServerFarm, Storage, Certificates, etc.)
+            </li>
+            <li>
+                Visual studio Code intellisense able to provide your the properties that needs to be configured by using <kbd>CTRL + Spacebar</kbd>
+                <img src="@PostBaseImage/bicep-intellisense.jpg" alt="Bicep intellisense" class="image" />
+            </li>
+            <li>
+                Type safety validation is so much better now as it provides real-time validation for incorrect input
+                <img src="@PostBaseImage/bicep-validation.jpg" alt="Bicep validation" class="image" />
+            </li>
+            <li>
+                Much lesser code compared as you can see the examples above that it has cut half the size(32 lines of code) of the development experience.
+            </li>
+            <li>
+                Developer experience is unified. I love the idea of assigning parameter as simple as assigning with equals(=) sign.
+                To join two strings, it can be done as easy as <code>'${prefix}_site'</code> which brings a unified experience similar to string interpolation.
+            </li>
+        </ol>
+    </p>
+
+    <p>
+        <h4>Limitations</h4>
+        I believe before it turns out to be a production use, there are couple of things which I anticipate that bicep can help to solve:
+        <ol>
+            <li>Current Intellisense experience with Visual Studio Code still has places to improve (e.g. providing intellisense types of locations)</li>
+            <li>
+                The moment we selected a resource (e.g. <code>'Microsoft.Web/staticSites@2020-06-01'</code>), if it can auto-generate basic boiler plate code on the pre-requisite
+                parameters and default values, that would be very handful for users like me to kickstart quickly. With the current experience, <kbd>CTRL + Spacebar</kbd> can
+                still be achieved but it does not provide a full experience of the values can be configured.
+            </li>
+            <li>
+                Deployments are done separately via Powershell today. It will look great if bicep cli can offer deployments as well.
+            </li>
+        </ol>
+    </p>
+
+    <p>
+        <h4>In closing</h4>
+        In my opinion, Project Bicep has a great potential in ensuring a great tooling experience for ARM templates. What amazed me is that even if it's still in preview, it offers
+        great functionalities for new projects start building from bicep as a base. I reckon in coming iterations, Project Bicep is going to evolve and offer better tooling support for ARM
+        development. If you are interested to give it a go, please do follow this GitHub page <a href="https://github.com/Azure/bicep">Azure Bicep</a> for future news.
+    </p>
+</div>
+
+<div class="post-footer">
+    <SocialMedia Title="@PostHeader" />
+</div>
+
+@code {
+    private string PostHeader = "Project Bicep - Deploy Azure resource declaratively";
+    private string PostDescription = "Bicep is a Domain Specific Language (DSL) for deploying Azure resources declaratively. It aims to drastically simplify the authoring experience with a cleaner syntax and better support for modularity and code re-use. Let's see with some examples!";
+    private string PostDate = "12th February 2021";
+    private string PostReadDuration = "15 minutes";
+    private string PostBaseImage = "/assets/posts/2021/2/bicep";
+    private string PostHeaderImage = "/assets/posts/2021/2/bicep/bicep-header.jpg";
+}
